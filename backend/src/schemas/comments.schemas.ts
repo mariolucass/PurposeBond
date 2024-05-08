@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const commentSchema = z.object({
+const commentSchema = z.object({
   id: z.string(),
   name: z.string().min(1),
   description: z.string().nullish(),
@@ -8,3 +8,5 @@ export const commentSchema = z.object({
   year: z.number().positive(),
   km: z.number().positive(),
 });
+
+export const commentReturnSchema = commentSchema;

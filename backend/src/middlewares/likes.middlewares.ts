@@ -5,7 +5,7 @@ import { AppError } from "../errors/appError";
 export class LikesMiddlewares {
   static verifyLikeExistence = async (
     req: Request,
-    _: Response,
+    res: Response,
     next: NextFunction
   ) => {
     const id = req.params.id;
@@ -17,6 +17,8 @@ export class LikesMiddlewares {
     if (!like) {
       throw new AppError(404, "Like not found");
     }
+
+    res.locals.like = like;
 
     return next();
   };

@@ -5,7 +5,7 @@ import { AppError } from "../errors/appError";
 export class UsersMiddlewares {
   static verifyUserExistence = async (
     req: Request,
-    _: Response,
+    res: Response,
     next: NextFunction
   ) => {
     const id = req.params.id;
@@ -18,6 +18,8 @@ export class UsersMiddlewares {
       throw new AppError(404, "User not found.");
     }
 
+    res.locals.userFound = user;
+
     return next();
   };
 
@@ -27,7 +29,7 @@ export class UsersMiddlewares {
     next: NextFunction
   ) => {
     const userAuthenticatedId = res.locals.user.id;
-    const userParamsId = req.params.id;
+    const userParamsId = res.locals.userFound;
 
     if (userAuthenticatedId !== userParamsId) {
       throw new AppError(403, "Insufficient permission.");
