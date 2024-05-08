@@ -5,7 +5,7 @@ import { AppError } from "../errors/appError";
 export class PostsMiddlewares {
   static verifyPostExistence = async (
     req: Request,
-    _: Response,
+    res: Response,
     next: NextFunction
   ) => {
     const id = req.params.id;
@@ -17,6 +17,8 @@ export class PostsMiddlewares {
     if (!post) {
       throw new AppError(404, "Post not found.");
     }
+
+    res.locals.post = post;
 
     return next();
   };

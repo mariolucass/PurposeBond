@@ -18,6 +18,8 @@ export class CommentsMiddlewares {
       throw new AppError(404, "Comment not found");
     }
 
+    res.locals.comment = comment;
+
     return next();
   };
 }

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const postSchema = z.object({
+const messageSchema = z.object({
   id: z.string(),
   name: z.string().min(1),
   description: z.string().nullish(),
@@ -9,4 +9,4 @@ const postSchema = z.object({
   km: z.number().positive(),
 });
 
-export const postReturnSchema = postSchema;
+export const messageReturnSchema = messageSchema;
