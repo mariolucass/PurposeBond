@@ -70,10 +70,10 @@ model Like {
   @@map("likes")
 }
 
-
-
 model Message {
   id String @id @default(uuid())
+  content String @db.Text()
+  createdAt DateTime @default(now())
 
   sender    User     @relation("Sent", fields: [senderId], references: [id])
   senderId  String

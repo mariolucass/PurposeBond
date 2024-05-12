@@ -4,18 +4,31 @@ import { MessagesServices } from "../services/messages.services";
 export class MessagesController {
   static getMessages = async (req: Request, res: Response) => {
     const senderId = res.locals.user.id;
-    const receiverId = res.locals.reqParamsUser.id;
 
-    const messages = await MessagesServices.getMessages(senderId, receiverId);
+    const messages = await MessagesServices.getMessages(senderId);
 
     return res.json(messages);
+  };
+
+  static getMessageByOneUser = async (req: Request, res: Response) => {
+    const senderId = res.locals.user.id;
+    const receiverId = res.locals.reqParamsUser.id;
+
+    // const messages = await MessagesServices.getMessages(senderId, receiverId);
+
+    // return res.json(messages);
   };
 
   static postMessage = async (req: Request, res: Response) => {
     const senderId = res.locals.user.id;
     const receiverId = res.locals.reqParamsUser.id;
+    const content = req.body.content;
 
-    const message = await MessagesServices.postMessage(senderId, receiverId);
+    const message = await MessagesServices.postMessage(
+      senderId,
+      receiverId,
+      content
+    );
 
     return res.status(201).json(message);
   };
