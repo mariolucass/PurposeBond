@@ -1,13 +1,20 @@
 import { Router } from "express";
+import { CommentsController } from "../controllers/comments.controllers";
+import { AuthMiddlewares } from "../middlewares/auth.middlewares";
+import { CommentsMiddlewares } from "../middlewares/comments.middlewares";
 
 export const commentsRouter = Router();
 
-commentsRouter.post("/");
+commentsRouter.use(AuthMiddlewares.validateToken);
 
-commentsRouter.get("/");
+commentsRouter.get("/", CommentsController.getComments);
 
-commentsRouter.get("/:id");
+commentsRouter.post("/:postId", CommentsController.postComment);
 
-commentsRouter.patch("/:id");
+commentsRouter.use("/:id", CommentsMiddlewares.verifyCommentExistence);
 
-commentsRouter.delete("/:id");
+commentsRouter.get("/:id", CommentsController.retrieveComment);
+
+commentsRouter.patch("/:id", CommentsController.patchComment);
+
+commentsRouter.delete("/:id", CommentsController.deleteComment);

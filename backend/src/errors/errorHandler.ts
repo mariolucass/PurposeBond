@@ -12,6 +12,8 @@ export class ErrorHandler {
       return res.status(400).json(err);
     }
 
+    console.log(err);
+
     return res.status(500).json({ error: "Internal server error." });
   }
 }

@@ -1,13 +1,28 @@
 import { Router } from "express";
+import { PostsController } from "../controllers/posts.controllers";
+import { AuthMiddlewares } from "../middlewares/auth.middlewares";
+import { PostsMiddlewares } from "../middlewares/posts.middlewares";
 
 export const postsRouter = Router();
 
-postsRouter.post("/");
+postsRouter.use(AuthMiddlewares.validateToken);
 
-postsRouter.get("/");
+postsRouter.post("/", PostsController.postPost);
 
-postsRouter.get("/:id");
+postsRouter.get("/", PostsController.getPosts);
 
-postsRouter.patch("/:id");
+postsRouter.use("/:id", PostsMiddlewares.verifyPostExistence);
 
-postsRouter.delete("/:id");
+postsRouter.get("/:id", PostsController.retrievePost);
+
+postsRouter.patch(
+  "/:id",
+  PostsMiddlewares.confirmPostOwnership,
+  PostsController.patchPost
+);
+
+postsRouter.delete(
+  "/:id",
+  PostsMiddlewares.confirmPostOwnership,
+  PostsController.deletePost
+);

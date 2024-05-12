@@ -14,7 +14,7 @@ authRouter.post(
   AuthController.register
 );
 
-authRouter.get(
+authRouter.post(
   "/login",
   GlobalMiddlewares.validateSchema(loginSchema),
   AuthController.login

@@ -5,7 +5,7 @@ export class UsersServices {
   static getUsers = async () => {
     const users = await userModel.findMany();
 
-    return userReturnSchema.parse(users);
+    return userReturnSchema.array().parse(users);
   };
 
   static retrieveUser = async (id: string) => {

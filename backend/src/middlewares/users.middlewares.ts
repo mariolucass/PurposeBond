@@ -10,15 +10,18 @@ export class UsersMiddlewares {
   ) => {
     const id = req.params.id;
 
+    console.log(req.params);
+
     const user = await userModel.findUnique({
       where: { id },
+      select: { id: true, email: true, username: true },
     });
 
     if (!user) {
       throw new AppError(404, "User not found.");
     }
 
-    res.locals.userFound = user;
+    res.locals.reqParamsUser = user;
 
     return next();
   };

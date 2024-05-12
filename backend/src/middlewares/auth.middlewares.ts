@@ -13,9 +13,22 @@ export class AuthMiddlewares {
 
     authorization = authorization.split(" ")[1];
 
-    verify(authorization, process.env.SECRET_KEY!);
+    console.log(authorization);
 
-    res.locals.user;
+    const decoded = verify(authorization, process.env.JWT_SECRET!) as {
+      id: string;
+      email: string;
+      username: string;
+    };
+
+    console.log(decoded);
+
+    res.locals.user = {
+      id: decoded.id,
+      email: decoded.email,
+      username: decoded.username,
+    };
+
     return next();
   };
 
