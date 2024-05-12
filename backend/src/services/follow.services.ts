@@ -2,7 +2,7 @@ import { userModel } from "../database/models";
 
 export class FollowServices {
   static getFollowedUsers = async (userAuthenticatedId: string) => {
-    const usersFollowedBy = await userModel.findUnique({
+    const user = await userModel.findUnique({
       where: { id: userAuthenticatedId },
       select: {
         followedBy: {
@@ -14,11 +14,11 @@ export class FollowServices {
       },
     });
 
-    return usersFollowedBy!.followedBy;
+    return user!.followedBy;
   };
 
   static getFollowingUsers = async (userAuthenticatedId: string) => {
-    const usersFollowing = await userModel.findUnique({
+    const user = await userModel.findUnique({
       where: { id: userAuthenticatedId },
       select: {
         following: {
@@ -30,7 +30,7 @@ export class FollowServices {
       },
     });
 
-    return usersFollowing!.following;
+    return user!.following;
   };
 
   static followUser = async (

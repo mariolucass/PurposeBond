@@ -5,11 +5,9 @@ import { PostsMiddlewares } from "../middlewares/posts.middlewares";
 
 export const postsRouter = Router();
 
-postsRouter.use(AuthMiddlewares.validateToken);
-
-postsRouter.post("/", PostsController.postPost);
-
 postsRouter.get("/", PostsController.getPosts);
+
+postsRouter.post("/", AuthMiddlewares.validateToken, PostsController.postPost);
 
 postsRouter.use("/:id", PostsMiddlewares.verifyPostExistence);
 
@@ -17,12 +15,16 @@ postsRouter.get("/:id", PostsController.retrievePost);
 
 postsRouter.patch(
   "/:id",
+
+  AuthMiddlewares.validateToken,
   PostsMiddlewares.confirmPostOwnership,
   PostsController.patchPost
 );
 
 postsRouter.delete(
   "/:id",
+
+  AuthMiddlewares.validateToken,
   PostsMiddlewares.confirmPostOwnership,
   PostsController.deletePost
 );

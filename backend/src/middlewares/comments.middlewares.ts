@@ -12,6 +12,7 @@ export class CommentsMiddlewares {
 
     const comment = await commentModel.findUnique({
       where: { id },
+      include: { author: true },
     });
 
     if (!comment) {

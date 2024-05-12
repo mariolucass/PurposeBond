@@ -9,7 +9,8 @@ export class PostsController {
   };
 
   static postPost = async (req: Request, res: Response) => {
-    const post = await PostsServices.postPost(req.body);
+    const userAuthId = res.locals.user.id;
+    const post = await PostsServices.postPost(userAuthId, req.body);
 
     return res.status(201).json(post);
   };
