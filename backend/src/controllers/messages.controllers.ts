@@ -4,7 +4,7 @@ import { MessagesServices } from "../services/messages.services";
 export class MessagesController {
   static getMessages = async (req: Request, res: Response) => {
     const senderId = res.locals.user.id;
-    const receiverId = res.locals.foundUser.id;
+    const receiverId = res.locals.reqParamsUser.id;
 
     const messages = await MessagesServices.getMessages(senderId, receiverId);
 
@@ -13,7 +13,7 @@ export class MessagesController {
 
   static postMessage = async (req: Request, res: Response) => {
     const senderId = res.locals.user.id;
-    const receiverId = res.locals.foundUser.id;
+    const receiverId = res.locals.reqParamsUser.id;
 
     const message = await MessagesServices.postMessage(senderId, receiverId);
 

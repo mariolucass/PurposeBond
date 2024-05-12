@@ -12,6 +12,7 @@ export class PostsMiddlewares {
 
     const post = await postModel.findUnique({
       where: { id },
+      select: { id: true, content: true, author: true },
     });
 
     if (!post) {
@@ -19,6 +20,21 @@ export class PostsMiddlewares {
     }
 
     res.locals.post = post;
+
+    return next();
+  };
+
+  static confirmPostOwnership = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const userAuthenticatedId = res.locals.user.id;
+    const userParamsId = res.locals.post.author.id;
+
+    if (userAuthenticatedId !== userParamsId) {
+      throw new AppError(403, "Insufficient permission.");
+    }
 
     return next();
   };

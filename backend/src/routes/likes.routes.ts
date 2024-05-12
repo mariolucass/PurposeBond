@@ -1,30 +1,18 @@
 import { Router } from "express";
 import { LikesController } from "../controllers/likes.controllers";
+import { AuthMiddlewares } from "../middlewares/auth.middlewares";
 import { LikesMiddlewares } from "../middlewares/likes.middlewares";
 import { UsersMiddlewares } from "../middlewares/users.middlewares";
 
 export const likesRouter = Router();
 
+likesRouter.use(AuthMiddlewares.validateToken);
+
 likesRouter.post("/:postId", LikesController.postLike);
 
-likesRouter.get("/", LikesController.getLikes);
-
-likesRouter.get(
-  "/:id",
-  LikesMiddlewares.verifyLikeExistence,
-  LikesController.retrieveLike
-);
-
-likesRouter.patch(
-  "/:id",
+likesRouter.use("/:id", [
   LikesMiddlewares.verifyLikeExistence,
   UsersMiddlewares.confirmUserIdentity,
-  LikesController.patchLike
-);
+]);
 
-likesRouter.delete(
-  "/:id",
-  LikesMiddlewares.verifyLikeExistence,
-  UsersMiddlewares.confirmUserIdentity,
-  LikesController.deleteLike
-);
+likesRouter.delete("/:id", LikesController.deleteLike);

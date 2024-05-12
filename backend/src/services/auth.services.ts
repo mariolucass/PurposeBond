@@ -1,7 +1,8 @@
-import { compare } from "bcryptjs";
+import { compare, hash } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { userModel } from "../database/models";
 import { AppError } from "../errors/appError";
+import { userReturnSchema } from "../schemas/users.schemas";
 
 export class AuthServices {
   static loginService = async (body: { email: string; password: string }) => {
@@ -19,17 +20,27 @@ export class AuthServices {
       throw new AppError(403, "User or password invalid");
     }
 
-    const token = sign(
-      { id: user.id, email: user.email },
-      process.env.SECRET_KEY!,
-      {
-        subject: user.id,
-        expiresIn: "24h",
-      }
-    );
+    const userData = {
+      id: user.id,
+      email: user.email,
+      username: user.username,
+    };
 
-    return { token: token };
+    const jwtConfig = {
+      subject: user.id,
+      expiresIn: "24h",
+    };
+
+    const token = sign(userData, process.env.SECRET_KEY!, jwtConfig);
+
+    return { accessToken: token, user: userReturnSchema.parse(user) };
   };
 
-  static registerService = async () => {};
+  static registerService = async (body: any) => {
+    body.password = await hash(body.password, 10);
+
+    const user = await userModel.create({ data: body });
+
+    return userReturnSchema.parse(user);
+  };
 }

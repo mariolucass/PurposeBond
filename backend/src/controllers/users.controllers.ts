@@ -9,21 +9,22 @@ export class UsersController {
   };
 
   static retrieveUser = async (req: Request, res: Response) => {
-    const userId = res.locals.User.id;
-    const user = await UsersServices.retrieveUser(userId);
+    const user = res.locals.reqParamsUser;
 
     return res.json(user);
   };
 
   static patchUser = async (req: Request, res: Response) => {
-    const userId = res.locals.User.id;
+    const userId = res.locals.reqParamsUser.id;
+
     const user = await UsersServices.patchUser(userId, req.body);
 
     return res.json(user);
   };
 
   static deleteUser = async (req: Request, res: Response) => {
-    const userId = res.locals.user.id;
+    const userId = res.locals.reqParamsUser.id;
+
     await UsersServices.deleteUser(userId);
 
     return res.status(204);
