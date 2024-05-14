@@ -1,11 +1,9 @@
-const Dashboard = () => {
+const NotFoundPage = () => {
   return (
     <main className="w-full h-full items-center justify-center">
-      <div>
-        <p>Oi</p>
-      </div>
+      <div className="w-full"></div>
     </main>
   );
 };
 
-export default Dashboard;
+export default NotFoundPage;
