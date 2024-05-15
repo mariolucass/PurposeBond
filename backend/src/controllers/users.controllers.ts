@@ -9,7 +9,8 @@ export class UsersController {
   };
 
   static retrieveUser = async (req: Request, res: Response) => {
-    const user = res.locals.reqParamsUser;
+    const userId = res.locals.reqParamsUser.id;
+    const user = await UsersServices.retrieveUser(userId);
 
     return res.json(user);
   };

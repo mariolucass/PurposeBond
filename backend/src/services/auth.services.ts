@@ -31,7 +31,7 @@ export class AuthServices {
       expiresIn: "24h",
     };
 
-    const token = sign(userData, process.env.SECRET_KEY!, jwtConfig);
+    const token = sign(userData, process.env.JWT_SECRET!, jwtConfig);
 
     return { accessToken: token, user: userReturnSchema.parse(user) };
   };

@@ -4,14 +4,7 @@ export class FollowServices {
   static getFollowedUsers = async (userAuthenticatedId: string) => {
     const user = await userModel.findUnique({
       where: { id: userAuthenticatedId },
-      select: {
-        followedBy: {
-          select: {
-            id: true,
-            username: true,
-          },
-        },
-      },
+      select: { followedBy: { select: { id: true, username: true } } },
     });
 
     return user!.followedBy;
@@ -20,14 +13,7 @@ export class FollowServices {
   static getFollowingUsers = async (userAuthenticatedId: string) => {
     const user = await userModel.findUnique({
       where: { id: userAuthenticatedId },
-      select: {
-        following: {
-          select: {
-            id: true,
-            username: true,
-          },
-        },
-      },
+      select: { following: { select: { id: true, username: true } } },
     });
 
     return user!.following;
@@ -37,16 +23,10 @@ export class FollowServices {
     userAuthenticatedId: string,
     userToFollowId: string
   ) => {
-    const newFollow = await userModel.update({
+    await userModel.update({
       where: { id: userAuthenticatedId },
-      data: {
-        following: {
-          connect: { id: userToFollowId },
-        },
-      },
+      data: { following: { connect: { id: userToFollowId } } },
     });
-
-    return newFollow;
   };
 
   static unfollowUser = async (
@@ -55,11 +35,7 @@ export class FollowServices {
   ) => {
     await userModel.update({
       where: { id: userAuthenticatedId },
-      data: {
-        following: {
-          disconnect: { id: userToUnfollowId },
-        },
-      },
+      data: { following: { disconnect: { id: userToUnfollowId } } },
     });
   };
 }

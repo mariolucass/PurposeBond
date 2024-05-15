@@ -11,6 +11,7 @@ export class FollowController {
   };
 
   static getFollowingUsers = async (req: Request, res: Response) => {
+    console.log(res.locals);
     const userAuthId = res.locals.user.id;
 
     const data = await FollowServices.getFollowingUsers(userAuthId);

@@ -9,9 +9,12 @@ export class UsersServices {
   };
 
   static retrieveUser = async (id: string) => {
-    const user = await userModel.findFirst({ where: { id: id } });
+    const user = await userModel.findFirst({
+      where: { id: id },
+      include: { posts: true, comments: true, likes: true },
+    });
 
-    return userReturnSchema.parse(user);
+    return user;
   };
 
   static patchUser = async (id: string, body: {}) => {

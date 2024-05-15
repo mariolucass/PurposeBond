@@ -7,6 +7,12 @@ export const postsRouter = Router();
 
 postsRouter.get("/", PostsController.getPosts);
 
+postsRouter.get(
+  "/dashboard",
+  AuthMiddlewares.validateToken,
+  PostsController.getDashboardPosts
+);
+
 postsRouter.post("/", AuthMiddlewares.validateToken, PostsController.postPost);
 
 postsRouter.use("/:id", PostsMiddlewares.verifyPostExistence);

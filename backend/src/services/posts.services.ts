@@ -1,10 +1,38 @@
 import { Post } from "@prisma/client";
-import { postModel } from "../database/models";
+import { postModel, userModel } from "../database/models";
 import { postReturnSchema } from "../schemas/posts.schemas";
 
 export class PostsServices {
+  static getDashboardPosts = async (userAuthenticatedId: string) => {
+    const user = await userModel.findUnique({
+      where: { id: userAuthenticatedId },
+      select: { following: { select: { id: true } } },
+    });
+
+    const followingIds = user!.following.map((user) => user.id);
+
+    const followingPosts = await postModel.findMany({
+      where: { authorId: { in: followingIds } },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return postReturnSchema.array().parse(followingPosts);
+  };
+
   static getPosts = async () => {
     const posts = await postModel.findMany({ include: { author: true } });
+
+    return postReturnSchema.array().parse(posts);
+  };
+
+  static getUserPosts = async (userId: string) => {
+    const posts = await postModel.findMany({ where: { authorId: userId } });
+
+    return postReturnSchema.array().parse(posts);
+  };
+
+  static getUserPostsAndComments = async (userId: string) => {
+    const posts = await postModel.findMany({ where: { authorId: userId } });
 
     return postReturnSchema.array().parse(posts);
   };

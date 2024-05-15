@@ -18,7 +18,7 @@ app.use(json());
 
 app.use("", authRouter);
 
-app.use("/users", followRouter);
+app.use("/user", followRouter);
 app.use("/users", usersRouter);
 
 app.use("/comments", commentsRouter);
