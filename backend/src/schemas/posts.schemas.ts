@@ -8,4 +8,8 @@ const postSchema = z.object({
   author: userReturnSchema,
 });
 
+export const postCreateSchema = postSchema;
+
+export const postUpdateSchema = postSchema;
+
 export const postReturnSchema = postSchema;

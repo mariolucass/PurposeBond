@@ -8,4 +8,8 @@ const messageSchema = z.object({
   sender: userReturnSchema,
 });
 
+export const messageCreateSchema = messageSchema;
+
+export const messageUpdateSchema = messageSchema;
+
 export const messageReturnSchema = messageSchema;

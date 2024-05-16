@@ -8,4 +8,8 @@ const commentSchema = z.object({
   author: userReturnSchema,
 });
 
+export const commentCreateSchema = commentSchema;
+
+export const commentUpdateSchema = commentSchema;
+
 export const commentReturnSchema = commentSchema;

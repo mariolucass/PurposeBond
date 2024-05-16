@@ -6,9 +6,6 @@ export const loginSchema = z.object({
 });
 
 export const registerSchema = z.object({
-  id: z.string(),
-  username: z.string(),
   email: z.string(),
   password: z.string(),
-  phone: z.string(),
 });

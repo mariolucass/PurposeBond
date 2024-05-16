@@ -7,4 +7,8 @@ const userSchema = z.object({
   phone: z.string(),
 });
 
+export const userCreateSchema = userSchema;
+
+export const userUpdateSchema = userSchema;
+
 export const userReturnSchema = userSchema;
