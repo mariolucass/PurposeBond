@@ -1,4 +1,4 @@
-import { IChildren } from "@/interfaces/global";
+import { IChildren } from "@/interfaces/global.interfaces";
 import { cn } from "@/lib/utils";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
