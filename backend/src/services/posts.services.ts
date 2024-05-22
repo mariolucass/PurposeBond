@@ -3,6 +3,22 @@ import { postModel, userModel } from "../database/models";
 import { postReturnSchema } from "../schemas/posts.schemas";
 
 export class PostsServices {
+  static getNewDashboardPosts = async (userAuthenticatedId: string) => {
+    const user = await userModel.findUnique({
+      where: { id: userAuthenticatedId },
+      select: { following: { select: { id: true } } },
+    });
+
+    const followingIds = user!.following.map((user) => user.id);
+
+    const followingPosts = await postModel.findMany({
+      where: { authorId: { in: followingIds } },
+      orderBy: { createdAt: "desc" },
+    });
+
+    return postReturnSchema.array().parse(followingPosts);
+  };
+
   static getDashboardPosts = async (userAuthenticatedId: string) => {
     const user = await userModel.findUnique({
       where: { id: userAuthenticatedId },

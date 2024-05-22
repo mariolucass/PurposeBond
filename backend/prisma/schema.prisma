@@ -20,6 +20,8 @@ model User {
   address String @db.VarChar(254)
 
   posts     Post[]
+  postViews PostView[] 
+
   comments  Comment[]
   likes     Like[]
 
@@ -28,6 +30,7 @@ model User {
 
   messagesSent     Message[] @relation("Sent")
   messagesReceived Message[] @relation("Received")
+
 
   
   @@map("users")
@@ -40,10 +43,24 @@ model Post {
  
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String
+  
   likes     Like[]
   comments  Comment[]
+  views     PostView[]
 
   @@map("posts")
+}
+
+model PostView {
+  id          String   @id @default(uuid())
+  userId      String
+  postId      String
+  viewedAt    DateTime @default(now())
+
+  user        User     @relation(fields: [userId], references: [id])
+  post        Post     @relation(fields: [postId], references: [id])
+
+  @@unique([userId, postId])
 }
 
 model Comment {
