@@ -2,6 +2,7 @@ import { z } from "zod";
 import { userSchema } from "./users.schemas";
 
 export const postSchema = z.object({
+  id: z.string(),
   content: z.string(),
   createdAt: z.date(),
 });

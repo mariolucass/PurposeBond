@@ -6,6 +6,7 @@ export const userSchema = z.object({
   username: z.string(),
   email: z.string(),
   password: z.string(),
+  description: z.string(),
   posts: postSchema.array(),
   comments: commentSchema.array(),
 });

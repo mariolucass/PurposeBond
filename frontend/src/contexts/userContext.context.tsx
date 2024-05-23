@@ -1,4 +1,4 @@
-import { IChildren } from "@/interfaces/global";
+import { IChildren } from "@/interfaces/global.interfaces";
 import { createContext, useContext } from "react";
 
 interface IUserContext {}

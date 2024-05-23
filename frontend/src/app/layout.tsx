@@ -1,3 +1,5 @@
+"use client";
+import { AuthProvider } from "@/contexts/authContext.context";
 import { IChildren } from "@/interfaces/global.interfaces";
 import { cn } from "@/lib/utils";
 import { Inter as FontSans } from "next/font/google";
@@ -12,15 +14,16 @@ const fontSans = FontSans({
 const RootLayout = ({ children }: IChildren) => (
   <html lang="en" suppressHydrationWarning>
     <Head />
-
-    <body
-      className={cn(
-        "min-h-screen bg-background font-sans antialiased",
-        fontSans.variable
-      )}
-    >
-      {children}
-    </body>
+    <AuthProvider>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+      >
+        {children}
+      </body>
+    </AuthProvider>
   </html>
 );
 

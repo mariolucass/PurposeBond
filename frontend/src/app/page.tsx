@@ -1,5 +1,6 @@
 import { Feed } from "@/components/feed";
 import { Container } from "@/layouts/Container";
+import { MainSection } from "@/layouts/MainSection";
 import { SideBarLeft, SideBarRight } from "@/layouts/SideBars";
 
 const Dashboard = () => {
@@ -8,7 +9,9 @@ const Dashboard = () => {
       <Container>
         <SideBarLeft />
 
-        <Feed />
+        <MainSection>
+          <Feed />
+        </MainSection>
 
         <SideBarRight />
       </Container>
