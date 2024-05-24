@@ -1,6 +1,8 @@
 import { PostComponent } from "@/components/post";
-import { api } from "@/services/api";
-import { useEffect, useState } from "react";
+import { Separator } from "@/components/ui/separator";
+import { api } from "@/services/config/api";
+
+import { Fragment, useEffect, useState } from "react";
 
 export const TabLikes = ({ userId }: { userId: string }) => {
   const [likes, setLikes] = useState([]);
@@ -33,8 +35,11 @@ export const TabLikes = ({ userId }: { userId: string }) => {
 
   return (
     <ul>
-      {likes.map((e: any) => (
-        <PostComponent post={e} key={e.id} />
+      {likes.map((e: any, index) => (
+        <Fragment key={e.id}>
+          <PostComponent post={e} key={e.id} />
+          {index !== likes.length - 1 && <Separator />}
+        </Fragment>
       ))}
     </ul>
   );

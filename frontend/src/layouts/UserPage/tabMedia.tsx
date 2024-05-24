@@ -1,5 +1,6 @@
 import { PostComponent } from "@/components/post";
-import { api } from "@/services/api";
+import { api } from "@/services/config/api";
+
 import { useEffect, useState } from "react";
 
 export const TabMedia = ({ userId }: { userId: string }) => {

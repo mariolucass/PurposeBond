@@ -1,21 +1,27 @@
 import { PostComponent } from "@/components/post";
-import { api } from "@/services/api";
-import { useEffect, useState } from "react";
+import { Separator } from "@/components/ui/separator";
+import { PostInterface } from "@/interfaces/posts.interfaces";
+import { ApiError } from "@/services/config/apiError";
+import { getPostsByUser } from "@/services/posts.services";
+import Error from "next/error";
+import { Fragment, useEffect, useState } from "react";
 
 export const TabPosts = ({ userId }: { userId: string }) => {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<PostInterface[]>([]);
+
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(false);
+
+  const [errorCode, setErrorCode] = useState(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await api.get(`users/${userId}/posts/`);
-        console.log(response);
-        setPosts(response.data);
+        const fetchedPosts = await getPostsByUser(userId);
+        setPosts(fetchedPosts);
       } catch (error) {
-        console.error("Error fetching post:", error);
-        setError(true);
+        if (error instanceof ApiError) {
+          console.error(error);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -28,14 +34,17 @@ export const TabPosts = ({ userId }: { userId: string }) => {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>Post not found.</div>;
+  if (errorCode) {
+    return <Error statusCode={errorCode} />;
   }
 
   return (
-    <ul>
-      {posts.map((e: any) => (
-        <PostComponent post={e} key={e.id} />
+    <ul className="flex flex-col gap-8 w-full">
+      {posts.map((e: any, index) => (
+        <Fragment key={e.id}>
+          <PostComponent post={e} key={e.id} />
+          {index !== posts.length - 1 && <Separator />}
+        </Fragment>
       ))}
     </ul>
   );

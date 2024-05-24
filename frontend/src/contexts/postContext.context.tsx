@@ -1,23 +1,27 @@
 "use client";
 
 import { IChildren } from "@/interfaces/global.interfaces";
-import { PostReturnInterface } from "@/interfaces/posts.interfaces";
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  PostContextInterface,
+  PostInterface,
+} from "@/interfaces/posts.interfaces";
+import { createContext, useContext, useState } from "react";
 
-interface IPostContext {
-  setCurrentPost: any;
-  currentPost: any;
-}
-
-const PostContext = createContext<IPostContext>({} as IPostContext);
+const PostContext = createContext<PostContextInterface>(
+  {} as PostContextInterface
+);
 
 export const PostProvider = ({ children }: IChildren) => {
-  const [currentPost, setCurrentPost] = useState<PostReturnInterface>();
+  const [posts, setPosts] = useState<PostInterface[]>([]);
 
-  useEffect(() => {}, []);
+  const [currentPost, setCurrentPost] = useState<PostInterface>(
+    {} as PostInterface
+  );
 
   return (
-    <PostContext.Provider value={{ currentPost, setCurrentPost }}>
+    <PostContext.Provider
+      value={{ currentPost, setCurrentPost, posts, setPosts }}
+    >
       {children}
     </PostContext.Provider>
   );

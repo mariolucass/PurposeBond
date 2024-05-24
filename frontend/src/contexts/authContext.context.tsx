@@ -5,7 +5,6 @@ import {
   SetStateAction,
   createContext,
   useContext,
-  useEffect,
   useState,
 } from "react";
 
@@ -18,15 +17,10 @@ const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 export const AuthProvider = ({ children }: IChildren) => {
   const [user, setUser] = useState({} as UserContextInterface);
-  const [isLogged, setIsLogged] = useState({});
-
-  const [token, setToken] = useState();
 
   const loginUser = (body: any) => {};
 
   const registerUser = (body: any) => {};
-
-  useEffect(() => {}, []);
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>

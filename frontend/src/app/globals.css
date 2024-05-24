@@ -92,3 +92,11 @@ body {
   background-color: var(--bg-one);
   background-repeat: no-repeat;
 }
+
+.side-bar-left {
+  width: calc((100% / 12));
+}
+
+.side-bar-right {
+  width: calc((100% / 12) + ((100% / 12) / 2));
+}

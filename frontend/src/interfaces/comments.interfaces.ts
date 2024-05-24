@@ -2,7 +2,7 @@ import {
   commentCreateSchema,
   commentReturnSchema,
   commentUpdateSchema,
-} from "@/schemas/comments.schemas";
+} from "@/lib/schemas/comments.schemas";
 import { z } from "zod";
 
 export type CommentCreateInterface = z.infer<typeof commentCreateSchema>;

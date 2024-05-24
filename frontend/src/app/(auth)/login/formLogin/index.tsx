@@ -1,5 +1,5 @@
 import { LoginInterface } from "@/interfaces/auth.interfaces";
-import { loginSchema } from "@/schemas/auth.schemas";
+import { loginSchema } from "@/lib/schemas/auth.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 

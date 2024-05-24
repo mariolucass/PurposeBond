@@ -7,18 +7,20 @@ import { TabLikes } from "@/layouts/UserPage/tabLikes";
 import { TabMedia } from "@/layouts/UserPage/tabMedia";
 import { TabMessage } from "@/layouts/UserPage/tabMessage";
 import { TabPosts } from "@/layouts/UserPage/tabPosts";
-import { api } from "@/services/api";
+import { UserSectionProfile } from "@/layouts/UserPage/userProfile";
+import { getProfile } from "@/services/users.services";
 import { useEffect, useState } from "react";
 
 const ProfilePage = () => {
   const { user, setUser } = useAuthContext();
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getUser = async () => {
       try {
-        const response = await api.get("/profile");
-        setUser(response.data);
+        const fetchedUser = await getProfile();
+        setUser(fetchedUser);
       } catch (error) {
         console.log(error);
       } finally {
@@ -29,8 +31,6 @@ const ProfilePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(user);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -40,17 +40,8 @@ const ProfilePage = () => {
   }
 
   return (
-    <section className="border-x-4 gap-4 min-w-4/6 w-4/6 flex flex-col justify-start">
-      <div className="flex flex-col md:flex-row items-center mb-6">
-        <div>
-          <h1 className="text-3xl font-bold">{user.username}</h1>
-          <h2 className="text-lg text-gray-600">{user.email}</h2>
-        </div>
-      </div>
-      <div className="bg-gray-100 rounded-lg p-4 mb-4">
-        <h3 className="text-xl font-semibold mb-2">About Me</h3>
-        <p>{user.description || "No bio yet."}</p>
-      </div>
+    <section className="gap-4 min-w-full w-full flex flex-col justify-start">
+      <UserSectionProfile user={user} />
 
       <Separator />
 
@@ -67,7 +58,7 @@ const ProfilePage = () => {
 
         <Separator />
 
-        <TabsContent value="posts">
+        <TabsContent value="posts" className="w-full">
           <TabPosts userId={user.id} />
         </TabsContent>
 

@@ -1,6 +1,6 @@
 import { usePostContext } from "@/contexts/postContext.context";
 import { useEffect, useState } from "react";
-import { api } from "../services/api";
+import { api } from "../services/config/api";
 
 const useFetchPost = (id: string) => {
   const { currentPost, setCurrentPost } = usePostContext();

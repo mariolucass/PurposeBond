@@ -11,6 +11,8 @@ export const postSchema = z.object({
 
 export const postCreateSchema = postSchema.extend({ author: userSchema });
 
-export const postUpdateSchema = postSchema.extend({ author: userSchema });
+export const postUpdateSchema = postSchema
+  .extend({ author: userSchema })
+  .partial();
 
 export const postReturnSchema = postSchema.extend({ author: userSchema });

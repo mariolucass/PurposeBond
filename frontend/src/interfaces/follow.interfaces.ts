@@ -2,7 +2,7 @@ import {
   followCreateSchema,
   followReturnSchema,
   followUpdateSchema,
-} from "@/schemas/follow.schemas";
+} from "@/lib/schemas/follow.schemas";
 import { z } from "zod";
 
 export type FollowCreateInterface = z.infer<typeof followCreateSchema>;

@@ -1,9 +1,10 @@
 "use client";
 
-import { PostComponent } from "@/components/post";
+import { CommentComponent } from "@/components/comment";
 import useFetchPost from "@/hooks/post.hook";
 import { CommentReturnInterface } from "@/interfaces/comments.interfaces";
-import { api } from "@/services/api";
+import { api } from "@/services/config/api";
+
 import { useEffect, useState } from "react";
 
 interface CommentPageProps {
@@ -22,7 +23,6 @@ const CommentPage = ({ params: { id, commentId } }: CommentPageProps) => {
       try {
         const response = await api.get(`/comments/${commentId}`);
         setComment(response.data);
-        console.log(response);
       } catch (error) {
         console.error("Error fetching post:", error);
       } finally {
@@ -44,8 +44,8 @@ const CommentPage = ({ params: { id, commentId } }: CommentPageProps) => {
   }
 
   return (
-    <section className="border-x-4 gap-4 w-4/6 flex flex-col justify-start">
-      <PostComponent post={comment} />
+    <section className="gap-4 flex flex-col justify-start">
+      <CommentComponent comment={comment} />
     </section>
   );
 };
