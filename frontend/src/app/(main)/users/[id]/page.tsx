@@ -19,7 +19,7 @@ const UserPage = ({ params: { id } }: UserPageProps) => {
     const getUser = async () => {
       try {
         const response = await api.get(`/users/${id}`);
-        console.log(response);
+
         setUser(response.data);
       } catch (error) {
         console.log(error);
@@ -40,7 +40,7 @@ const UserPage = ({ params: { id } }: UserPageProps) => {
   }
 
   return (
-    <section className="container mx-auto mt-8 p-4 bg-white rounded-lg ">
+    <section className="border-x-4 gap-4 min-w-4/6 w-4/6 flex flex-col justify-start">
       <div className="flex flex-col md:flex-row items-center mb-6">
         {/* <IMAGE
           src={user.avatarUrl || "https://via.placeholder.com/150"} // Use placeholder if no avatar

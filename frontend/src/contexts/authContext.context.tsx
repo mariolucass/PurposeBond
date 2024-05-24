@@ -1,5 +1,5 @@
 import { IChildren } from "@/interfaces/global.interfaces";
-import { UserReturnInterface } from "@/interfaces/users.interfaces";
+import { UserContextInterface } from "@/interfaces/users.interfaces";
 import {
   Dispatch,
   SetStateAction,
@@ -10,44 +10,14 @@ import {
 } from "react";
 
 interface IAuthContext {
-  user: {
-    username: string;
-    email: string;
-    password: string;
-    description: string;
-    posts: {
-      id: string;
-      content: string;
-      createdAt: Date;
-    }[];
-    comments: {
-      email: string;
-      password: string;
-    }[];
-  };
-  setUser: Dispatch<
-    SetStateAction<{
-      username: string;
-      email: string;
-      password: string;
-      description: string;
-      posts: {
-        id: string;
-        content: string;
-        createdAt: Date;
-      }[];
-      comments: {
-        email: string;
-        password: string;
-      }[];
-    }>
-  >;
+  user: UserContextInterface;
+  setUser: Dispatch<SetStateAction<UserContextInterface>>;
 }
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
-export function AuthProvider({ children }: IChildren) {
-  const [user, setUser] = useState({} as UserReturnInterface);
+export const AuthProvider = ({ children }: IChildren) => {
+  const [user, setUser] = useState({} as UserContextInterface);
   const [isLogged, setIsLogged] = useState({});
 
   const [token, setToken] = useState();
@@ -63,5 +33,6 @@ export function AuthProvider({ children }: IChildren) {
       {children}
     </AuthContext.Provider>
   );
-}
+};
+
 export const useAuthContext = () => useContext(AuthContext);

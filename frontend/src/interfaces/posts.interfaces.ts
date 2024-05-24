@@ -8,3 +8,10 @@ import { z } from "zod";
 export type PostCreateInterface = z.infer<typeof postCreateSchema>;
 export type PostUpdateInterface = z.infer<typeof postUpdateSchema>;
 export type PostReturnInterface = z.infer<typeof postReturnSchema>;
+export interface PostContextInterface {
+  id: string;
+  username: string;
+  email: string;
+  password: string;
+  description: string;
+}

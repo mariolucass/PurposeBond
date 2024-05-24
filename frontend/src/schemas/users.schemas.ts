@@ -3,6 +3,7 @@ import { commentSchema } from "./comments.schemas";
 import { postSchema } from "./posts.schemas";
 
 export const userSchema = z.object({
+  id: z.string(),
   username: z.string(),
   email: z.string(),
   password: z.string(),
@@ -10,6 +11,15 @@ export const userSchema = z.object({
   posts: postSchema.array(),
   comments: commentSchema.array(),
 });
+
+export const userSchemaInformations = userSchema.omit({
+  comments: true,
+  posts: true,
+});
+
+export const userSchemaWithoutComments = userSchema.omit({ comments: true });
+
+export const userSchemaWithoutPosts = userSchema.omit({ posts: true });
 
 export const userCreateSchema = userSchema;
 

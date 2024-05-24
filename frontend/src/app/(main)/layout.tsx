@@ -1,3 +1,4 @@
+import { PostProvider } from "@/contexts/postContext.context";
 import { IChildren } from "@/interfaces/global.interfaces";
 import { Container } from "@/layouts/Container";
 import { SideBarLeft, SideBarRight } from "@/layouts/SideBars";
@@ -7,7 +8,7 @@ const MainLayout = ({ children }: IChildren) => (
     <Container>
       <SideBarLeft />
 
-      {children}
+      <PostProvider>{children}</PostProvider>
 
       <SideBarRight />
     </Container>
