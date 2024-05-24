@@ -2,6 +2,13 @@ import { Request, Response } from "express";
 import { PostsServices } from "../services/posts.services";
 
 export class PostsController {
+  static getPostsByUser = async (req: Request, res: Response) => {
+    const userAuthId = res.locals.reqParamsUser.id;
+    const posts = await PostsServices.getPostsByUser(userAuthId);
+
+    return res.json(posts);
+  };
+
   static getPosts = async (req: Request, res: Response) => {
     const posts = await PostsServices.getPosts();
 

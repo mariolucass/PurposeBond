@@ -16,7 +16,10 @@ export class CommentsServices {
   };
 
   static retrieveComment = async (id: string) => {
-    const comment = await commentModel.findFirst({ where: { id: id } });
+    const comment = await commentModel.findFirst({
+      where: { id: id },
+      include: { author: true },
+    });
 
     return commentReturnSchema.parse(comment);
   };

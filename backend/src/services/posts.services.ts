@@ -1,6 +1,9 @@
 import { Post } from "@prisma/client";
 import { postModel, userModel } from "../database/models";
-import { postReturnSchema } from "../schemas/posts.schemas";
+import {
+  postReturnSchema,
+  postWithCommentsSchema,
+} from "../schemas/posts.schemas";
 
 export class PostsServices {
   static getNewDashboardPosts = async (userAuthenticatedId: string) => {
@@ -41,8 +44,11 @@ export class PostsServices {
     return postReturnSchema.array().parse(posts);
   };
 
-  static getUserPosts = async (userId: string) => {
-    const posts = await postModel.findMany({ where: { authorId: userId } });
+  static getPostsByUser = async (userId: string) => {
+    const posts = await postModel.findMany({
+      where: { authorId: userId },
+      include: { author: true },
+    });
 
     return postReturnSchema.array().parse(posts);
   };
@@ -65,10 +71,19 @@ export class PostsServices {
   static retrievePost = async (id: string) => {
     const post = await postModel.findFirst({
       where: { id: id },
-      include: { author: true },
+      include: {
+        author: true,
+        comments: {
+          include: {
+            author: true,
+          },
+        },
+      },
     });
 
-    return postReturnSchema.parse(post);
+    console.log(post?.comments[0].content);
+
+    return postWithCommentsSchema.parse(post);
   };
 
   static patchPost = async (id: string, body: {}) => {

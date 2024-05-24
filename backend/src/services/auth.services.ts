@@ -43,4 +43,13 @@ export class AuthServices {
 
     return userReturnSchema.parse(user);
   };
+
+  static getProfile = async (id: string) => {
+    const user = await userModel.findFirst({
+      where: { id: id },
+      include: { posts: true, comments: true, likes: true },
+    });
+
+    return userReturnSchema.parse(user);
+  };
 }

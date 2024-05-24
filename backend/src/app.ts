@@ -1,3 +1,4 @@
+import cors from "cors";
 import express, { json } from "express";
 import "express-async-errors";
 import helmet from "helmet";
@@ -9,12 +10,15 @@ import { followRouter } from "./routes/follow.routes";
 import { likesRouter } from "./routes/likes.routes";
 import { messagesRouter } from "./routes/messages.routes";
 import { postsRouter } from "./routes/posts.routes";
+
 import { usersRouter } from "./routes/users.routes";
 
 export const app = express();
 
-app.use(helmet());
+app.use(cors());
+
 app.use(json());
+app.use(helmet());
 
 app.use("", authRouter);
 

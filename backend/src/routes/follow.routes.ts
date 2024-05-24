@@ -8,6 +8,8 @@ export const followRouter = Router();
 
 followRouter.use(AuthMiddlewares.validateToken);
 
+followRouter.get("/recommended", FollowController.getRecommendedUsers);
+
 followRouter.get("/followers", FollowController.getFollowedUsers);
 
 followRouter.get("/following", FollowController.getFollowingUsers);

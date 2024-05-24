@@ -7,4 +7,10 @@ export class AuthController {
     const login = await AuthServices.loginService(req.body);
     return res.json(login);
   };
+
+  static getProfile = async (req: Request, res: Response) => {
+    const userId = res.locals.user.id;
+    const user = await AuthServices.getProfile(userId);
+    return res.json(user);
+  };
 }

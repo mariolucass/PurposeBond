@@ -1,11 +1,22 @@
 import { z } from "zod";
-import { userReturnSchema } from "./users.schemas";
+import { userBasicInformationSchema } from "./users.schemas";
+
+const commentInPostSchema = z.object({
+  id: z.string(),
+  content: z.string(),
+  createdAt: z.date(),
+  author: userBasicInformationSchema,
+});
 
 const postSchema = z.object({
   id: z.string(),
   content: z.string().min(1),
   createdAt: z.date(),
-  author: userReturnSchema,
+  author: userBasicInformationSchema,
+});
+
+export const postWithCommentsSchema = postSchema.extend({
+  comments: commentInPostSchema.array(),
 });
 
 export const postCreateSchema = postSchema;

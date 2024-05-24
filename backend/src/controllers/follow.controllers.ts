@@ -2,18 +2,22 @@ import { Request, Response } from "express";
 import { FollowServices } from "../services/follow.services";
 
 export class FollowController {
+  static getRecommendedUsers = async (req: Request, res: Response) => {
+    const userAuthId = res.locals.user.id;
+    const data = await FollowServices.getRecommendedUsers(userAuthId);
+
+    return res.json(data);
+  };
+
   static getFollowedUsers = async (req: Request, res: Response) => {
     const userAuthId = res.locals.user.id;
-
     const data = await FollowServices.getFollowedUsers(userAuthId);
 
     return res.json(data);
   };
 
   static getFollowingUsers = async (req: Request, res: Response) => {
-    console.log(res.locals);
     const userAuthId = res.locals.user.id;
-
     const data = await FollowServices.getFollowingUsers(userAuthId);
 
     return res.json(data);
