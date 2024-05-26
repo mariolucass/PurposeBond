@@ -1,9 +1,6 @@
 import { Post } from "@prisma/client";
 import { postModel, userModel } from "../database/models";
-import {
-  postReturnSchema,
-  postWithCommentsSchema,
-} from "../schemas/posts.schemas";
+import { getPostsSchema, postReturnSchema } from "../schemas/posts.schemas";
 
 export class PostsServices {
   static getNewDashboardPosts = async (userAuthenticatedId: string) => {
@@ -39,18 +36,52 @@ export class PostsServices {
   };
 
   static getPosts = async () => {
-    const posts = await postModel.findMany({ include: { author: true } });
+    const posts = await postModel.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      select: {
+        id: true,
+        content: true,
+        createdAt: true,
+        author: {
+          select: { id: true, username: true, name: true },
+        },
+        _count: {
+          select: {
+            likes: true,
+            comments: true,
+          },
+        },
+      },
+    });
 
-    return postReturnSchema.array().parse(posts);
+    return getPostsSchema.array().parse(posts);
   };
 
   static getPostsByUser = async (userId: string) => {
     const posts = await postModel.findMany({
       where: { authorId: userId },
-      include: { author: true },
+      orderBy: {
+        createdAt: "desc",
+      },
+      select: {
+        id: true,
+        content: true,
+        createdAt: true,
+        author: {
+          select: { id: true, username: true, name: true },
+        },
+        _count: {
+          select: {
+            likes: true,
+            comments: true,
+          },
+        },
+      },
     });
 
-    return postReturnSchema.array().parse(posts);
+    return getPostsSchema.array().parse(posts);
   };
 
   static getUserPostsAndComments = async (userId: string) => {
@@ -71,19 +102,32 @@ export class PostsServices {
   static retrievePost = async (id: string) => {
     const post = await postModel.findFirst({
       where: { id: id },
-      include: {
-        author: true,
+
+      select: {
+        id: true,
+        content: true,
+        createdAt: true,
+        author: {
+          select: { id: true, username: true, name: true },
+        },
         comments: {
-          include: {
-            author: true,
+          select: {
+            id: true,
+            content: true,
+            createdAt: true,
+            author: { select: { id: true, username: true, name: true } },
+          },
+        },
+        _count: {
+          select: {
+            likes: true,
+            comments: true,
           },
         },
       },
     });
 
-    console.log(post?.comments[0].content);
-
-    return postWithCommentsSchema.parse(post);
+    return post;
   };
 
   static patchPost = async (id: string, body: {}) => {
