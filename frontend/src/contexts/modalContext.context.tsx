@@ -1,4 +1,4 @@
-import { IChildren } from "@/interfaces/global.interfaces";
+import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import {
   Dispatch,
   SetStateAction,
@@ -14,7 +14,7 @@ interface IModalContext {
 
 const ModalContext = createContext<IModalContext>({} as IModalContext);
 
-export const ModalProvider = ({ children }: IChildren) => {
+export const ModalProvider = ({ children }: ChildrenInterface) => {
   const [isDialogMessagesOpen, setIsDialogMessagesOpen] = useState(false);
 
   return (

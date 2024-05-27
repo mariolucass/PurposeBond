@@ -1,11 +1,11 @@
-import { IChildren } from "@/interfaces/global.interfaces";
+import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import { createContext, useContext } from "react";
 
 interface ICommentContext {}
 
 const CommentContext = createContext<ICommentContext>({} as ICommentContext);
 
-export const CommentProvider = ({ children }: IChildren) => {
+export const CommentProvider = ({ children }: ChildrenInterface) => {
   const createComment = () => {};
 
   const deleteComment = () => {};

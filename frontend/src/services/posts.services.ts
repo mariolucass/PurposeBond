@@ -1,7 +1,4 @@
-import {
-  PostInterface,
-  PostUpdateInterface,
-} from "@/interfaces/posts.interfaces";
+import { PostInterface, PostUpdateType } from "@/interfaces/posts.interfaces";
 import { api } from "./config/api";
 import { handleApiResponse } from "./config/handleResponse";
 
@@ -17,7 +14,7 @@ export const getPost = async (postId: string) => {
   return handleApiResponse<PostInterface>(api.get(`/posts/${postId}`));
 };
 
-export const patchPost = async (body: PostUpdateInterface, postId: string) => {
+export const patchPost = async (body: PostUpdateType, postId: string) => {
   return handleApiResponse<PostInterface>(api.patch(`/posts/${postId}`, body));
 };
 

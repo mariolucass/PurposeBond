@@ -1,6 +1,6 @@
 "use client";
 
-import { IChildren } from "@/interfaces/global.interfaces";
+import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import {
   PostContextInterface,
   PostInterface,
@@ -11,7 +11,7 @@ const PostContext = createContext<PostContextInterface>(
   {} as PostContextInterface
 );
 
-export const PostProvider = ({ children }: IChildren) => {
+export const PostProvider = ({ children }: ChildrenInterface) => {
   const [posts, setPosts] = useState<PostInterface[]>([]);
 
   const [currentPost, setCurrentPost] = useState<PostInterface>(

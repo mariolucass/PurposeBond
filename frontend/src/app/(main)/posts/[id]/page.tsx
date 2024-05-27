@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { usePostContext } from "@/contexts/postContext.context";
 import useFetchPost from "@/hooks/post.hook";
-import { CommentReturnInterface } from "@/interfaces/comments.interfaces";
+import { CommentInterface } from "@/interfaces/comments.interfaces";
 import { Fragment } from "react";
 
 interface PostPageProps {
@@ -42,7 +42,7 @@ const PostPage = ({ params: { id } }: PostPageProps) => {
       <Separator />
 
       <ul className="flex flex-col gap-8">
-        {currentPost.comments.map((e: CommentReturnInterface, index) => (
+        {currentPost.comments.map((e: CommentInterface, index) => (
           <Fragment key={e.id}>
             <CommentComponent comment={e} postId={currentPost.id} />
             {index !== currentPost.comments.length - 1 && <Separator />}

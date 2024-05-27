@@ -1,6 +1,6 @@
 "use client";
 import { AuthProvider } from "@/contexts/authContext.context";
-import { IChildren } from "@/interfaces/global.interfaces";
+import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import { cn } from "@/lib/utils";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
@@ -11,7 +11,7 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 
-const RootLayout = ({ children }: IChildren) => (
+const RootLayout = ({ children }: ChildrenInterface) => (
   <html lang="en" suppressHydrationWarning>
     <Head />
     <AuthProvider>

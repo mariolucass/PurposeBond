@@ -1,5 +1,5 @@
-import { IChildren } from "@/interfaces/global.interfaces";
-import { UserContextInterface } from "@/interfaces/users.interfaces";
+import { ChildrenInterface } from "@/interfaces/global.interfaces";
+import { UserInterface } from "@/interfaces/users.interfaces";
 import {
   Dispatch,
   SetStateAction,
@@ -9,14 +9,14 @@ import {
 } from "react";
 
 interface IAuthContext {
-  user: UserContextInterface;
-  setUser: Dispatch<SetStateAction<UserContextInterface>>;
+  user: UserInterface;
+  setUser: Dispatch<SetStateAction<UserInterface>>;
 }
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
-export const AuthProvider = ({ children }: IChildren) => {
-  const [user, setUser] = useState({} as UserContextInterface);
+export const AuthProvider = ({ children }: ChildrenInterface) => {
+  const [user, setUser] = useState({} as UserInterface);
 
   const loginUser = (body: any) => {};
 

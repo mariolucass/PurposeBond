@@ -1,11 +1,11 @@
-import { IChildren } from "@/interfaces/global.interfaces";
+import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import { createContext, useContext } from "react";
 
 interface ILikeContext {}
 
 const LikeContext = createContext<ILikeContext>({} as ILikeContext);
 
-export const LikeProvider = ({ children }: IChildren) => {
+export const LikeProvider = ({ children }: ChildrenInterface) => {
   const likePost = (postId: string) => {};
 
   const unlikePost = (postId: string) => {};

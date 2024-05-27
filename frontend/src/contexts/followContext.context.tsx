@@ -1,4 +1,4 @@
-import { IChildren } from "@/interfaces/global.interfaces";
+import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import { createContext, useContext } from "react";
 
 interface IFollowContext {
@@ -10,7 +10,7 @@ interface IFollowContext {
 
 const FollowContext = createContext<IFollowContext>({} as IFollowContext);
 
-export const FollowProvider = ({ children }: IChildren) => {
+export const FollowProvider = ({ children }: ChildrenInterface) => {
   const followUser = (userId: string) => {};
 
   const unfollowUser = (userId: string) => {};

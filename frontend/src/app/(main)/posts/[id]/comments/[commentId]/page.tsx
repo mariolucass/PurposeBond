@@ -2,7 +2,8 @@
 
 import { CommentComponent } from "@/components/comment";
 import useFetchPost from "@/hooks/post.hook";
-import { CommentReturnInterface } from "@/interfaces/comments.interfaces";
+import { CommentInterface } from "@/interfaces/comments.interfaces";
+
 import { api } from "@/services/config/api";
 
 import { useEffect, useState } from "react";
@@ -13,8 +14,8 @@ interface CommentPageProps {
 
 const CommentPage = ({ params: { id, commentId } }: CommentPageProps) => {
   const {} = useFetchPost(id);
-  const [comment, setComment] = useState<CommentReturnInterface>(
-    {} as CommentReturnInterface
+  const [comment, setComment] = useState<CommentInterface>(
+    {} as CommentInterface
   );
   const [isLoading, setIsLoading] = useState(true);
 

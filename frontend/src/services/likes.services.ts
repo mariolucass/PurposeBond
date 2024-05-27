@@ -7,7 +7,7 @@ export const getLikesByUser = async (userId: string) => {
 };
 
 export const postLike = async (postId: string) => {
-  return handleApiResponse<PostInterface>(api.post(`/posts/${postId}`));
+  return handleApiResponse<lIKEiNTE>(api.post(`/posts/${postId}`));
 };
 
 export const deleteLike = async (postId: string) => {

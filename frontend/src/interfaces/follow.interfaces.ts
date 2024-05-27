@@ -5,14 +5,8 @@ import {
 } from "@/lib/schemas/follow.schemas";
 import { z } from "zod";
 
-export type FollowCreateInterface = z.infer<typeof followCreateSchema>;
-export type FollowUpdateInterface = z.infer<typeof followUpdateSchema>;
-export type FollowReturnInterface = z.infer<typeof followReturnSchema>;
-
-export interface FollowContextInterface {
-  id: string;
-  username: string;
-  email: string;
-  password: string;
-  description: string;
-}
+export type FollowCreateType = z.infer<typeof followCreateSchema>;
+export type FollowUpdateType = z.infer<typeof followUpdateSchema>;
+export type FollowReturnType = z.infer<typeof followReturnSchema>;
+export interface FollowInterface extends FollowReturnType {}
+export interface FollowContextInterface {}
