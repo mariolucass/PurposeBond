@@ -1,20 +1,33 @@
 import { messageModel } from "../database/models";
 import { messageReturnSchema } from "../schemas/messages.schemas";
+import { userRefSelect } from "../utils/prismaHelpers";
 
 export class MessagesServices {
-  static getMessages = async (userAuthenticatedId: string) => {
+  private static async fetchMessages(whereClause: any) {
     const messages = await messageModel.findMany({
-      where: {
-        OR: [
-          { senderId: userAuthenticatedId },
-          { receiverId: userAuthenticatedId },
-        ],
-      },
+      where: whereClause,
       orderBy: { createdAt: "desc" },
       include: { sender: true, receiver: true },
     });
 
     return messageReturnSchema.array().parse(messages);
+  }
+
+  static getMessages = async (userAuthenticatedId: string) => {
+    return this.fetchMessages({
+      OR: [
+        { senderId: userAuthenticatedId },
+        { receiverId: userAuthenticatedId },
+      ],
+    });
+  };
+
+  static getMessagesBySender = async (userAuthenticatedId: string) => {
+    return this.fetchMessages({ senderId: userAuthenticatedId });
+  };
+
+  static getMessagesByReceiver = async (userAuthenticatedId: string) => {
+    return this.fetchMessages({ receiverId: userAuthenticatedId });
   };
 
   static postMessage = async (
@@ -23,9 +36,21 @@ export class MessagesServices {
     content: string
   ) => {
     const message = await messageModel.create({
-      data: { senderId: userAuthenticatedId, receiverId: receiverId, content },
-      include: { receiver: true },
+      data: {
+        senderId: userAuthenticatedId,
+        receiverId: receiverId,
+        content,
+      },
+      select: {
+        id: true,
+        content: true,
+        createdAt: true,
+        sender: { select: userRefSelect },
+        receiver: { select: userRefSelect },
+      },
     });
+
+    console.log(message);
 
     return messageReturnSchema.parse(message);
   };

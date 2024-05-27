@@ -1,21 +1,34 @@
 import { NextFunction, Request, Response } from "express";
-import { likeModel } from "../database/models";
 import { AppError } from "../errors/appError";
 
 export class LikesMiddlewares {
-  static verifyLikeExistence = async (
-    req: Request,
+  static verifyLikeNonExistenceForLike = async (
+    _: Request,
     res: Response,
     next: NextFunction
   ) => {
-    const id = req.params.id;
+    const { post, user } = res.locals;
 
-    const like = await likeModel.findUnique({
-      where: { id },
-    });
+    const haveLike = post.likes.some((like: any) => like.userId === user.id);
+
+    if (haveLike) {
+      throw new AppError(409, "User already liked this post");
+    }
+
+    return next();
+  };
+
+  static verifyLikeExistenceForUnlike = async (
+    _: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const { post, user } = res.locals;
+
+    const like = post.likes.find((like: any) => like.userId === user.id);
 
     if (!like) {
-      throw new AppError(404, "Like not found");
+      throw new AppError(409, "User already unliked this post");
     }
 
     res.locals.like = like;

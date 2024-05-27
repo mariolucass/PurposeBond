@@ -24,8 +24,10 @@ export class FollowController {
   };
 
   static followUser = async (req: Request, res: Response) => {
-    const userAuthId = res.locals.user.id;
-    const userToFollowId = res.locals.reqParamsUser.id;
+    const {
+      user: { id: userAuthId },
+      reqParamsUser: { id: userToFollowId },
+    } = res.locals;
 
     await FollowServices.followUser(userAuthId, userToFollowId);
 
@@ -33,8 +35,10 @@ export class FollowController {
   };
 
   static unfollowUser = async (req: Request, res: Response) => {
-    const userAuthId = res.locals.user.id;
-    const userToFollowId = res.locals.reqParamsUser.id;
+    const {
+      user: { id: userAuthId },
+      reqParamsUser: { id: userToFollowId },
+    } = res.locals;
 
     await FollowServices.unfollowUser(userAuthId, userToFollowId);
 

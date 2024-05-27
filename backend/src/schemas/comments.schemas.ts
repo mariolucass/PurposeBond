@@ -1,15 +1,22 @@
 import { z } from "zod";
-import { userReturnSchema } from "./users.schemas";
+import { userRefSchema } from "./users.schemas";
 
 const commentSchema = z.object({
   id: z.string(),
   content: z.string(),
   createdAt: z.date(),
-  author: userReturnSchema,
+
+  author: userRefSchema,
 });
 
-export const commentCreateSchema = commentSchema;
+export const commentRefSchema = z.object({
+  id: z.string(),
+  content: z.string(),
+  createdAt: z.date(),
+});
 
-export const commentUpdateSchema = commentSchema;
+export const commentCreateSchema = commentSchema.pick({ content: true });
+
+export const commentUpdateSchema = commentCreateSchema.partial();
 
 export const commentReturnSchema = commentSchema;

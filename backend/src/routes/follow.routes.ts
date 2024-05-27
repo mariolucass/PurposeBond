@@ -19,6 +19,14 @@ followRouter.use("/follow/:id", [
   FollowMiddlewares.preventSelfFollow,
 ]);
 
-followRouter.patch("/follow/:id", FollowController.followUser);
+followRouter.patch(
+  "/follow/:id",
+  FollowMiddlewares.verifyFollowNonExistenceForFollow,
+  FollowController.followUser
+);
 
-followRouter.delete("/follow/:id", FollowController.unfollowUser);
+followRouter.delete(
+  "/follow/:id",
+  FollowMiddlewares.verifyFollowExistenceForUnfollow,
+  FollowController.unfollowUser
+);

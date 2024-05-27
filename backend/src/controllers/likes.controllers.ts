@@ -10,10 +10,8 @@ export class LikesController {
   };
 
   static postLike = async (req: Request, res: Response) => {
-    const like = await LikesServices.postLike(
-      req.params.postId,
-      res.locals.user.id
-    );
+    const { user, post } = res.locals;
+    const like = await LikesServices.postLike(post.id, user.id);
 
     return res.status(201).json(like);
   };
@@ -22,6 +20,6 @@ export class LikesController {
     const likeId = res.locals.like.id;
     await LikesServices.deleteLike(likeId);
 
-    return res.status(204);
+    return res.status(204).send();
   };
 }

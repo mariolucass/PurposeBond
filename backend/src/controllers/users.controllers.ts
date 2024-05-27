@@ -17,7 +17,6 @@ export class UsersController {
 
   static patchUser = async (req: Request, res: Response) => {
     const userId = res.locals.reqParamsUser.id;
-
     const user = await UsersServices.patchUser(userId, req.body);
 
     return res.json(user);
@@ -25,7 +24,6 @@ export class UsersController {
 
   static deleteUser = async (req: Request, res: Response) => {
     const userId = res.locals.reqParamsUser.id;
-
     await UsersServices.deleteUser(userId);
 
     return res.status(204);

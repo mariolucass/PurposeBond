@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { postModel } from "../database/models";
 import { AppError } from "../errors/appError";
+import { postSelect } from "../utils/prismaHelpers";
 
 export class PostsMiddlewares {
   static verifyPostExistence = async (
@@ -12,7 +13,10 @@ export class PostsMiddlewares {
 
     const post = await postModel.findUnique({
       where: { id },
-      select: { id: true, content: true, author: true },
+      select: {
+        ...postSelect,
+        likes: { select: { id: true, postId: true, userId: true } },
+      },
     });
 
     if (!post) {
@@ -25,7 +29,7 @@ export class PostsMiddlewares {
   };
 
   static confirmPostOwnership = (
-    req: Request,
+    _: Request,
     res: Response,
     next: NextFunction
   ) => {

@@ -10,7 +10,9 @@ export class CommentsServices {
   };
 
   static postComment = async (postId: string, body: Comment) => {
-    const comment = await commentModel.create({ data: body });
+    const updatedData = { ...body, postId };
+
+    const comment = await commentModel.create({ data: updatedData });
 
     return commentReturnSchema.parse(comment);
   };

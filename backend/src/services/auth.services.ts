@@ -3,6 +3,12 @@ import { sign } from "jsonwebtoken";
 import { userModel } from "../database/models";
 import { AppError } from "../errors/appError";
 import { userReturnSchema } from "../schemas/users.schemas";
+import {
+  commentRefSelect,
+  postRefSelect,
+  userRefSelect,
+} from "../utils/prismaHelpers";
+import { userSelect } from "./../utils/prismaHelpers";
 
 export class AuthServices {
   static loginService = async (body: { email: string; password: string }) => {
@@ -45,11 +51,18 @@ export class AuthServices {
   };
 
   static getProfile = async (id: string) => {
-    const user = await userModel.findFirst({
+    const user = await userModel.findUnique({
       where: { id: id },
-      include: { posts: true, comments: true, likes: true },
+      select: {
+        ...userSelect,
+        posts: { select: postRefSelect },
+        comments: { select: commentRefSelect },
+        likes: { select: { post: { select: postRefSelect } } },
+        followedBy: { select: userRefSelect },
+        following: { select: userRefSelect },
+      },
     });
 
-    return userReturnSchema.parse(user);
+    return user;
   };
 }

@@ -5,16 +5,24 @@ export class LikesServices {
     const likes = await likeModel.findMany({
       where: { userId: userId },
     });
+
     return likes;
   };
 
   static postLike = async (postId: string, userId: string) => {
-    await likeModel.create({
-      data: { userId: userId, postId: postId },
+    const like = await likeModel.create({
+      data: {
+        post: { connect: { id: postId } },
+        user: { connect: { id: userId } },
+      },
     });
+
+    return like;
   };
 
-  static deleteLike = async (id: string) => {
-    await likeModel.delete({ where: { id: id } });
+  static deleteLike = async (likeId: string) => {
+    await likeModel.delete({ where: { id: likeId } });
+
+    return;
   };
 }

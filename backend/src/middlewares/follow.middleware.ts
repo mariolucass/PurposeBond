@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "../errors/appError";
+import { FollowServices } from "../services/follow.services";
 
 export class FollowMiddlewares {
   static preventSelfFollow = (
-    req: Request,
+    _: Request,
     res: Response,
     next: NextFunction
   ) => {
@@ -12,6 +13,54 @@ export class FollowMiddlewares {
 
     if (userAuthenticatedId === userParamsId) {
       throw new AppError(403, "Insufficient permission.");
+    }
+
+    return next();
+  };
+
+  static verifyFollowNonExistenceForFollow = async (
+    _: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const {
+      reqParamsUser: userToFollow,
+      user: { id: userAuthId },
+    } = res.locals;
+
+    const followedBy = await FollowServices.getFollowedUsers(userToFollow.id);
+
+    const existingFollow = followedBy.some(
+      (follow: { id: string }) => follow.id === userAuthId
+    );
+
+    if (existingFollow) {
+      throw new AppError(400, "User is already following this user");
+    }
+
+    return next();
+  };
+
+  static verifyFollowExistenceForUnfollow = async (
+    _: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const {
+      reqParamsUser: userToUnfollow,
+      user: { id: userAuthId },
+    } = res.locals;
+
+    const followedBy = await FollowServices.getFollowedUsers(userToUnfollow.id);
+
+    const followRelationship = followedBy.find(
+      (follow: { id: string }) => follow.id === userAuthId
+    );
+
+    console.log(followRelationship);
+
+    if (!followRelationship) {
+      throw new AppError(404, "Follow relationship not found");
     }
 
     return next();
