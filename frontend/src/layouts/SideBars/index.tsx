@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { api } from "@/services/config/api";
+import { getFollowRecommendations } from "@/services/follow.services";
 
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
@@ -36,19 +36,21 @@ export const SideBarRight = () => {
   const [recommendations, setRecommendations] = useState([]);
 
   useEffect(() => {
-    const getRecommendations = async () => {
+    const fetchRecommendations = async () => {
       try {
-        const { data } = await api.get("/user/recommended");
-        setRecommendations(data);
+        const fetchedRecommendations = await getFollowRecommendations();
+        setRecommendations(fetchedRecommendations);
       } catch (error) {
         console.error("Erro ao buscar recomendações:", error);
       }
     };
 
     if (!recommendations.length) {
-      getRecommendations();
+      fetchRecommendations();
     }
   });
+
+  console.log(recommendations.length);
 
   return (
     <section className="side-bar-right flex flex-col justify-start items-center gap-16 fixed mt-8 mx-auto z-40">
@@ -57,11 +59,13 @@ export const SideBarRight = () => {
         <Button type="submit">Pesquisar</Button>
       </div>
 
-      <div className="border-4 gap-4 flex w-full flex-col justify-start rounded-2xl h-96 ">
-        <ul className="space-y-4 p-4 w-full">
-          {recommendations.slice(0, 4).map((user: any) => (
+      <div className="border-4 gap-4 flex w-full flex-col rounded-2xl h-96 justify-center p-4">
+        <h1>Recommendations</h1>
+
+        <ul className="space-y-4 w-full">
+          {recommendations.slice(0, 4).map((user: any, index: any) => (
             <Fragment key={user.id}>
-              <li key={user.id} className="flex items-center">
+              <li key={user.id} className="flex items-center" id={index}>
                 <Avatar className="mr-4">
                   <AvatarImage src="https://github.com/shadcn.png" />
                   <AvatarFallback>CN</AvatarFallback>
@@ -75,7 +79,8 @@ export const SideBarRight = () => {
                   </div>
                 </Link>
               </li>
-              <Separator />
+
+              {index != recommendations.length - 1 && <Separator />}
             </Fragment>
           ))}
         </ul>

@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { userSchema } from "./users.schemas";
 
 const userInformation = z.object({
   id: z.string(),
@@ -15,9 +14,9 @@ export const commentSchema = z.object({
   createdAt: z.date(),
 });
 
-export const commentCreateSchema = commentSchema.extend({ author: userSchema });
+export const commentCreateSchema = commentSchema.pick({ content: true });
 
-export const commentUpdateSchema = commentSchema.extend({ author: userSchema });
+export const commentUpdateSchema = commentCreateSchema;
 
 export const commentReturnSchema = commentSchema.extend({
   author: userInformation,

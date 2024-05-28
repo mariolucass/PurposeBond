@@ -8,7 +8,6 @@ const config = {
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
   ],
-  prefix: "",
   theme: {
     container: {
       center: true,
@@ -17,23 +16,12 @@ const config = {
         "2xl": "1400px",
       },
     },
-
     colors: {
-      primary: "#01161e",
-      secondary: "#124559",
-      tertiary: "#598392",
-      quaternary: "#aec3b0",
-      quinary: "#eff6e0",
-
-      footer: "#B5B5B5",
-
-      bgone: "#eeeeee",
-      bgtwo: "#e5e5e5",
-      bginput: "#d9d9d9",
-      bgmodal: "#00000075",
-
-      white: "#FFFFFF",
-      black: "#000000",
+      primary: "#4d7a86",
+      secondary: "#2b4c5a",
+      accent: "#81c5ca",
+      background: "#f3f6f4",
+      text: "#333333",
     },
 
     extend: {

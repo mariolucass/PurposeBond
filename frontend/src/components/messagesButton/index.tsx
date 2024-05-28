@@ -1,4 +1,4 @@
-import { useModalContext } from "@/contexts/modalContext.context";
+import { useModalContext } from "@/contexts/modal.context";
 import { motion } from "framer-motion";
 import { Mail } from "lucide-react";
 

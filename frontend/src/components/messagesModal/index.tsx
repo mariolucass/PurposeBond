@@ -11,7 +11,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useModalContext } from "@/contexts/modalContext.context";
+import { useModalContext } from "@/contexts/modal.context";
 
 export const MessagesModal = () => {
   const { isDialogMessagesOpen, setIsDialogMessagesOpen } = useModalContext();

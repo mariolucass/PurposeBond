@@ -39,7 +39,7 @@ export const TabPosts = ({ userId }: { userId: string }) => {
   }
 
   return (
-    <ul className="flex flex-col gap-8 w-full">
+    <ul className="flex flex-col gap-4 w-full">
       {posts.map((e: any, index) => (
         <Fragment key={e.id}>
           <PostComponent post={e} key={e.id} />

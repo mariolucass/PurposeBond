@@ -8,3 +8,7 @@ export const followUser = async (userId: string) => {
 export const unfollowUser = async (userId: string) => {
   return handleApiResponse<void>(api.delete(`/user/follow/${userId}/`));
 };
+
+export const getFollowRecommendations = async () => {
+  return handleApiResponse<any>(api.get(`/user/recommended`));
+};

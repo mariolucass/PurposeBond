@@ -3,9 +3,7 @@
 import { CommentComponent } from "@/components/comment";
 import useFetchPost from "@/hooks/post.hook";
 import { CommentInterface } from "@/interfaces/comments.interfaces";
-
 import { api } from "@/services/config/api";
-
 import { useEffect, useState } from "react";
 
 interface CommentPageProps {
@@ -30,7 +28,6 @@ const CommentPage = ({ params: { id, commentId } }: CommentPageProps) => {
         setIsLoading(false);
       }
     };
-
     getComment();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

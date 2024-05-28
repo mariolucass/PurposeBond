@@ -9,18 +9,14 @@ import {
 } from "react";
 
 interface IAuthContext {
-  user: UserInterface;
-  setUser: Dispatch<SetStateAction<UserInterface>>;
+  user: UserInterface | null;
+  setUser: Dispatch<SetStateAction<UserInterface | null>>;
 }
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 export const AuthProvider = ({ children }: ChildrenInterface) => {
-  const [user, setUser] = useState({} as UserInterface);
-
-  const loginUser = (body: any) => {};
-
-  const registerUser = (body: any) => {};
+  const [user, setUser] = useState<UserInterface | null>(null);
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>

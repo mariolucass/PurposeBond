@@ -2,7 +2,7 @@ import { z } from "zod";
 import { commentSchema } from "./comments.schemas";
 import { postSchema } from "./posts.schemas";
 
-export const userSchema = z.object({
+const userSchema = z.object({
   id: z.string(),
   name: z.string(),
   username: z.string(),
@@ -18,9 +18,11 @@ export const userSchemaInformations = userSchema.omit({
   posts: true,
 });
 
-export const userSchemaWithoutComments = userSchema.omit({ comments: true });
-
-export const userSchemaWithoutPosts = userSchema.omit({ posts: true });
+export const userSchemaRef = z.object({
+  id: z.string(),
+  name: z.string(),
+  username: z.string(),
+});
 
 export const userCreateSchema = userSchema;
 
