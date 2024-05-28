@@ -1,23 +1,18 @@
 "use client";
 
 import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useAuthContext } from "@/contexts/authContext.context";
-import { TabLikes } from "@/layouts/UserPage/tabLikes";
-import { TabMedia } from "@/layouts/UserPage/tabMedia";
-import { TabMessage } from "@/layouts/UserPage/tabMessage";
-import { TabPosts } from "@/layouts/UserPage/tabPosts";
+import { useAuthContext } from "@/contexts/auth.context";
+import { TabsUserPage } from "@/layouts/UserPage/tabs";
 import { UserSectionProfile } from "@/layouts/UserPage/userProfile";
 import { getProfile } from "@/services/users.services";
 import { useEffect, useState } from "react";
 
 const ProfilePage = () => {
   const { user, setUser } = useAuthContext();
-
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(user ? false : true);
 
   useEffect(() => {
-    const getUser = async () => {
+    const fetchProfile = async () => {
       try {
         const fetchedUser = await getProfile();
         setUser(fetchedUser);
@@ -27,7 +22,10 @@ const ProfilePage = () => {
         setIsLoading(false);
       }
     };
-    getUser();
+
+    if (!user) {
+      fetchProfile();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -45,35 +43,7 @@ const ProfilePage = () => {
 
       <Separator />
 
-      <Tabs
-        defaultValue="posts"
-        className="min-w-full flex flex-col items-center"
-      >
-        <TabsList className="w-11/12 flex justify-between p-4 mb-4">
-          <TabsTrigger value="posts">Posts</TabsTrigger>
-          <TabsTrigger value="likes">Likes</TabsTrigger>
-          <TabsTrigger value="media">Media</TabsTrigger>
-          <TabsTrigger value="message">Message</TabsTrigger>
-        </TabsList>
-
-        <Separator />
-
-        <TabsContent value="posts" className="w-full">
-          <TabPosts userId={user.id} />
-        </TabsContent>
-
-        <TabsContent value="likes">
-          <TabLikes userId={user.id} />
-        </TabsContent>
-
-        <TabsContent value="media">
-          <TabMedia userId={user.id} />
-        </TabsContent>
-
-        <TabsContent value="message">
-          <TabMessage userId={user.id} />
-        </TabsContent>
-      </Tabs>
+      <TabsUserPage userId={user.id} />
     </section>
   );
 };

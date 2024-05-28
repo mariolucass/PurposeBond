@@ -2,7 +2,7 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 export const UserSectionProfile = ({ user }: any) => (
   <div className="relative">
-    <div className="absolute top-0 left-0 w-full h-1/3 bg-tertiary z-10 rounded-t-2xl"></div>
+    <div className="absolute top-0 left-0 w-full h-1/3 bg-accent z-10 rounded-t-2xl"></div>
     <div className="flex flex-col md:flex-row items-center my-6 p-6 gap-6 relative z-20">
       <Avatar className="w-[120px] h-[120px]">
         <AvatarImage src="https://avatars.githubusercontent.com/u/105565220?v=4" />

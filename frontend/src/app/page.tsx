@@ -3,8 +3,9 @@
 import { Feed } from "@/components/feed";
 import { MessageButton } from "@/components/messagesButton";
 import { MessagesModal } from "@/components/messagesModal";
-import { ModalProvider } from "@/contexts/modalContext.context";
-import { PostProvider } from "@/contexts/postContext.context";
+import { ModalProvider } from "@/contexts/modal.context";
+import { PostProvider } from "@/contexts/post.context";
+
 import { SideBarLeft, SideBarRight } from "@/layouts/SideBars";
 
 const Dashboard = () => {

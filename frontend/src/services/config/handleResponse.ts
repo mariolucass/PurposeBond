@@ -7,6 +7,7 @@ export async function handleApiResponse<T>(promise: Promise<any>): Promise<T> {
     return data;
   } catch (error) {
     if (error instanceof AxiosError) {
+      console.log(error);
       if (error.response) {
         const { status, data } = error.response;
         throw new ApiError(`${error.message}`, status);

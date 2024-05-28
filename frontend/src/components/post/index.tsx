@@ -37,7 +37,7 @@ export const PostComponent = ({ post, pageType }: any) => {
     <Fragment key={post.id}>
       <Link href={`/posts/${post.id}`}>
         <div className="flex-col w-full p-6 bg-white rounded-lg  ">
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-4">
             <div className="flex items-center">
               <Avatar className="mr-4">
                 <AvatarImage src="https://github.com/shadcn.png" />

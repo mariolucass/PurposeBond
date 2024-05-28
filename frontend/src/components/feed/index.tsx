@@ -1,7 +1,7 @@
 "use client";
 
-import { usePostContext } from "@/contexts/postContext.context";
-import { PostReturnInterface } from "@/interfaces/posts.interfaces";
+import { usePostContext } from "@/contexts/post.context";
+import { PostReturnType } from "@/interfaces/posts.interfaces";
 import { ApiError } from "@/services/config/apiError";
 import { getPosts } from "@/services/posts.services";
 import { Fragment, useEffect } from "react";
@@ -31,7 +31,7 @@ export const Feed = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const postsRender = posts.map((e: PostReturnInterface, index) => (
+  const postsRender = posts.map((e: PostReturnType, index) => (
     <Fragment key={e.id}>
       <PostComponent post={e} />
       {index !== posts.length - 1 && <Separator />}
