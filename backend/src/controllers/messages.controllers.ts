@@ -2,27 +2,20 @@ import { Request, Response } from "express";
 import { MessagesServices } from "../services/messages.services";
 
 export class MessagesController {
-  static getMessages = async (req: Request, res: Response) => {
+  static getMessages = async (_: Request, res: Response) => {
     const senderId = res.locals.user.id;
-
     const messages = await MessagesServices.getMessages(senderId);
 
     return res.json(messages);
   };
 
-  static getMessageByOneUser = async (req: Request, res: Response) => {
-    const senderId = res.locals.user.id;
-    const receiverId = res.locals.reqParamsUser.id;
-
-    // const messages = await MessagesServices.getMessages(senderId, receiverId);
-
-    // return res.json(messages);
-  };
-
   static postMessage = async (req: Request, res: Response) => {
-    const senderId = res.locals.user.id;
-    const receiverId = res.locals.reqParamsUser.id;
-    const content = req.body.content;
+    const {
+      user: { id: senderId },
+      reqParamsUser: { id: receiverId },
+    } = res.locals;
+
+    const { content } = req.body;
 
     const message = await MessagesServices.postMessage(
       senderId,
@@ -33,7 +26,7 @@ export class MessagesController {
     return res.status(201).json(message);
   };
 
-  static deleteMessage = async (req: Request, res: Response) => {
+  static deleteMessage = async (_: Request, res: Response) => {
     const MessageId = res.locals.message.id;
     await MessagesServices.deleteMessage(MessageId);
 

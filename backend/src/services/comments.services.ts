@@ -1,22 +1,41 @@
-import { Comment } from "@prisma/client";
+import { z } from "zod";
 import { commentModel } from "../database/models";
-import { commentReturnSchema } from "../schemas/comments.schemas";
+import { CommentCreateInterface } from "../interfaces/comments.interfaces";
+import { userRefSchema } from "../schemas/users.schemas";
+import { commentSelect } from "../utils/prismaHelpers";
+
+const commentReturnSchema = z.object({
+  id: z.string(),
+  content: z.string(),
+  createdAt: z.date(),
+
+  author: userRefSchema,
+});
 
 export class CommentsServices {
   static getComments = async (postId: string) => {
-    const comments = await commentModel.findMany({ where: { postId } });
+    const comments = await commentModel.findMany({
+      where: { postId },
+      select: commentSelect,
+    });
 
-    return commentReturnSchema.parse(comments);
+    return commentReturnSchema.array().parse(comments);
   };
 
-  static postComment = async (postId: string, body: Comment) => {
-    const comment = await commentModel.create({ data: body });
+  static postComment = async (body: CommentCreateInterface) => {
+    const comment = await commentModel.create({
+      data: body,
+      select: commentSelect,
+    });
 
     return commentReturnSchema.parse(comment);
   };
 
   static retrieveComment = async (id: string) => {
-    const comment = await commentModel.findFirst({ where: { id: id } });
+    const comment = await commentModel.findFirst({
+      where: { id: id },
+      include: { author: true },
+    });
 
     return commentReturnSchema.parse(comment);
   };

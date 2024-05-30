@@ -2,10 +2,17 @@ import { Router } from "express";
 import { PostsController } from "../controllers/posts.controllers";
 import { AuthMiddlewares } from "../middlewares/auth.middlewares";
 import { PostsMiddlewares } from "../middlewares/posts.middlewares";
+import { commentsRouter } from "./comments.routes";
 
 export const postsRouter = Router();
 
 postsRouter.get("/", PostsController.getPosts);
+
+postsRouter.get(
+  "/dashboard",
+  AuthMiddlewares.validateToken,
+  PostsController.getDashboardPosts
+);
 
 postsRouter.post("/", AuthMiddlewares.validateToken, PostsController.postPost);
 
@@ -23,8 +30,9 @@ postsRouter.patch(
 
 postsRouter.delete(
   "/:id",
-
   AuthMiddlewares.validateToken,
   PostsMiddlewares.confirmPostOwnership,
   PostsController.deletePost
 );
+
+postsRouter.use("/:id/comments/", commentsRouter);

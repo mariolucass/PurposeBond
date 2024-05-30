@@ -9,7 +9,7 @@ commentsRouter.use(AuthMiddlewares.validateToken);
 
 commentsRouter.get("/", CommentsController.getComments);
 
-commentsRouter.post("/:postId", CommentsController.postComment);
+commentsRouter.post("/", CommentsController.postComment);
 
 commentsRouter.use("/:id", CommentsMiddlewares.verifyCommentExistence);
 

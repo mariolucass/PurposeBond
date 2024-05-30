@@ -1,13 +1,28 @@
 import { likeModel } from "../database/models";
 
 export class LikesServices {
-  static postLike = async (postId: string, userId: string) => {
-    await likeModel.create({
-      data: { userId: userId, postId: postId },
+  static getLikesUser = async (userId: string) => {
+    const likes = await likeModel.findMany({
+      where: { authorId: userId },
     });
+
+    return likes;
   };
 
-  static deleteLike = async (id: string) => {
-    await likeModel.delete({ where: { id: id } });
+  static postLike = async (postId: string, userId: string) => {
+    const like = await likeModel.create({
+      data: {
+        post: { connect: { id: postId } },
+        author: { connect: { id: userId } },
+      },
+    });
+
+    return like;
+  };
+
+  static deleteLike = async (likeId: string) => {
+    await likeModel.delete({ where: { id: likeId } });
+
+    return;
   };
 }

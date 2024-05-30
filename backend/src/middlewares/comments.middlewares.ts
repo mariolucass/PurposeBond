@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { commentModel } from "../database/models";
 import { AppError } from "../errors/appError";
+import { commentSelect } from "../utils/prismaHelpers";
 
 export class CommentsMiddlewares {
   static verifyCommentExistence = async (
@@ -12,7 +13,7 @@ export class CommentsMiddlewares {
 
     const comment = await commentModel.findUnique({
       where: { id },
-      include: { author: true },
+      select: commentSelect,
     });
 
     if (!comment) {
@@ -20,6 +21,21 @@ export class CommentsMiddlewares {
     }
 
     res.locals.comment = comment;
+
+    return next();
+  };
+
+  static confirmCommentOwnership = (
+    _: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const userAuthenticatedId = res.locals.user.id;
+    const userParamsId = res.locals.comment.author.id;
+
+    if (userAuthenticatedId !== userParamsId) {
+      throw new AppError(403, "Insufficient permission.");
+    }
 
     return next();
   };

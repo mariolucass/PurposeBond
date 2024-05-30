@@ -8,6 +8,8 @@ export const followRouter = Router();
 
 followRouter.use(AuthMiddlewares.validateToken);
 
+followRouter.get("/recommended", FollowController.getRecommendedUsers);
+
 followRouter.get("/followers", FollowController.getFollowedUsers);
 
 followRouter.get("/following", FollowController.getFollowingUsers);
@@ -17,6 +19,14 @@ followRouter.use("/follow/:id", [
   FollowMiddlewares.preventSelfFollow,
 ]);
 
-followRouter.patch("/follow/:id", FollowController.followUser);
+followRouter.post(
+  "/follow/:id",
+  FollowMiddlewares.verifyFollowNonExistenceForFollow,
+  FollowController.followUser
+);
 
-followRouter.delete("/follow/:id", FollowController.unfollowUser);
+followRouter.delete(
+  "/follow/:id",
+  FollowMiddlewares.verifyFollowExistenceForUnfollow,
+  FollowController.unfollowUser
+);

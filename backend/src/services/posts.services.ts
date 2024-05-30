@@ -1,43 +1,108 @@
-import { Post } from "@prisma/client";
+import { z } from "zod";
 import { postModel } from "../database/models";
-import { postReturnSchema } from "../schemas/posts.schemas";
+import { PostCreateInterface } from "../interfaces/posts.interfaces";
+import { userRefSchema } from "../schemas/users.schemas";
+import { countSchema } from "../schemas/utils.schemas";
+import { commentRefSelect, postSelect } from "../utils/prismaHelpers";
+import { FollowServices } from "./follow.services";
+
+const postReturnSchema = z.object({
+  id: z.string(),
+  content: z.string().min(1),
+  createdAt: z.date(),
+
+  author: userRefSchema,
+  _count: countSchema,
+});
 
 export class PostsServices {
+  private static async fetchPosts(whereClause: any) {
+    const posts = await postModel.findMany({
+      where: whereClause,
+      select: postSelect,
+      orderBy: { createdAt: "desc" },
+    });
+
+    return postReturnSchema.array().parse(posts);
+  }
+
+  static getNewerDashboardPosts = async (
+    userAuthenticatedId: string,
+    createdAt: Date
+  ) => {
+    const followingUsers = await FollowServices.getFollowingUsers(
+      userAuthenticatedId
+    );
+    const followingIds = followingUsers.map((user) => user.id);
+
+    return this.fetchPosts({
+      authorId: { in: followingIds },
+      createdAt: { gt: createdAt },
+    });
+  };
+
+  static getDashboardPosts = async (userAuthenticatedId: string) => {
+    const followingUsers = await FollowServices.getFollowingUsers(
+      userAuthenticatedId
+    );
+    const followingIds = followingUsers.map((user) => user.id);
+
+    return this.fetchPosts({ authorId: { in: followingIds } });
+  };
+
   static getPosts = async () => {
-    const posts = await postModel.findMany({ include: { author: true } });
+    return this.fetchPosts({});
+  };
+
+  static getPostsByUser = async (userId: string) => {
+    return this.fetchPosts({ authorId: userId });
+  };
+
+  static getPostsWithCommentsByUser = async (userId: string) => {
+    const posts = await postModel.findMany({
+      where: { authorId: userId },
+      select: {
+        ...postSelect,
+        comments: { select: commentRefSelect },
+      },
+      orderBy: { createdAt: "desc" },
+    });
 
     return postReturnSchema.array().parse(posts);
   };
 
-  static postPost = async (userAuthenticatedId: string, body: Post) => {
+  static async postPost(
+    userAuthenticatedId: string,
+    body: PostCreateInterface
+  ) {
     const post = await postModel.create({
       data: { ...body, authorId: userAuthenticatedId },
-      include: { author: true },
+      select: postSelect,
     });
 
     return postReturnSchema.parse(post);
-  };
+  }
 
-  static retrievePost = async (id: string) => {
-    const post = await postModel.findFirst({
-      where: { id: id },
-      include: { author: true },
+  static async retrievePost(id: string) {
+    const post = await postModel.findUnique({
+      where: { id },
+      select: postSelect,
     });
 
     return postReturnSchema.parse(post);
-  };
+  }
 
-  static patchPost = async (id: string, body: {}) => {
+  static async patchPost(id: string, content: string) {
     const post = await postModel.update({
-      data: body,
-      where: { id: id },
-      include: { author: true },
+      data: { content },
+      where: { id },
+      select: postSelect,
     });
 
     return postReturnSchema.parse(post);
-  };
+  }
 
-  static deletePost = async (id: string) => {
-    await postModel.delete({ where: { id: id }, include: { author: true } });
-  };
+  static async deletePost(id: string) {
+    await postModel.delete({ where: { id } });
+  }
 }

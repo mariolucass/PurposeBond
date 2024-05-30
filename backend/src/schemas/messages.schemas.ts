@@ -1,11 +1,17 @@
 import { z } from "zod";
-import { userReturnSchema } from "./users.schemas";
+import { userRefSchema } from "./users.schemas";
 
 const messageSchema = z.object({
   id: z.string(),
   content: z.string(),
-  receiver: userReturnSchema,
-  sender: userReturnSchema,
+  createdAt: z.date(),
+
+  receiver: userRefSchema,
+  sender: userRefSchema,
 });
 
 export const messageReturnSchema = messageSchema;
+
+export const messageCreateSchema = messageSchema.pick({ content: true });
+
+export const messageUpdateSchema = messageCreateSchema.partial();

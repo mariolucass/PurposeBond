@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { userModel } from "../database/models";
 import { AppError } from "../errors/appError";
+import { userRefSelect } from "../utils/prismaHelpers";
 
 export class UsersMiddlewares {
   static verifyUserExistence = async (
@@ -12,7 +13,7 @@ export class UsersMiddlewares {
 
     const user = await userModel.findUnique({
       where: { id },
-      select: { id: true, email: true, username: true },
+      select: userRefSelect,
     });
 
     if (!user) {
@@ -25,7 +26,7 @@ export class UsersMiddlewares {
   };
 
   static confirmUserIdentity = (
-    req: Request,
+    _: Request,
     res: Response,
     next: NextFunction
   ) => {
