@@ -3,7 +3,7 @@ import { likeModel } from "../database/models";
 export class LikesServices {
   static getLikesUser = async (userId: string) => {
     const likes = await likeModel.findMany({
-      where: { userId: userId },
+      where: { authorId: userId },
     });
 
     return likes;
@@ -13,7 +13,7 @@ export class LikesServices {
     const like = await likeModel.create({
       data: {
         post: { connect: { id: postId } },
-        user: { connect: { id: userId } },
+        author: { connect: { id: userId } },
       },
     });
 

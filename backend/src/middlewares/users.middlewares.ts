@@ -13,7 +13,7 @@ export class UsersMiddlewares {
 
     const user = await userModel.findUnique({
       where: { id },
-      select: { ...userRefSelect },
+      select: userRefSelect,
     });
 
     if (!user) {

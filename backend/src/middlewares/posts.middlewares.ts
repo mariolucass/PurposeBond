@@ -15,7 +15,7 @@ export class PostsMiddlewares {
       where: { id },
       select: {
         ...postSelect,
-        likes: { select: { id: true, postId: true, userId: true } },
+        likes: { select: { id: true, postId: true, authorId: true } },
       },
     });
 

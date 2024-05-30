@@ -38,6 +38,7 @@ export class FollowServices {
     const recommendedUsers = await userModel.findMany({
       where: { id: { notIn: connectedUserIds } },
       select: userRefSelect,
+      take: 4,
     });
 
     return userRefSchema.array().parse(recommendedUsers);

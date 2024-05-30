@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { MessagesServices } from "../services/messages.services";
 
 export class MessagesController {
-  static getMessages = async (req: Request, res: Response) => {
+  static getMessages = async (_: Request, res: Response) => {
     const senderId = res.locals.user.id;
     const messages = await MessagesServices.getMessages(senderId);
 
@@ -26,7 +26,7 @@ export class MessagesController {
     return res.status(201).json(message);
   };
 
-  static deleteMessage = async (req: Request, res: Response) => {
+  static deleteMessage = async (_: Request, res: Response) => {
     const MessageId = res.locals.message.id;
     await MessagesServices.deleteMessage(MessageId);
 

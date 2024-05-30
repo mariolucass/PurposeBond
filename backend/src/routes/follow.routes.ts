@@ -19,7 +19,7 @@ followRouter.use("/follow/:id", [
   FollowMiddlewares.preventSelfFollow,
 ]);
 
-followRouter.patch(
+followRouter.post(
   "/follow/:id",
   FollowMiddlewares.verifyFollowNonExistenceForFollow,
   FollowController.followUser

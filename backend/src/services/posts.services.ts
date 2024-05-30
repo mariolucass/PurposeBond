@@ -1,8 +1,19 @@
+import { z } from "zod";
 import { postModel } from "../database/models";
 import { PostCreateInterface } from "../interfaces/posts.interfaces";
-import { postReturnSchema } from "../schemas/posts.schemas";
+import { userRefSchema } from "../schemas/users.schemas";
+import { countSchema } from "../schemas/utils.schemas";
 import { commentRefSelect, postSelect } from "../utils/prismaHelpers";
 import { FollowServices } from "./follow.services";
+
+const postReturnSchema = z.object({
+  id: z.string(),
+  content: z.string().min(1),
+  createdAt: z.date(),
+
+  author: userRefSchema,
+  _count: countSchema,
+});
 
 export class PostsServices {
   private static async fetchPosts(whereClause: any) {

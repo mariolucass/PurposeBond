@@ -7,9 +7,15 @@ const userSchema = z.object({
   name: z.string(),
   username: z.string(),
   email: z.string(),
-  description: z.string(),
+  description: z.string().nullable(),
   phone: z.string(),
+  address: z.string(),
   password: z.string(),
+
+  _count: z.object({
+    followedBy: z.number(),
+    following: z.number(),
+  }),
 });
 
 export const userRefSchema = userSchema.pick({
@@ -29,12 +35,18 @@ export const userFullSchema = z.object({
   posts: postRefSchema.array(),
   comments: commentRefSchema.array(),
   likes: postRefSchema.array(),
-  followers: userRefSchema.array(),
-  following: userRefSchema.array(),
+
+  _count: z.object({
+    followedBy: z.number(),
+    following: z.number(),
+  }),
 });
 
 export const userCreateSchema = userSchema;
 
 export const userUpdateSchema = userSchema;
 
-export const userReturnSchema = userSchema.omit({ password: true });
+export const userReturnSchema = userSchema.omit({
+  password: true,
+  email: true,
+});

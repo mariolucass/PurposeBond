@@ -14,6 +14,7 @@ export class AuthServices {
   static loginService = async (body: { email: string; password: string }) => {
     const user = await userModel.findFirst({
       where: { email: body.email },
+      select: { ...userSelect, password: true, email: true },
     });
 
     if (!user) {

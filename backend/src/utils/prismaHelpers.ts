@@ -1,6 +1,11 @@
-const _countSelect = {
+const _countPostSelect = {
   likes: true,
   comments: true,
+};
+
+const _countUserSelect = {
+  followedBy: true,
+  following: true,
 };
 
 export const userRefSelect = {
@@ -15,13 +20,14 @@ export const userSelect = {
   birthdate: true,
   description: true,
   address: true,
+  _count: { select: _countUserSelect },
 };
 
 export const postRefSelect = {
   id: true,
   content: true,
   createdAt: true,
-  _count: { select: _countSelect },
+  _count: { select: _countPostSelect },
 };
 
 export const postSelect = {

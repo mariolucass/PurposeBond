@@ -15,7 +15,9 @@ export const commentRefSchema = z.object({
   createdAt: z.date(),
 });
 
-export const commentCreateSchema = commentSchema.pick({ content: true });
+export const commentCreateSchema = commentSchema
+  .extend({ authorId: z.string(), postId: z.string() })
+  .pick({ content: true, authorId: true, postId: true });
 
 export const commentUpdateSchema = commentCreateSchema.partial();
 

@@ -2,13 +2,13 @@ import { Request, Response } from "express";
 import { UsersServices } from "../services/users.services";
 
 export class UsersController {
-  static getUsers = async (req: Request, res: Response) => {
+  static getUsers = async (_: Request, res: Response) => {
     const users = await UsersServices.getUsers();
 
     return res.json(users);
   };
 
-  static retrieveUser = async (req: Request, res: Response) => {
+  static retrieveUser = async (_: Request, res: Response) => {
     const userId = res.locals.reqParamsUser.id;
     const user = await UsersServices.retrieveUser(userId);
 
@@ -22,7 +22,7 @@ export class UsersController {
     return res.json(user);
   };
 
-  static deleteUser = async (req: Request, res: Response) => {
+  static deleteUser = async (_: Request, res: Response) => {
     const userId = res.locals.reqParamsUser.id;
     await UsersServices.deleteUser(userId);
 

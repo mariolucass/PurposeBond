@@ -2,20 +2,29 @@ import { Request, Response } from "express";
 import { CommentsServices } from "../services/comments.services";
 
 export class CommentsController {
-  static getComments = async (req: Request, res: Response) => {
-    const postId = res.locals.foundPost.id;
+  static getComments = async (_: Request, res: Response) => {
+    const postId = res.locals.post.id;
     const comments = await CommentsServices.getComments(postId);
 
     return res.json(comments);
   };
 
   static postComment = async (req: Request, res: Response) => {
-    const postId = res.locals.foundPost.id;
-    const comment = await CommentsServices.postComment(postId, req.body);
+    const postId = res.locals.post.id;
+    const userId = res.locals.user.id;
+
+    req.body = {
+      ...req.body,
+      postId,
+      authorId: userId,
+    };
+
+    const comment = await CommentsServices.postComment(req.body);
 
     return res.status(201).json(comment);
   };
-  static retrieveComment = async (req: Request, res: Response) => {
+
+  static retrieveComment = async (_: Request, res: Response) => {
     const commentId = res.locals.comment.id;
     2;
     const comment = await CommentsServices.retrieveComment(commentId);
@@ -28,7 +37,7 @@ export class CommentsController {
 
     return res.json(comment);
   };
-  static deleteComment = async (req: Request, res: Response) => {
+  static deleteComment = async (_: Request, res: Response) => {
     const commentId = res.locals.comment.id;
     await CommentsServices.deleteComment(commentId);
 

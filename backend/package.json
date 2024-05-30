@@ -8,7 +8,8 @@
     "start": "node dist/server.js",
     "build": "yarn run tsc",
     "dev": "tsnd --cls --rs --respawn src/server.ts",
-    "migrate": "yarn run prisma migrate dev"
+    "migrate": "yarn run prisma migrate dev",
+    "seed": "npx ts-node mocked/dataLoader.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.13.0",

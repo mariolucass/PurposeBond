@@ -57,7 +57,7 @@ export class FollowMiddlewares {
       (follow: { id: string }) => follow.id === userAuthId
     );
 
-    console.log(followRelationship);
+
 
     if (!followRelationship) {
       throw new AppError(404, "Follow relationship not found");

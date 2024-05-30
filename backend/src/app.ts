@@ -10,7 +10,6 @@ import { followRouter } from "./routes/follow.routes";
 import { likesRouter } from "./routes/likes.routes";
 import { messagesRouter } from "./routes/messages.routes";
 import { postsRouter } from "./routes/posts.routes";
-
 import { usersRouter } from "./routes/users.routes";
 
 export const app = express();
@@ -24,7 +23,6 @@ app.use("", authRouter);
 
 app.use("/user", followRouter);
 app.use("/users", usersRouter);
-
 app.use("/comments", commentsRouter);
 app.use("/likes", likesRouter);
 app.use("/posts", postsRouter);

@@ -50,8 +50,6 @@ export class MessagesServices {
       },
     });
 
-    console.log(message);
-
     return messageReturnSchema.parse(message);
   };
 
