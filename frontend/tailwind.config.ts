@@ -16,13 +16,13 @@ const config = {
         "2xl": "1400px",
       },
     },
-    colors: {
-      primary: "#4d7a86",
-      secondary: "#2b4c5a",
-      accent: "#81c5ca",
-      background: "#f3f6f4",
-      text: "#333333",
-    },
+    // colors: {
+    //   primary: "#4d7a86",
+    //   secondary: "#2b4c5a",
+    //   accent: "#81c5ca",
+    //   background: "#f3f6f4",
+    //   text: "#333333",
+    // },
 
     extend: {
       colors: {

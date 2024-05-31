@@ -30,6 +30,8 @@ const UserPage = ({ params: { id } }: UserPageProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(user);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }

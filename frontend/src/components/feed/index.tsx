@@ -6,12 +6,12 @@ import { ApiError } from "@/services/config/apiError";
 import { getPosts } from "@/services/posts.services";
 import { Fragment, useEffect } from "react";
 import { PostComponent } from "../post";
-import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
-import { Textarea } from "../ui/textarea";
+import { FormCreatePost } from "./formCreatePost";
 
 export const Feed = () => {
-  const { posts, setPosts } = usePostContext();
+  const { posts, setPosts, shouldFetchPosts, setShouldFetchPosts } =
+    usePostContext();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -25,11 +25,13 @@ export const Feed = () => {
       }
     };
 
-    if (!posts.length) {
+    if (shouldFetchPosts) {
       fetchPosts();
+      setShouldFetchPosts(false);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [shouldFetchPosts]);
 
   const postsRender = posts.map((e: PostReturnType, index) => (
     <Fragment key={e.id}>
@@ -40,10 +42,7 @@ export const Feed = () => {
 
   return (
     <section className="gap-4 min-w-full w-full flex flex-col justify-start">
-      <div className="grid w-full gap-2 p-6">
-        <Textarea placeholder="Type your post here." />
-        <Button onClick={() => {}}>Post</Button>
-      </div>
+      <FormCreatePost />
 
       <Separator />
 

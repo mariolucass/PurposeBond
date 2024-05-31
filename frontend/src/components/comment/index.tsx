@@ -7,12 +7,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Separator } from "../ui/separator";
 
 export const CommentComponent = ({ comment, postId }: any) => {
-  const { user } = useAuthContext();
+  const { authenticatedUser } = useAuthContext();
 
   let userIsOwnerOfComment = false;
 
-  if (user) {
-    userIsOwnerOfComment = user!.id === comment.author.id;
+  if (authenticatedUser) {
+    userIsOwnerOfComment = authenticatedUser!.id === comment.author.id;
   }
 
   return (

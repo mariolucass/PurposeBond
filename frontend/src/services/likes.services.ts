@@ -1,15 +1,18 @@
-import { PostInterface } from "@/interfaces/posts.interfaces";
 import { api } from "./config/api";
 import { handleApiResponse } from "./config/handleResponse";
 
+export const getLikesProfile = async () => {
+  return handleApiResponse<any>(api.get(`profile/likes`));
+};
+
 export const getLikesByUser = async (userId: string) => {
-  return handleApiResponse<PostInterface[]>(api.get(`users/${userId}/posts`));
+  return handleApiResponse<any>(api.get(`users/${userId}/likes`));
 };
 
 export const postLike = async (postId: string) => {
-  return handleApiResponse<lIKEiNTE>(api.post(`/posts/${postId}`));
+  return handleApiResponse<any>(api.post(`/likes/${postId}`));
 };
 
 export const deleteLike = async (postId: string) => {
-  return handleApiResponse<void>(api.delete(`/posts/${postId}`));
+  return handleApiResponse<void>(api.delete(`/likes/${postId}`));
 };

@@ -12,8 +12,8 @@ export const postSchema = z.object({
   createdAt: z.date(),
 });
 
-export const postCreateSchema = postSchema.extend({
-  author: userSchemaRef,
+export const postCreateSchema = postSchema.pick({
+  content: true,
 });
 
 export const postUpdateSchema = postSchema

@@ -1,5 +1,4 @@
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
-import { UserInterface } from "@/interfaces/users.interfaces";
 import {
   Dispatch,
   SetStateAction,
@@ -9,17 +8,17 @@ import {
 } from "react";
 
 interface IAuthContext {
-  user: UserInterface | null;
-  setUser: Dispatch<SetStateAction<UserInterface | null>>;
+  authenticatedUser: any | null;
+  setAuthenticatedUser: Dispatch<SetStateAction<any | null>>;
 }
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 export const AuthProvider = ({ children }: ChildrenInterface) => {
-  const [user, setUser] = useState<UserInterface | null>(null);
+  const [authenticatedUser, setAuthenticatedUser] = useState<any | null>(null);
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ authenticatedUser, setAuthenticatedUser }}>
       {children}
     </AuthContext.Provider>
   );

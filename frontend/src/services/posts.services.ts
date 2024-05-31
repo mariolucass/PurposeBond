@@ -1,4 +1,8 @@
-import { PostInterface, PostUpdateType } from "@/interfaces/posts.interfaces";
+import {
+  PostCreateType,
+  PostInterface,
+  PostUpdateType,
+} from "@/interfaces/posts.interfaces";
 import { api } from "./config/api";
 import { handleApiResponse } from "./config/handleResponse";
 
@@ -12,6 +16,10 @@ export const getPosts = async () => {
 
 export const getPost = async (postId: string) => {
   return handleApiResponse<PostInterface>(api.get(`/posts/${postId}`));
+};
+
+export const postPost = async (body: PostCreateType) => {
+  return handleApiResponse<PostInterface>(api.post(`/posts/`, body));
 };
 
 export const patchPost = async (body: PostUpdateType, postId: string) => {

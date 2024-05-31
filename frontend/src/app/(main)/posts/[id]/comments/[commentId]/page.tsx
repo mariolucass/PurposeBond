@@ -1,49 +1,32 @@
 "use client";
 
 import { CommentComponent } from "@/components/comment";
-import useFetchPost from "@/hooks/post.hook";
-import { CommentInterface } from "@/interfaces/comments.interfaces";
-import { api } from "@/services/config/api";
-import { useEffect, useState } from "react";
+import { useCommentContext } from "@/contexts/comment.context";
+import { useFetchComment } from "@/hooks/comment.hook";
 
 interface CommentPageProps {
   params: { id: string; commentId: string };
 }
 
 const CommentPage = ({ params: { id, commentId } }: CommentPageProps) => {
-  const {} = useFetchPost(id);
-  const [comment, setComment] = useState<CommentInterface>(
-    {} as CommentInterface
+  const { isLoadingCurrentComment, fetchCommentError } = useFetchComment(
+    id,
+    commentId
   );
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const getComment = async () => {
-      try {
-        const response = await api.get(`/comments/${commentId}`);
-        setComment(response.data);
-      } catch (error) {
-        console.error("Error fetching post:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    getComment();
+  const { currentComment } = useCommentContext();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  if (isLoading) {
+  if (isLoadingCurrentComment) {
     return <div>Loading...</div>;
   }
 
-  if (!comment) {
+  if (fetchCommentError) {
     return <div>Comment not found.</div>;
   }
 
   return (
     <section className="gap-4 flex flex-col justify-start">
-      <CommentComponent comment={comment} />
+      <CommentComponent comment={currentComment} />
     </section>
   );
 };

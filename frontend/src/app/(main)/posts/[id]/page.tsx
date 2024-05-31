@@ -2,21 +2,15 @@
 
 import { CommentComponent } from "@/components/comment";
 import { PostComponent } from "@/components/post";
-import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { usePostContext } from "@/contexts/post.context";
-import useFetchPost from "@/hooks/post.hook";
-import {
-  CommentCreateType,
-  CommentInterface,
-} from "@/interfaces/comments.interfaces";
-import { commentCreateSchema } from "@/lib/schemas/comments.schemas";
-import { getCommentsByPost, postComment } from "@/services/comments.services";
-import { zodResolver } from "@hookform/resolvers/zod";
+
+import { useCommentContext } from "@/contexts/comment.context";
+import { useFetchPost } from "@/hooks/post.hook";
+import { CommentInterface } from "@/interfaces/comments.interfaces";
+import { getCommentsByPost } from "@/services/comments.services";
 import { Fragment, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { FormCreateComment } from "./formCreateComment";
 
 interface PostPageProps {
   params: { id: string };
@@ -26,22 +20,14 @@ interface Comment {
 }
 
 const PostPage = ({ params: { id } }: PostPageProps) => {
-  const { isLoadingCurrentPost, error } = useFetchPost(id);
   const { currentPost } = usePostContext();
+  const { isLoadingCurrentPost, fetchPostError } = useFetchPost(id);
   const [isLoading, setIsLoading] = useState(true);
-  const [comments, setComments] = useState<CommentInterface[]>(
-    [] as CommentInterface[]
-  );
-
-  const form = useForm<Comment>({
-    resolver: zodResolver(commentCreateSchema),
-    defaultValues: {
-      content: "",
-    },
-  });
+  const { shouldFetchComments, setShouldFetchComments, comments, setComments } =
+    useCommentContext();
 
   useEffect(() => {
-    const getUser = async () => {
+    const fetchComments = async () => {
       try {
         const fetchedComments = await getCommentsByPost(id);
         setComments(fetchedComments);
@@ -51,22 +37,22 @@ const PostPage = ({ params: { id } }: PostPageProps) => {
         setIsLoading(false);
       }
     };
-    getUser();
+
+    if (shouldFetchComments) {
+      fetchComments();
+      setShouldFetchComments(false);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [shouldFetchComments]);
 
   if (isLoadingCurrentPost) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
+  if (fetchPostError || !currentPost) {
     return <div>Post not found.</div>;
   }
-
-  const createComment = async (data: CommentCreateType) => {
-    await postComment(id, data);
-    form.reset();
-  };
 
   return (
     <section className="gap-4 w-full flex flex-col justify-start">
@@ -74,26 +60,8 @@ const PostPage = ({ params: { id } }: PostPageProps) => {
 
       <Separator />
 
-      <div className="w-full flex p-4">
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(createComment)}
-            className="min-w-full flex justify-evenly"
-          >
-            <FormField
-              control={form.control}
-              name="content"
-              render={({ field }) => (
-                <FormItem className="w-9/12">
-                  <FormControl>
-                    <Input placeholder="Write a comment" {...field} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <Button type="submit">Submit</Button>
-          </form>
-        </Form>
+      <div className="w-full flex p-4 ">
+        <FormCreateComment />
       </div>
 
       <ul className="flex flex-col">

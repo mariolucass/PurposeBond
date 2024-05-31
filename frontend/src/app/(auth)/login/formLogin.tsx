@@ -14,10 +14,12 @@ export const LoginForm = () => {
 
   const loginFormMethods = useForm<LoginType>({
     resolver: zodResolver(loginSchema),
+    defaultValues: { email: "", password: "" },
   });
 
   const handleLogin = async (form: LoginType) => {
     const response = await postLogin(form);
+
     localStorage.setItem("tokenRedeSocial", response.accessToken);
 
     router.push("/profile");
