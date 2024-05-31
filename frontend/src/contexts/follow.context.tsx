@@ -1,27 +1,29 @@
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
-import { createContext, useContext } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useContext,
+  useState,
+} from "react";
 
 interface IFollowContext {
-  followUser: (userId: string) => void;
-  unfollowUser: (userId: string) => void;
-  loadFollowing: (userId: string) => void;
-  loadFollowers: (userId: string) => void;
+  followedBy: never[];
+  setFollowedBy: Dispatch<SetStateAction<never[]>>;
+
+  following: never[];
+  setFollowing: Dispatch<SetStateAction<never[]>>;
 }
 
 const FollowContext = createContext<IFollowContext>({} as IFollowContext);
 
 export const FollowProvider = ({ children }: ChildrenInterface) => {
-  const followUser = (userId: string) => {};
-
-  const unfollowUser = (userId: string) => {};
-
-  const loadFollowing = (userId: string) => {};
-
-  const loadFollowers = (userId: string) => {};
+  const [followedBy, setFollowedBy] = useState([]);
+  const [following, setFollowing] = useState([]);
 
   return (
     <FollowContext.Provider
-      value={{ followUser, loadFollowers, loadFollowing, unfollowUser }}
+      value={{ followedBy, setFollowedBy, following, setFollowing }}
     >
       {children}
     </FollowContext.Provider>

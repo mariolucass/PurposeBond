@@ -6,9 +6,14 @@ export const handleDateWithMoment = (date: Date | string) => {
   }
 
   const yearNow = new Date().getFullYear();
+  const dayNow = new Date().getDay();
 
   if (yearNow > date.getFullYear()) {
     return moment(date, "YYYY-MM-DDTHH:mm").format("ll");
+  }
+
+  if (dayNow < date.getDay()) {
+    return moment(date).format("MMM D");
   }
 
   return moment(date, "YYYY-MM-DDTHH:mm").startOf("hour").fromNow();

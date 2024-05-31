@@ -1,19 +1,51 @@
+import { CommentInterface } from "@/interfaces/comments.interfaces";
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
-import { createContext, useContext } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useContext,
+  useState,
+} from "react";
 
-interface ICommentContext {}
+interface ICommentContext {
+  comments: CommentInterface[];
+  setComments: Dispatch<SetStateAction<CommentInterface[]>>;
+
+  shouldFetchComments: boolean;
+  setShouldFetchComments: Dispatch<SetStateAction<boolean>>;
+
+  currentComment: CommentInterface | null;
+  setCurrentComment: Dispatch<SetStateAction<CommentInterface | null>>;
+}
 
 const CommentContext = createContext<ICommentContext>({} as ICommentContext);
 
 export const CommentProvider = ({ children }: ChildrenInterface) => {
-  const createComment = () => {};
+  const [currentComment, setCurrentComment] = useState<CommentInterface | null>(
+    null
+  );
+  const [comments, setComments] = useState<CommentInterface[]>([]);
 
-  const deleteComment = () => {};
-
-  const editComment = () => {};
+  const [shouldFetchComments, setShouldFetchComments] = useState(
+    !comments.length
+  );
 
   return (
-    <CommentContext.Provider value={{}}>{children}</CommentContext.Provider>
+    <CommentContext.Provider
+      value={{
+        comments,
+        setComments,
+
+        shouldFetchComments,
+        setShouldFetchComments,
+
+        currentComment,
+        setCurrentComment,
+      }}
+    >
+      {children}
+    </CommentContext.Provider>
   );
 };
 

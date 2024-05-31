@@ -1,12 +1,16 @@
+import { Fragment } from "react";
 import { RegisterForm } from "./formRegister";
 
-const LoginPage = () => {
+const SignUpPage = () => {
   return (
-    <div className="w-1/3 shadow-xl min-h-1/2 p-6">
-      <h1>Register</h1>
+    <Fragment>
       <RegisterForm />
-    </div>
+
+      <div className="w-full shadow-sm h-32">
+        <div></div>
+      </div>
+    </Fragment>
   );
 };
 
-export default LoginPage;
+export default SignUpPage;

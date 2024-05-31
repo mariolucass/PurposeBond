@@ -2,9 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
 export const TabMessage = ({ userId }: { userId: string }) => {
-  const sendMessage = () => {
-    console.log(userId);
-  };
+  const sendMessage = () => {};
 
   return (
     <>

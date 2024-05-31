@@ -2,10 +2,10 @@ import { useAuthContext } from "@/contexts/auth.context";
 import { useEffect, useState } from "react";
 import { api } from "../services/config/api";
 
-const useFetchProfile = () => {
-  const { user, setUser } = useAuthContext();
+export const useFetchProfile = () => {
+  const { setAuthenticatedUser } = useAuthContext();
 
-  const [isLoadingCurrentProfile, setisLoadingCurrentProfile] = useState(true);
+  const [isLoadingCurrentProfile, setIsLoadingCurrentProfile] = useState(true);
   const [error, setError] = useState<null | unknown>(null);
 
   useEffect(() => {
@@ -13,19 +13,20 @@ const useFetchProfile = () => {
 
     const fetchUser = async () => {
       try {
-        const response = await api.get(`/profile`);
-        setUser(response.data);
+        const response = await api.get("/profile");
+        setAuthenticatedUser(response.data);
       } catch (error) {
         localStorage.removeItem("tokenRedeSocial");
         setError(error);
       } finally {
-        setisLoadingCurrentProfile(false);
+        setIsLoadingCurrentProfile(false);
       }
     };
 
     if (token) {
       fetchUser();
     } else {
+      setIsLoadingCurrentProfile(false);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -33,5 +34,3 @@ const useFetchProfile = () => {
 
   return { isLoadingCurrentProfile, error };
 };
-
-export default useFetchProfile;

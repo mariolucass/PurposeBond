@@ -18,7 +18,7 @@ export const postComment = async (postId: string, body: CommentCreateType) => {
   );
 };
 
-export const getComment = async (postId: string, commentId: string) => {
+export const getComment = async (commentId: string) => {
   return handleApiResponse<CommentInterface>(api.get(`/comments/${commentId}`));
 };
 

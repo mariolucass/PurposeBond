@@ -10,7 +10,7 @@ export const MessageButton = () => {
       <div className="relative w-full max-w-7xl pointer-events-auto">
         <div className="absolute bottom-5 right-0 z-50">
           <button
-            className="bg-tertiary text-white p-4 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none"
+            className="bg-primary text-white p-4 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none"
             onClick={() => {
               setIsDialogMessagesOpen(true);
             }}

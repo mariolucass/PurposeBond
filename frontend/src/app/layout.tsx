@@ -1,5 +1,6 @@
 "use client";
 
+import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "@/contexts/auth.context";
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import { cn } from "@/lib/utils";
@@ -24,6 +25,8 @@ const RootLayout = ({ children }: ChildrenInterface) => (
         )}
       >
         {children}
+
+        <Toaster />
       </body>
     </AuthProvider>
   </html>

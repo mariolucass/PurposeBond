@@ -2,10 +2,6 @@ import { UserInterface, UserUpdateType } from "@/interfaces/users.interfaces";
 import { api } from "./config/api";
 import { handleApiResponse } from "./config/handleResponse";
 
-export const getProfile = async () => {
-  return handleApiResponse<UserInterface>(api.get(`/profile`));
-};
-
 export const getUsers = async () => {
   return handleApiResponse<UserInterface[]>(api.get("/users"));
 };
