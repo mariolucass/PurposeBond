@@ -19,9 +19,3 @@ authRouter.post(
   GlobalMiddlewares.validateSchema(loginSchema),
   AuthController.login
 );
-
-authRouter.get(
-  "/profile",
-  AuthMiddlewares.validateToken,
-  AuthController.getProfile
-);
