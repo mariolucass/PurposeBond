@@ -17,6 +17,7 @@ export class CommentsServices {
     const comments = await commentModel.findMany({
       where: { postId },
       select: commentSelect,
+      orderBy: { createdAt: "desc" },
     });
 
     return commentReturnSchema.array().parse(comments);

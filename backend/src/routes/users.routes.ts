@@ -10,7 +10,10 @@ export const usersRouter = Router();
 
 usersRouter.get("/", UsersController.getUsers);
 
-usersRouter.use("/:id", UsersMiddlewares.verifyUserExistence);
+usersRouter.use("/:id", [
+  AuthMiddlewares.validateToken,
+  UsersMiddlewares.verifyUserExistence,
+]);
 
 usersRouter.get("/:id", UsersController.retrieveUser);
 
@@ -20,15 +23,20 @@ usersRouter.get("/:id/posts", PostsController.getPostsByUser);
 
 usersRouter.get("/:id/media", FollowController.getFollowingUsers);
 
-usersRouter.use("/:id", [
-  AuthMiddlewares.validateToken,
+usersRouter.patch(
+  "/:id",
   UsersMiddlewares.confirmUserIdentity,
-]);
+  UsersController.patchUser
+);
 
-usersRouter.patch("/:id", UsersController.patchUser);
+usersRouter.delete(
+  "/:id",
+  UsersMiddlewares.confirmUserIdentity,
+  UsersController.deleteUser
+);
 
-usersRouter.delete("/:id", UsersController.deleteUser);
-
-usersRouter.use("/:id", UsersMiddlewares.verifyUserExistence);
-
-
+usersRouter.use(
+  "/:id",
+  UsersMiddlewares.confirmUserIdentity,
+  UsersMiddlewares.verifyUserExistence
+);

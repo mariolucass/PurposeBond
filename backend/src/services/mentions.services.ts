@@ -30,9 +30,4 @@ export class MentionsServices {
 
     return mentions;
   };
-
-  // You can add more methods like:
-  // - deleteMention(mentionId: string)
-  // - updateMention(mentionId: string, data: Partial<Mention>)
-  // - getMentionsForMultipleUsers(userIds: string[])
 }

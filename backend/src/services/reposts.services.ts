@@ -1,5 +1,5 @@
 import { repostModel } from "../database/models";
-import { NotificationsService } from "./notifications.services";
+import { NotificationsServices } from "./notifications.services";
 
 export class RepostsService {
   static postRepost = async (userId: string, postId: string) => {
@@ -12,7 +12,7 @@ export class RepostsService {
       include: { post: true },
     });
 
-    const notification = await NotificationsService.postNotification({
+    const notification = await NotificationsServices.postNotification({
       user: { connect: { id: newRepost.post.authorId } },
       type: "POST_REPOSTED",
       repostId: newRepost.id,

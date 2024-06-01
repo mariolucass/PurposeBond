@@ -10,8 +10,10 @@ export class CommentsController {
   };
 
   static postComment = async (req: Request, res: Response) => {
-    const postId = res.locals.post.id;
-    const userId = res.locals.user.id;
+    const {
+      post: { id: postId },
+      user: { id: userId },
+    } = res.locals;
 
     req.body = {
       ...req.body,
@@ -26,17 +28,18 @@ export class CommentsController {
 
   static retrieveComment = async (_: Request, res: Response) => {
     const commentId = res.locals.comment.id;
-    2;
     const comment = await CommentsServices.retrieveComment(commentId);
 
     return res.json(comment);
   };
+
   static patchComment = async (req: Request, res: Response) => {
     const commentId = res.locals.comment.id;
     const comment = await CommentsServices.patchComment(commentId, req.body);
 
     return res.json(comment);
   };
+
   static deleteComment = async (_: Request, res: Response) => {
     const commentId = res.locals.comment.id;
     await CommentsServices.deleteComment(commentId);

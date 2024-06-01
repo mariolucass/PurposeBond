@@ -1,6 +1,6 @@
 import { notificationModel } from "../database/models";
 
-export class NotificationsService {
+export class NotificationsServices {
   static postNotification = async (data: any) => {
     const notification = await notificationModel.create({ data });
     return notification;
@@ -27,8 +27,4 @@ export class NotificationsService {
   static deleteNotification = async (notificationId: string) => {
     await notificationModel.delete({ where: { id: notificationId } });
   };
-
-  // You can add more methods like:
-  // - markAllNotificationsAsRead(userId: string)
-  // - getUnreadNotificationsCount(userId: string)
 }
