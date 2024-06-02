@@ -19,9 +19,7 @@ export const LoginForm = () => {
 
   const handleLogin = async (form: LoginType) => {
     const response = await postLogin(form);
-
     localStorage.setItem("tokenRedeSocial", response.accessToken);
-
     router.push("/profile");
   };
 

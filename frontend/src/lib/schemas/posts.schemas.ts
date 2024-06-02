@@ -1,25 +1,20 @@
 import { z } from "zod";
+import { userRefSchema } from "./users.schemas";
+import { countSchema } from "./utils.schemas";
 
-export const userSchemaRef = z.object({
+const postSchema = z.object({
   id: z.string(),
-  name: z.string(),
-  username: z.string(),
-});
-
-export const postSchema = z.object({
-  id: z.string(),
-  content: z.string(),
+  content: z.string().min(1),
   createdAt: z.date(),
+
+  author: userRefSchema,
+  _count: countSchema,
 });
 
-export const postCreateSchema = postSchema.pick({
-  content: true,
-});
+export const postRefSchema = postSchema.omit({ author: true });
 
-export const postUpdateSchema = postSchema
-  .extend({ author: userSchemaRef })
-  .partial();
+export const postCreateSchema = postSchema.pick({ content: true });
 
-export const postReturnSchema = postSchema.extend({
-  author: userSchemaRef,
-});
+export const postUpdateSchema = postCreateSchema.optional();
+
+export const postReturnSchema = postSchema;

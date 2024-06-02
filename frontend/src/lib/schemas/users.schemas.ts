@@ -1,31 +1,52 @@
 import { z } from "zod";
-import { commentSchema } from "./comments.schemas";
-import { postSchema } from "./posts.schemas";
+import { commentRefSchema } from "./comments.schemas";
+import { postRefSchema } from "./posts.schemas";
 
 const userSchema = z.object({
   id: z.string(),
   name: z.string(),
   username: z.string(),
   email: z.string(),
+  description: z.string().nullable(),
+  phone: z.string(),
+  address: z.string(),
   password: z.string(),
-  description: z.string(),
-  posts: postSchema.array(),
-  comments: commentSchema.array(),
+
+  _count: z.object({
+    followedBy: z.number(),
+    following: z.number(),
+  }),
 });
 
-export const userSchemaInformations = userSchema.omit({
-  comments: true,
-  posts: true,
+export const userRefSchema = userSchema.pick({
+  id: true,
+  name: true,
+  username: true,
 });
 
-export const userSchemaRef = z.object({
+export const userFullSchema = z.object({
   id: z.string(),
   name: z.string(),
   username: z.string(),
+  email: z.string(),
+  description: z.string(),
+  phone: z.string(),
+
+  posts: postRefSchema.array(),
+  comments: commentRefSchema.array(),
+  likes: postRefSchema.array(),
+
+  _count: z.object({
+    followedBy: z.number(),
+    following: z.number(),
+  }),
 });
 
 export const userCreateSchema = userSchema;
 
 export const userUpdateSchema = userSchema;
 
-export const userReturnSchema = userSchema;
+export const userReturnSchema = userSchema.omit({
+  password: true,
+  email: true,
+});
