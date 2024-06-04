@@ -1,16 +1,7 @@
-import { z } from "zod";
 import { commentModel } from "../database/models";
 import { CommentCreateInterface } from "../interfaces/comments.interfaces";
-import { userRefSchema } from "../schemas/users.schemas";
+import { commentReturnSchema } from "../schemas/comments.schemas";
 import { commentSelect } from "../utils/prismaHelpers";
-
-const commentReturnSchema = z.object({
-  id: z.string(),
-  content: z.string(),
-  createdAt: z.date(),
-
-  author: userRefSchema,
-});
 
 export class CommentsServices {
   static getComments = async (postId: string) => {

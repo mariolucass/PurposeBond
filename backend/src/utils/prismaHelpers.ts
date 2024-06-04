@@ -1,6 +1,7 @@
 const _countPostSelect = {
   likes: true,
   comments: true,
+  reposts: true,
 };
 
 const _countUserSelect = {
