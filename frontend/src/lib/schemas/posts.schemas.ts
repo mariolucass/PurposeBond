@@ -1,6 +1,12 @@
 import { z } from "zod";
-import { userRefSchema } from "./users.schemas";
+
 import { countSchema } from "./utils.schemas";
+
+const userRefSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  username: z.string(),
+});
 
 const postSchema = z.object({
   id: z.string(),

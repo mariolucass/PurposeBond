@@ -1,5 +1,5 @@
 import { PostInterface } from "@/interfaces/posts.interfaces";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { Fragment, useRef } from "react";
 import { PostAuthorInfo } from "./authorInfo";
 import { PostInteractions } from "./interactions";
@@ -28,12 +28,10 @@ export const PostComponent = ({ post, pageType }: any) => {
 
   const handleAuthorInfoClick = () => {
     console.log("Author info clicked (navigating to user profile...)");
-    // Navigate to user profile
   };
 
   const handleInteractionsClick = () => {
     console.log("Interactions clicked (handling interactions logic...)");
-    // Handle interactions logic
   };
 
   return (
@@ -50,11 +48,16 @@ export const PostComponent = ({ post, pageType }: any) => {
 
           <p className="text-gray-800 max-w-64">{post.content}</p>
 
-          <div ref={interactionsRef} onClick={handleInteractionsClick}>
+          <div
+            ref={interactionsRef}
+            onClick={handleInteractionsClick}
+            className="self-end flex gap-2"
+          >
             <PostInteractions
               postId={post.id}
               initialComments={post._count.comments}
               initialLikes={post._count.likes}
+              initialReposts={post._count.reposts}
             />
           </div>
         </div>
