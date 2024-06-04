@@ -24,6 +24,14 @@ export class NotificationsServices {
     return updatedNotification;
   };
 
+  static markAllNotificationAsRead = async (userId: string) => {
+    const updatedNotifications = await notificationModel.updateMany({
+      where: { userId },
+      data: { isRead: true },
+    });
+    return updatedNotifications;
+  };
+
   static deleteNotification = async (notificationId: string) => {
     await notificationModel.delete({ where: { id: notificationId } });
   };
