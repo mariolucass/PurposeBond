@@ -24,7 +24,9 @@ const ProfilePage = () => {
   return (
     <section className="gap-4 min-w-full w-full flex flex-col justify-start">
       <UserSectionProfile user={authenticatedUser} />
+
       <Separator />
+
       <TabsUserPage userId={authenticatedUser.id} />
 
       <FollowedByDialog user={authenticatedUser} />
