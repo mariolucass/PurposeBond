@@ -19,7 +19,11 @@ export const PostInteractions = ({
   initialReposts,
 }: PostInteractionsProps) => {
   const { toast } = useToast();
-  const { authenticatedUser } = useAuthContext();
+  const {
+    authenticatedUser,
+    getLikesForAuthenticatedUser,
+    getRepostsForAuthenticatedUser,
+  } = useAuthContext();
 
   const [isLiked, setIsLiked] = useState(false);
   const [isReposted, setIsReposted] = useState(false);
@@ -29,23 +33,21 @@ export const PostInteractions = ({
 
   useEffect(() => {
     const checkInteractionStatus = async () => {
-      if (authenticatedUser) {
-        const postLiked = authenticatedUser.likes.some(
-          (like: any) => like.post.id === postId
-        );
-        setIsLiked(postLiked);
+      const likes = await getLikesForAuthenticatedUser();
+      const postLiked = likes.some((elem: any) => elem.id === postId);
+      setIsLiked(postLiked);
 
-        const postReposted = authenticatedUser.reposts.some(
-          (repost: any) => repost.post.id === postId
-        );
-        setIsReposted(postReposted);
-      }
+      const reposts = await getRepostsForAuthenticatedUser();
+      const postReposted = reposts.some((elem: any) => elem.id === postId);
+      setIsReposted(postReposted);
     };
 
     if (authenticatedUser) {
       checkInteractionStatus();
     }
-  }, [authenticatedUser, postId]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleLike = async () => {
     if (!authenticatedUser) {
@@ -109,6 +111,7 @@ export const PostInteractions = ({
       ) : (
         <Repeat2 onClick={() => handleRepost()} />
       )}
+
       <h2>{repostCount}</h2>
 
       <MessageSquare />

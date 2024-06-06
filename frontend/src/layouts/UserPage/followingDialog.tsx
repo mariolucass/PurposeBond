@@ -5,12 +5,16 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { UserCard } from "@/components/userCard";
+import { useAuthContext } from "@/contexts/auth.context";
 import { useModalContext } from "@/contexts/modal.context";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 
 import { Fragment } from "react";
 
-export const FollowingDialog = ({ user }: any) => {
+export const FollowingDialog = ({ user, isProfile }: any) => {
+  const { authenticatedUser } = useAuthContext();
+  const displayedUser = isProfile ? authenticatedUser : user;
+
   const { isDialogFollowingOpen, setIsDialogFollowingOpen } = useModalContext();
 
   const closeDialogFollowing = () => {

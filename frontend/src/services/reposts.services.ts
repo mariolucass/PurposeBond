@@ -1,11 +1,7 @@
 import { api } from "./config/api";
 import { handleApiResponse } from "./config/handleResponse";
 
-export const getLikesProfile = async () => {
-  return handleApiResponse<any>(api.get(`profile/reposts`));
-};
-
-export const getLikesByUser = async (userId: string) => {
+export const getRepostsByUser = async (userId: string) => {
   return handleApiResponse<any>(api.get(`users/${userId}/reposts`));
 };
 

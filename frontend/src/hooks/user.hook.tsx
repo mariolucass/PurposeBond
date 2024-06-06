@@ -1,9 +1,9 @@
 import { useAuthContext } from "@/contexts/auth.context";
+import { getProfile } from "@/services/profile.services";
 import { useEffect, useState } from "react";
-import { api } from "../services/config/api";
 
 export const useFetchProfile = () => {
-  const { setAuthenticatedUser } = useAuthContext();
+  const { setAuthenticatedUser, authenticatedUser } = useAuthContext();
 
   const [isLoadingCurrentProfile, setIsLoadingCurrentProfile] = useState(true);
   const [error, setError] = useState<null | unknown>(null);
@@ -13,8 +13,8 @@ export const useFetchProfile = () => {
 
     const fetchUser = async () => {
       try {
-        const response = await api.get("/profile");
-        setAuthenticatedUser(response.data);
+        const fetchedUser = await getProfile();
+        setAuthenticatedUser(fetchedUser);
       } catch (error) {
         localStorage.removeItem("tokenRedeSocial");
         setError(error);
@@ -23,7 +23,7 @@ export const useFetchProfile = () => {
       }
     };
 
-    if (token) {
+    if (token && !authenticatedUser) {
       fetchUser();
     } else {
       setIsLoadingCurrentProfile(false);
