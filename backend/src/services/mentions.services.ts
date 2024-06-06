@@ -18,7 +18,6 @@ export class MentionsServices {
       where: { userId },
       include: { post: true },
     });
-
     return mentions;
   };
 
@@ -27,7 +26,6 @@ export class MentionsServices {
       where: { postId },
       include: { user: true },
     });
-
     return mentions;
   };
 }

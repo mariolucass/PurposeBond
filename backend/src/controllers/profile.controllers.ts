@@ -16,24 +16,31 @@ export class ProfileController {
     return res.json(user);
   };
 
+  static getDiscussions = async (_: Request, res: Response) => {
+    const userId = res.locals.user.id;
+    const discussions = await ProfileServices.getDiscussions(userId);
+
+    return res.json(discussions);
+  };
+
   static getPosts = async (_: Request, res: Response) => {
     const userId = res.locals.user.id;
-    const user = await ProfileServices.getProfile(userId);
+    const posts = await ProfileServices.getPosts(userId);
 
-    return res.json(user);
+    return res.json(posts);
   };
 
   static getLikes = async (_: Request, res: Response) => {
     const userId = res.locals.user.id;
-    const user = await ProfileServices.getProfile(userId);
+    const likes = await ProfileServices.getLikes(userId);
 
-    return res.json(user);
+    return res.json(likes);
   };
 
   static getMedia = async (_: Request, res: Response) => {
     const userId = res.locals.user.id;
-    const user = await ProfileServices.getProfile(userId);
+    const media = await ProfileServices.getMedia(userId);
 
-    return res.json(user);
+    return res.json(media);
   };
 }
