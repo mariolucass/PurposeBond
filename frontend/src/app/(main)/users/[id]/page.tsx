@@ -2,6 +2,8 @@
 
 import { Separator } from "@/components/ui/separator";
 import { UserInterface } from "@/interfaces/users.interfaces";
+import { FollowedByDialog } from "@/layouts/UserPage/followedByDialog";
+import { FollowingDialog } from "@/layouts/UserPage/followingDialog";
 import { TabsUserPage } from "@/layouts/UserPage/tabs";
 import { UserSectionProfile } from "@/layouts/UserPage/userProfile";
 import { getUser } from "@/services/users.services";
@@ -30,14 +32,12 @@ const UserPage = ({ params: { id } }: UserPageProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(user);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
   if (!user) {
-    return <div>User not found or not logged in.</div>;
+    return <div>User not found.</div>;
   }
 
   return (
@@ -47,6 +47,10 @@ const UserPage = ({ params: { id } }: UserPageProps) => {
       <Separator />
 
       <TabsUserPage userId={user.id} />
+
+      <FollowedByDialog user={user} />
+
+      <FollowingDialog user={user} />
     </section>
   );
 };

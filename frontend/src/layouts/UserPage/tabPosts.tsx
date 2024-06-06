@@ -26,6 +26,7 @@ export const TabPosts = ({ userId }: { userId: string }) => {
         setIsLoading(false);
       }
     };
+
     fetchPosts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

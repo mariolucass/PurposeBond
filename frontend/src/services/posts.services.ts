@@ -19,7 +19,7 @@ export const getPost = async (postId: string) => {
 };
 
 export const postPost = async (body: PostCreateType) => {
-  return handleApiResponse<PostInterface>(api.post(`/posts/`, body));
+  return handleApiResponse<PostInterface>(api.post("/posts/", body));
 };
 
 export const patchPost = async (body: PostUpdateType, postId: string) => {
