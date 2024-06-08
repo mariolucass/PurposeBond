@@ -12,7 +12,9 @@ profileRouter.get("/discussions", ProfileController.getDiscussions);
 
 profileRouter.get("/posts", ProfileController.getPosts);
 
-profileRouter.get("/likes", ProfileController.getLikes);
+profileRouter.get("/likes", ProfileController.getLikedPosts);
+
+profileRouter.get("/reposts", ProfileController.getRepostedPosts);
 
 profileRouter.get("/media", ProfileController.getMedia);
 

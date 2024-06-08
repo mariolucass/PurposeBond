@@ -6,14 +6,22 @@ import {
   repostModel,
   userModel,
 } from "../database/models";
-import { commentRefSelect, userSelect } from "../utils/prismaHelpers";
+import {
+  commentRefSelect,
+  userRefSelect,
+  userSelect,
+} from "../utils/prismaHelpers";
 import { postRefSelect } from "./../utils/prismaHelpers";
 
 export class ProfileServices {
   static getProfile = async (id: string) => {
     const user = await userModel.findUnique({
       where: { id: id },
-      select: userSelect,
+      select: {
+        ...userSelect,
+        followedBy: { select: userRefSelect },
+        following: { select: userRefSelect },
+      },
     });
 
     return user;
@@ -39,14 +47,23 @@ export class ProfileServices {
     return posts;
   };
 
-  static getLikes = async (id: string) => {
+  static getRepostedPosts = async (id: string) => {
+    const reposts = await repostModel.findMany({
+      where: { authorId: id },
+      select: { post: { select: postRefSelect } },
+    });
+
+    const repostedPosts = reposts.map((like) => like.post);
+    return repostedPosts;
+  };
+
+  static getLikedPosts = async (id: string) => {
     const likes = await likeModel.findMany({
       where: { authorId: id },
       select: { post: { select: postRefSelect } },
     });
 
     const likedPosts = likes.map((like) => like.post);
-
     return likedPosts;
   };
 
