@@ -1,13 +1,13 @@
 import { messageModel } from "../database/models";
 import { messageReturnSchema } from "../schemas/messages.schemas";
-import { userRefSelect } from "../utils/prismaHelpers";
+import { messageSelect } from "../utils/prismaHelpers";
 
 export class MessagesServices {
   private static async fetchMessages(whereClause: any) {
     const messages = await messageModel.findMany({
       where: whereClause,
+      select: messageSelect,
       orderBy: { createdAt: "desc" },
-      include: { sender: true, receiver: true },
     });
 
     return messageReturnSchema.array().parse(messages);
@@ -41,13 +41,7 @@ export class MessagesServices {
         receiverId: receiverId,
         content,
       },
-      select: {
-        id: true,
-        content: true,
-        createdAt: true,
-        sender: { select: userRefSelect },
-        receiver: { select: userRefSelect },
-      },
+      select: messageSelect,
     });
 
     return messageReturnSchema.parse(message);

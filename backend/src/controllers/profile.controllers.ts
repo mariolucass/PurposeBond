@@ -30,9 +30,16 @@ export class ProfileController {
     return res.json(posts);
   };
 
-  static getLikes = async (_: Request, res: Response) => {
+  static getRepostedPosts = async (_: Request, res: Response) => {
     const userId = res.locals.user.id;
-    const likes = await ProfileServices.getLikes(userId);
+    const user = await ProfileServices.getRepostedPosts(userId);
+
+    return res.json(user);
+  };
+
+  static getLikedPosts = async (_: Request, res: Response) => {
+    const userId = res.locals.user.id;
+    const likes = await ProfileServices.getLikedPosts(userId);
 
     return res.json(likes);
   };

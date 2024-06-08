@@ -8,15 +8,14 @@ export class RepostsService {
         author: { connect: { id: userId } },
         post: { connect: { id: postId } },
       },
-
       include: { post: true },
     });
 
-    const notification = await NotificationsServices.postNotification({
-      user: { connect: { id: newRepost.post.authorId } },
-      type: "POST_REPOSTED",
-      repostId: newRepost.id,
-    });
+    const notification =
+      await NotificationsServices.postNotificationPostReposted({
+        userId: newRepost.post.authorId,
+        repostId: newRepost.id,
+      });
 
     return {
       repost: newRepost,
@@ -29,6 +28,7 @@ export class RepostsService {
       where: { authorId: userId },
       include: { post: true },
     });
+
     return reposts;
   };
 
@@ -37,6 +37,7 @@ export class RepostsService {
       where: { postId },
       include: { author: true },
     });
+
     return reposts;
   };
 

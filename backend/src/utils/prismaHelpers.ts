@@ -2,6 +2,7 @@ const _countPostSelect = {
   likes: true,
   comments: true,
   reposts: true,
+  views: true,
 };
 
 const _countUserSelect = {
@@ -45,4 +46,12 @@ export const commentRefSelect = {
 export const commentSelect = {
   ...commentRefSelect,
   author: { select: userRefSelect },
+};
+
+export const messageSelect = {
+  id: true,
+  content: true,
+  createdAt: true,
+  sender: { select: userRefSelect },
+  receiver: { select: userRefSelect },
 };

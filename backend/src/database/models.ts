@@ -17,3 +17,5 @@ export const notificationModel = prisma.notification;
 export const mediaModel = prisma.media;
 
 export const repostModel = prisma.repost;
+
+export const postViewModel = prisma.postView;

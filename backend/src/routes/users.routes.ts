@@ -34,9 +34,3 @@ usersRouter.delete(
   UsersMiddlewares.confirmUserIdentity,
   UsersController.deleteUser
 );
-
-usersRouter.use(
-  "/:id",
-  UsersMiddlewares.confirmUserIdentity,
-  UsersMiddlewares.verifyUserExistence
-);
