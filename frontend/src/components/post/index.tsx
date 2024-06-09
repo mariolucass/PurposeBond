@@ -39,18 +39,25 @@ export const PostComponent = ({ post, pageType }: any) => {
               router.push(`/users/${post.author.id}`);
             }}
           >
-            <PostAuthorInfo author={post.author} createdAt={post.createdAt} />
-          </div>
+            <div
+              ref={authorInfoRef}
+              onClick={() => {
+                router.push(`/users/${post.author.id}`);
+              }}
+            >
+              <PostAuthorInfo author={post.author} createdAt={post.createdAt} />
+            </div>
 
-          <p className="text-gray-800 max-w-64">{post.content}</p>
+            <p className="text-gray-800 max-w-64">{post.content}</p>
 
-          <div ref={interactionsRef} className="self-end flex gap-2">
-            <PostInteractions
-              postId={post.id}
-              initialComments={post._count.comments}
-              initialLikes={post._count.likes}
-              initialReposts={post._count.reposts}
-            />
+            <div ref={interactionsRef} className="self-end flex gap-2">
+              <PostInteractions
+                postId={post.id}
+                initialComments={post._count.comments}
+                initialLikes={post._count.likes}
+                initialReposts={post._count.reposts}
+              />
+            </div>
           </div>
         </div>
       </div>
