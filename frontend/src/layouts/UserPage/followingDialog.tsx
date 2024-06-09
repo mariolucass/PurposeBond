@@ -15,24 +15,20 @@ export const FollowingDialog = ({ user, isProfile }: any) => {
   const { authenticatedUser } = useAuthContext();
   const displayedUser = isProfile ? authenticatedUser : user;
 
-  const { isDialogFollowingOpen, setIsDialogFollowingOpen } = useModalContext();
-
-  const closeDialogFollowing = () => {
-    setIsDialogFollowingOpen(false);
-  };
+  const { isDialogFollowingOpen, handleFollowingDialog } = useModalContext();
 
   return (
-    <Dialog open={isDialogFollowingOpen} onOpenChange={closeDialogFollowing}>
+    <Dialog open={isDialogFollowingOpen} onOpenChange={handleFollowingDialog}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{user.username} Following</DialogTitle>
+          <DialogTitle>{displayedUser.username} Following</DialogTitle>
         </DialogHeader>
 
         <Separator />
 
         <div className="grid gap-4 py-4">
           <ul>
-            {user.following.map((user: any) => {
+            {displayedUser.following.map((user: any) => {
               return (
                 <Fragment key={user.id}>
                   <UserCard user={user} />

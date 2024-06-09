@@ -6,7 +6,7 @@ export const getRepostsByUser = async (userId: string) => {
 };
 
 export const postRepost = async (postId: string) => {
-  return handleApiResponse<any>(api.post(`/reposts/${postId}`));
+  return handleApiResponse<any>(api.post(`/repostgit cs/${postId}`));
 };
 
 export const deleteRepost = async (postId: string) => {

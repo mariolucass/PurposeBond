@@ -13,15 +13,10 @@ export const FollowedByDialog = ({ user, isProfile }: any) => {
   const { authenticatedUser } = useAuthContext();
   const displayedUser = isProfile ? authenticatedUser : user;
 
-  const { isDialogFollowedByOpen, setIsDialogFollowedByOpen } =
-    useModalContext();
-
-  const closeDialogFollowedBy = () => {
-    setIsDialogFollowedByOpen(false);
-  };
+  const { isDialogFollowedByOpen, handleFollowedByDialog } = useModalContext();
 
   return (
-    <Dialog open={isDialogFollowedByOpen} onOpenChange={closeDialogFollowedBy}>
+    <Dialog open={isDialogFollowedByOpen} onOpenChange={handleFollowedByDialog}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>{displayedUser.username} Followers</DialogTitle>

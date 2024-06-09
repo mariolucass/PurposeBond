@@ -7,16 +7,7 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
   const { authenticatedUser } = useAuthContext();
   const displayedUser = isProfile ? authenticatedUser : user;
 
-  const { setIsDialogFollowedByOpen, setIsDialogFollowingOpen } =
-    useModalContext();
-
-  const handleFollowedByDialog = () => {
-    setIsDialogFollowedByOpen(true);
-  };
-
-  const handleFollowingDialog = () => {
-    setIsDialogFollowingOpen(true);
-  };
+  const { handleFollowedByDialog, handleFollowingDialog } = useModalContext();
 
   const RenderFollowButton = () => {
     if (isProfile) {

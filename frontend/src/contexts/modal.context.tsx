@@ -1,41 +1,46 @@
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
-import {
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useContext,
-  useState,
-} from "react";
+import { createContext, useContext, useState } from "react";
 
 interface IModalContext {
   isDialogMessagesOpen: boolean;
-  setIsDialogMessagesOpen: Dispatch<SetStateAction<boolean>>;
+  handleMessagesDialog: () => void;
 
   isDialogFollowingOpen: boolean;
-  setIsDialogFollowingOpen: Dispatch<SetStateAction<boolean>>;
+  handleFollowedByDialog: () => void;
 
   isDialogFollowedByOpen: boolean;
-  setIsDialogFollowedByOpen: Dispatch<SetStateAction<boolean>>;
+  handleFollowingDialog: () => void;
 }
 
 const ModalContext = createContext<IModalContext>({} as IModalContext);
 
 export const ModalProvider = ({ children }: ChildrenInterface) => {
   const [isDialogMessagesOpen, setIsDialogMessagesOpen] = useState(false);
+  const handleMessagesDialog = () => {
+    setIsDialogMessagesOpen(!isDialogMessagesOpen);
+  };
+
   const [isDialogFollowedByOpen, setIsDialogFollowedByOpen] = useState(false);
+  const handleFollowedByDialog = () => {
+    setIsDialogFollowedByOpen(!isDialogFollowedByOpen);
+  };
+
   const [isDialogFollowingOpen, setIsDialogFollowingOpen] = useState(false);
+  const handleFollowingDialog = () => {
+    setIsDialogFollowingOpen(!isDialogFollowingOpen);
+  };
 
   return (
     <ModalContext.Provider
       value={{
         isDialogMessagesOpen,
-        setIsDialogMessagesOpen,
+        handleMessagesDialog,
 
         isDialogFollowedByOpen,
-        setIsDialogFollowedByOpen,
+        handleFollowedByDialog,
 
         isDialogFollowingOpen,
-        setIsDialogFollowingOpen,
+        handleFollowingDialog,
       }}
     >
       {children}
