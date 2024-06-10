@@ -1,8 +1,11 @@
-export { authRouter } from "./auth.routes";
-export { commentsRouter } from "./comments.routes";
-export { followRouter } from "./follow.routes";
-export { likesRouter } from "./likes.routes";
-export { messagesRouter } from "./messages.routes";
-export { postsRouter } from "./posts.routes";
-export { profileRouter } from "./profile.routes";
-export { usersRouter } from "./users.routes";
+export { authRouter } from "./core/auth.routes";
+
+export { commentsRouter } from "./interactions/comments.routes";
+export { likesRouter } from "./interactions/likes.routes";
+
+export { postsRouter } from "./resources/posts.routes";
+export { profileRouter } from "./resources/profile.routes";
+export { usersRouter } from "./resources/users.routes";
+
+export { followRouter } from "./social/follow.routes";
+export { messagesRouter } from "./social/messages.routes";
