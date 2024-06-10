@@ -7,18 +7,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
 model User {
   id String @id @default(uuid())
-  username String @db.VarChar(254) @unique
-  name String @db.VarChar(254)
-  email String @db.VarChar(254) @unique
+  username String @db.VarChar(50) @unique
+  name String @db.VarChar(100)
+  email String @db.VarChar(100) @unique
   password String @db.VarChar(128)
-  address String @db.VarChar(254)
 
+  profileImage String?   @db.VarChar(254) 
+  address String? @db.VarChar(100)
   phone String? @db.VarChar(15)
   birthdate DateTime? 
   description String? @db.Text()
-  profileImage String?   @db.VarChar(254) 
+
+  settings Settings[] 
 
   posts     Post[]
   postViews PostView[] 
@@ -26,8 +29,8 @@ model User {
   comments  Comment[]
   likes     Like[]
 
-  followedBy User[]  @relation("UserFollows")
-  following  User[]  @relation("UserFollows")
+  followers User[]  @relation("Follows")
+  following  User[]  @relation("Follows")
 
   messagesSent     Message[] @relation("Sent")
   messagesReceived Message[] @relation("Received")
@@ -37,6 +40,24 @@ model User {
   mentions Mention[]
 
   @@map("users")
+}
+
+model Settings {
+  id        String  @id @default(uuid())
+
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String  @unique
+
+  emailNotifications Boolean   @default(true) 
+  privateProfile     Boolean   @default(false) 
+  language           String    @default("en") 
+
+  contentFilters     String[]
+  darkMode           Boolean   @default(false) 
+
+  twoFactorAuth      Boolean   @default(false)
+
+  @@map("settings") 
 }
 
 model Post {
@@ -84,6 +105,10 @@ model Repost {
   @@map("reposts")
 }
 
+enum MediaType { 
+  IMAGE
+  VIDEO
+}
 model Media {  
   id        String    @id @default(uuid())
   url       String    @db.VarChar(254) 
@@ -91,11 +116,6 @@ model Media {
 
   post      Post      @relation(fields: [postId], references: [id])
   postId    String
-}
-
-enum MediaType { 
-  IMAGE
-  VIDEO
 }
 
 model PostView {
@@ -109,6 +129,7 @@ model PostView {
   postId      String
 
   @@unique([userId, postId])
+  @@map("postviews")
 }
 
 model Comment {
@@ -151,6 +172,14 @@ model Message {
   @@map("messages")
 }
 
+enum NotificationType {
+  NEW_FOLLOWER
+  POST_LIKED
+  POST_COMMENTED
+  POST_REPOSTED
+  COMMENT_LIKED
+}
+
 model Notification {
   id          String         @id @default(uuid())
   type        NotificationType
@@ -169,16 +198,9 @@ model Notification {
   followerId String? 
 
   @@map("notifications")
-
 }
 
-enum NotificationType {
-  NEW_FOLLOWER
-  POST_LIKED
-  POST_COMMENTED
-  POST_REPOSTED
-  COMMENT_LIKED
-}
+
 
 
 
