@@ -2,7 +2,7 @@
 
 import { Separator } from "@/components/ui/separator";
 import { UserInterface } from "@/interfaces/users.interfaces";
-import { FollowedByDialog } from "@/layouts/UserPage/followedByDialog";
+import { FollowersDialog } from "@/layouts/UserPage/FollowersDialog";
 import { FollowingDialog } from "@/layouts/UserPage/followingDialog";
 import { TabsUserPage } from "@/layouts/UserPage/tabs";
 import { UserSectionProfile } from "@/layouts/UserPage/userProfile";
@@ -48,7 +48,7 @@ const UserPage = ({ params: { id } }: UserPageProps) => {
 
       <TabsUserPage userId={user.id} />
 
-      <FollowedByDialog user={user} />
+      <FollowersDialog user={user} />
 
       <FollowingDialog user={user} />
     </section>

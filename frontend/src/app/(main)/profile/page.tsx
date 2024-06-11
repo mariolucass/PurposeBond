@@ -3,7 +3,7 @@
 import { Separator } from "@/components/ui/separator";
 import { useAuthContext } from "@/contexts/auth.context";
 import { useFetchProfile } from "@/hooks/user.hook";
-import { FollowedByDialog } from "@/layouts/UserPage/followedByDialog";
+import { FollowersDialog } from "@/layouts/UserPage/FollowersDialog";
 import { FollowingDialog } from "@/layouts/UserPage/followingDialog";
 import { TabsUserPage } from "@/layouts/UserPage/tabs";
 import { UserSectionProfile } from "@/layouts/UserPage/userProfile";
@@ -31,7 +31,7 @@ const ProfilePage = () => {
 
       <TabsUserPage isProfile />
 
-      <FollowedByDialog isProfile />
+      <FollowersDialog isProfile />
 
       <FollowingDialog isProfile />
     </section>

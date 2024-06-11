@@ -32,3 +32,11 @@ export const getProfilePosts = async () => {
 export const getProfileLikes = async () => {
   return handleApiResponse<PostInterface[]>(api.get(`/profile/likes/`));
 };
+
+export const getProfileFollowers = async () => {
+  return handleApiResponse<PostInterface[]>(api.get(`/profile/followers/`));
+};
+
+export const getProfileFollowing = async () => {
+  return handleApiResponse<PostInterface[]>(api.get(`/profile/following/`));
+};

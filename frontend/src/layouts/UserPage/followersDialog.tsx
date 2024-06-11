@@ -9,33 +9,32 @@ import { UserCard } from "@/components/userCard";
 import { useAuthContext } from "@/contexts/auth.context";
 import { useModalContext } from "@/contexts/modal.context";
 import { UserInterface } from "@/interfaces/users.interfaces";
-import { getFollowingByUser } from "@/services/follow.services";
-
+import { getFollowersByUser } from "@/services/follow.services";
 import { Fragment, useEffect, useState } from "react";
 
-export const FollowingDialog = ({ user, isProfile }: any) => {
+export const FollowersDialog = ({ user, isProfile }: any) => {
   const { authenticatedUser } = useAuthContext();
   const displayedUser = isProfile ? authenticatedUser : user;
 
-  const { isDialogFollowingOpen, setIsDialogFollowingOpen } = useModalContext();
-  const { getFollowingForAuthenticatedUser } = useAuthContext();
+  const { isDialogFollowersOpen, setIsDialogFollowersOpen } = useModalContext();
+  const { getFollowersForAuthenticatedUser } = useAuthContext();
 
-  const closeDialogFollowing = () => {
-    setIsDialogFollowingOpen(false);
+  const closeDialogFollowers = () => {
+    setIsDialogFollowersOpen(false);
   };
 
-  const [following, setFollowing] = useState<UserInterface[]>([]);
+  const [followers, setFollowers] = useState<UserInterface[]>([]);
 
   useEffect(() => {
     const fetchFollowing = async () => {
       try {
         const following = isProfile
-          ? await getFollowingForAuthenticatedUser()
-          : await getFollowingByUser(user.id);
+          ? await getFollowersForAuthenticatedUser()
+          : await getFollowersByUser(user.id);
 
-        setFollowing(following);
+        setFollowers(following);
       } catch (error) {
-        console.error("Error fetching following:", error);
+        console.error("Error fetching followers:", error);
       }
     };
 
@@ -44,26 +43,23 @@ export const FollowingDialog = ({ user, isProfile }: any) => {
   }, []);
 
   return (
-    <Dialog open={isDialogFollowingOpen} onOpenChange={closeDialogFollowing}>
+    <Dialog open={isDialogFollowersOpen} onOpenChange={closeDialogFollowers}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{displayedUser.username} Following</DialogTitle>
+          <DialogTitle>{displayedUser.username} Followers</DialogTitle>
         </DialogHeader>
-
-        <Separator />
 
         <div className="grid gap-4 py-4">
           <ul className="flex flex-col gap-4 min-h-200 overflow-y-auto">
-            {following.map((user: any) => (
+            {followers.map((user: any) => (
               <Fragment key={user.id}>
                 <UserCard user={user} />
+
                 <Separator />
               </Fragment>
             ))}
           </ul>
         </div>
-
-        <Separator />
       </DialogContent>
     </Dialog>
   );

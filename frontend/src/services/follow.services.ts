@@ -1,3 +1,4 @@
+import { UserInterface } from "@/interfaces/users.interfaces";
 import { api } from "./config/api";
 import { handleApiResponse } from "./config/handleResponse";
 
@@ -11,4 +12,16 @@ export const followUser = async (userId: string) => {
 
 export const unfollowUser = async (userId: string) => {
   return handleApiResponse<void>(api.delete(`/user/follow/${userId}/`));
+};
+
+export const getFollowersByUser = async (userId: string) => {
+  return handleApiResponse<UserInterface[]>(
+    api.get(`/users/${userId}/followers/`)
+  );
+};
+
+export const getFollowingByUser = async (userId: string) => {
+  return handleApiResponse<UserInterface[]>(
+    api.get(`/users/${userId}/following/`)
+  );
 };
