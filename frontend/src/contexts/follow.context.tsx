@@ -8,8 +8,8 @@ import {
 } from "react";
 
 interface IFollowContext {
-  followedBy: never[];
-  setFollowedBy: Dispatch<SetStateAction<never[]>>;
+  followers: never[];
+  setFollowers: Dispatch<SetStateAction<never[]>>;
 
   following: never[];
   setFollowing: Dispatch<SetStateAction<never[]>>;
@@ -18,12 +18,12 @@ interface IFollowContext {
 const FollowContext = createContext<IFollowContext>({} as IFollowContext);
 
 export const FollowProvider = ({ children }: ChildrenInterface) => {
-  const [followedBy, setFollowedBy] = useState([]);
+  const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
 
   return (
     <FollowContext.Provider
-      value={{ followedBy, setFollowedBy, following, setFollowing }}
+      value={{ followers, setFollowers, following, setFollowing }}
     >
       {children}
     </FollowContext.Provider>

@@ -7,11 +7,11 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
   const { authenticatedUser } = useAuthContext();
   const displayedUser = isProfile ? authenticatedUser : user;
 
-  const { setIsDialogFollowedByOpen, setIsDialogFollowingOpen } =
+  const { setIsDialogFollowersOpen, setIsDialogFollowingOpen } =
     useModalContext();
 
-  const handleFollowedByDialog = () => {
-    setIsDialogFollowedByOpen(true);
+  const handleFollowersDialog = () => {
+    setIsDialogFollowersOpen(true);
   };
 
   const handleFollowingDialog = () => {
@@ -72,9 +72,9 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
 
           <span
             className="hover:underline cursor-pointer"
-            onClick={handleFollowedByDialog}
+            onClick={handleFollowersDialog}
           >
-            {displayedUser._count.followedBy} followers
+            {displayedUser._count.followers} followers
           </span>
         </div>
       </div>

@@ -2,6 +2,8 @@ import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import {
   getProfileComments,
   getProfileDiscussions,
+  getProfileFollowers,
+  getProfileFollowing,
   getProfileLikes,
   getProfilePosts,
   getProfileReposts,
@@ -17,11 +19,14 @@ import {
 interface IAuthContext {
   authenticatedUser: any | null;
   setAuthenticatedUser: Dispatch<SetStateAction<any | null>>;
+
   getLikesForAuthenticatedUser: () => Promise<any>;
   getPostsForAuthenticatedUser: () => Promise<any>;
   getCommentsForAuthenticatedUser: () => Promise<any>;
   getDiscussionsForAuthenticatedUser: () => Promise<any>;
   getRepostsForAuthenticatedUser: () => Promise<any>;
+  getFollowersForAuthenticatedUser: () => Promise<any>;
+  getFollowingForAuthenticatedUser: () => Promise<any>;
 }
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
@@ -57,6 +62,12 @@ export const AuthProvider = ({ children }: ChildrenInterface) => {
   const getRepostsForAuthenticatedUser = async () =>
     getProfileData("reposts", getProfileReposts) as Promise<any[]>;
 
+  const getFollowersForAuthenticatedUser = async () =>
+    getProfileData("followers", getProfileFollowers) as Promise<any[]>;
+
+  const getFollowingForAuthenticatedUser = async () =>
+    getProfileData("following", getProfileFollowing) as Promise<any[]>;
+
   return (
     <AuthContext.Provider
       value={{
@@ -68,6 +79,8 @@ export const AuthProvider = ({ children }: ChildrenInterface) => {
         getRepostsForAuthenticatedUser,
         getCommentsForAuthenticatedUser,
         getDiscussionsForAuthenticatedUser,
+        getFollowersForAuthenticatedUser,
+        getFollowingForAuthenticatedUser,
       }}
     >
       {children}

@@ -47,7 +47,9 @@ export const MessagesModal = () => {
             <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
+
         <DropdownMenuSeparator />
+
         <DropdownMenuGroup>
           <DropdownMenuItem>Team</DropdownMenuItem>
           <DropdownMenuSub>

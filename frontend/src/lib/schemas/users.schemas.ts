@@ -11,7 +11,7 @@ const userSchema = z.object({
   password: z.string(),
 
   _count: z.object({
-    followedBy: z.number(),
+    followers: z.number(),
     following: z.number(),
   }),
 });
@@ -35,7 +35,7 @@ export const userRefSchema = userSchema.pick({
 //   likes: postRefSchema.array(),
 
 //   _count: z.object({
-//     followedBy: z.number(),
+//     Followers: z.number(),
 //     following: z.number(),
 //   }),
 // });
