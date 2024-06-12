@@ -18,6 +18,10 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
     setIsDialogFollowingOpen(true);
   };
 
+  const followUser = async () => {};
+
+  const unfollowUser = async () => {};
+
   const RenderFollowButton = () => {
     if (isProfile) {
       return;
@@ -32,10 +36,10 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
     );
 
     if (userIsFollowed) {
-      return <Button>Unfollow</Button>;
+      return <Button onClick={unfollowUser}>Unfollow</Button>;
     }
 
-    return <Button>Follow</Button>;
+    return <Button onClick={followUser}>Follow</Button>;
   };
 
   return (

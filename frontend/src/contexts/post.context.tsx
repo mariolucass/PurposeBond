@@ -25,8 +25,9 @@ const PostContext = createContext<IPostContext>({} as IPostContext);
 
 export const PostProvider = ({ children }: ChildrenInterface) => {
   const [posts, setPosts] = useState<PostInterface[]>([]);
-  const [shouldFetchPosts, setShouldFetchPosts] = useState(!posts.length);
   const [currentPost, setCurrentPost] = useState<PostInterface | null>(null);
+
+  const [shouldFetchPosts, setShouldFetchPosts] = useState(!posts.length);
 
   return (
     <PostContext.Provider

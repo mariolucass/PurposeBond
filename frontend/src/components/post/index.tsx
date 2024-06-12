@@ -26,6 +26,10 @@ export const PostComponent = ({ post, pageType }: any) => {
     }
   };
 
+  const handleClickAuthor = () => {
+    router.push(`/users/${post.author.id}`);
+  };
+
   return (
     <Fragment key={post.id}>
       <div
@@ -33,12 +37,7 @@ export const PostComponent = ({ post, pageType }: any) => {
         onClick={handlePostContentClick}
       >
         <div className="flex flex-col gap-4 ">
-          <div
-            ref={authorInfoRef}
-            onClick={() => {
-              router.push(`/users/${post.author.id}`);
-            }}
-          >
+          <div ref={authorInfoRef} onClick={handleClickAuthor}>
             <PostAuthorInfo author={post.author} createdAt={post.createdAt} />
           </div>
 
@@ -51,6 +50,7 @@ export const PostComponent = ({ post, pageType }: any) => {
               initialLikes={post._count.likes}
               initialReposts={post._count.reposts}
             />
+            p
           </div>
         </div>
       </div>
