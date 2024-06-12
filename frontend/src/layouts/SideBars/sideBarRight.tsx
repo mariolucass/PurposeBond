@@ -1,39 +1,15 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { UserCard } from "@/components/userCard";
 import { getFollowRecommendations } from "@/services/follow.services";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
-
-export const SideBarLeft = () => {
-  const navigationLinks = [
-    { href: "/", label: "Home" },
-    { href: "/profile", label: "Profile" },
-    { href: "/settings", label: "Settings" },
-    { href: "/about", label: "About" },
-    { href: "/notifications", label: "Notifications" },
-  ];
-
-  return (
-    <section className="side-bar-left min-h-full flex flex-col justify-start items-center gap-16 fixed mt-8 mx-auto ">
-      <div className="w-full  gap-4 flex flex-col justify-start rounded-2xl h-96 mt-24 p-4">
-        <ul className="w-full space-y-4 p-4">
-          {navigationLinks.map((link) => (
-            <li key={link.href}>
-              <Link href={link.href}>{link.label}</Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-};
+import { useForm } from "react-hook-form";
 
 export const SideBarRight = () => {
   const [recommendations, setRecommendations] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchRecommendations = async () => {
@@ -48,14 +24,26 @@ export const SideBarRight = () => {
     if (!recommendations.length) {
       fetchRecommendations();
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSearch = (data: any) => {
+    if (data.search.trim()) {
+      router.push(`/search?q=${encodeURIComponent(data.search)}`);
+    }
+  };
+
+  const { handleSubmit, register } = useForm<{ search: string }>({});
 
   return (
     <section className="side-bar-right flex flex-col justify-start items-center gap-16 fixed mt-8 mx-auto z-40">
-      <div className="flex w-full max-w-sm items-center space-x-2 ">
-        <Input type="search" placeholder="Search" />
-        <Button type="submit">Pesquisar</Button>
-      </div>
+      <form
+        className="flex w-full max-w-sm items-center space-x-2 "
+        onSubmit={handleSubmit(handleSearch)}
+      >
+        <Input type="search" placeholder="Search" {...register("search")} />
+        <Button type="submit">Search</Button>
+      </form>
 
       <div className="border-4 gap-4 flex w-full flex-col rounded-2xl h-96 justify-center p-4">
         <h1>Recommendations</h1>

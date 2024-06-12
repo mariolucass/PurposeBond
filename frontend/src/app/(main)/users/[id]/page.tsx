@@ -2,7 +2,7 @@
 
 import { Separator } from "@/components/ui/separator";
 import { UserInterface } from "@/interfaces/users.interfaces";
-import { FollowersDialog } from "@/layouts/UserPage/FollowersDialog";
+import { FollowersDialog } from "@/layouts/UserPage/followersDialog";
 import { FollowingDialog } from "@/layouts/UserPage/followingDialog";
 import { TabsUserPage } from "@/layouts/UserPage/tabs";
 import { UserSectionProfile } from "@/layouts/UserPage/userProfile";

@@ -6,7 +6,8 @@ import { CommentProvider } from "@/contexts/comment.context";
 import { ModalProvider } from "@/contexts/modal.context";
 import { PostProvider } from "@/contexts/post.context";
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
-import { SideBarLeft, SideBarRight } from "@/layouts/SideBars";
+import { SideBarLeft } from "@/layouts/SideBars/sideBarLeft";
+import { SideBarRight } from "@/layouts/SideBars/sideBarRight";
 
 const MainLayout = ({ children }: ChildrenInterface) => (
   <ModalProvider>

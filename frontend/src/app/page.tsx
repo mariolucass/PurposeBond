@@ -5,8 +5,8 @@ import { MessageButton } from "@/components/messagesButton";
 import { MessagesModal } from "@/components/messagesModal";
 import { ModalProvider } from "@/contexts/modal.context";
 import { PostProvider } from "@/contexts/post.context";
-
-import { SideBarLeft, SideBarRight } from "@/layouts/SideBars";
+import { SideBarLeft } from "@/layouts/SideBars/sideBarLeft";
+import { SideBarRight } from "@/layouts/SideBars/sideBarRight";
 
 const Dashboard = () => {
   return (

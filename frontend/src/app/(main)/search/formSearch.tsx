@@ -1,0 +1,28 @@
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+
+export const SearchForm = ({ query }: { query: string | null }) => {
+  const router = useRouter();
+
+  const { handleSubmit, register } = useForm<{ search: string | null }>({
+    defaultValues: { search: query },
+  });
+
+  const handleSearch = (data: any) => {
+    if (data.search.trim()) {
+      router.push(`/search?q=${encodeURIComponent(data.search)}`);
+    }
+  };
+
+  return (
+    <form
+      className="w-full max-w-sm flex items-center space-x-2 "
+      onSubmit={handleSubmit(handleSearch)}
+    >
+      <Input type="search" placeholder="Search" {...register("search")} />
+      <Button type="submit">Search</Button>
+    </form>
+  );
+};

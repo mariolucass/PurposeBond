@@ -3,7 +3,7 @@
 import { Separator } from "@/components/ui/separator";
 import { useAuthContext } from "@/contexts/auth.context";
 import { useFetchProfile } from "@/hooks/user.hook";
-import { FollowersDialog } from "@/layouts/UserPage/FollowersDialog";
+import { FollowersDialog } from "@/layouts/UserPage/followersDialog";
 import { FollowingDialog } from "@/layouts/UserPage/followingDialog";
 import { TabsUserPage } from "@/layouts/UserPage/tabs";
 import { UserSectionProfile } from "@/layouts/UserPage/userProfile";
