@@ -26,8 +26,10 @@ export const SearchProvider = ({ children }: ChildrenInterface) => {
   };
   const [resultUsers, setResultUsers] = useState([]);
   const fetchUsersSearch = () => {};
+
   const [resultPopular, setResultPopular] = useState([]);
   const fetchPopularSearch = () => {};
+
   const [resultMedia, setResultMedia] = useState([]);
   const fetchMediaSearch = () => {};
 

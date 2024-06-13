@@ -4,6 +4,7 @@ import { api } from "../services/config/api";
 
 export const useFetchPost = (id: string) => {
   const { currentPost, setCurrentPost } = usePostContext();
+
   const [isLoadingCurrentPost, setisLoadingCurrentPost] = useState(true);
   const [fetchPostError, setFetchPostError] = useState<null | unknown>(null);
 

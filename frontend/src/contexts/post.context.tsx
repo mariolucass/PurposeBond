@@ -46,4 +46,5 @@ export const PostProvider = ({ children }: ChildrenInterface) => {
     </PostContext.Provider>
   );
 };
+
 export const usePostContext = () => useContext(PostContext);
