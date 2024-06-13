@@ -3,43 +3,62 @@ import { deleteLike, postLike } from "@/services/likes.services";
 import { deleteRepost, postRepost } from "@/services/reposts.services";
 import { MessageSquare, Repeat2, ThumbsUp } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useToast } from "../ui/use-toast";
+import { errorLiking, errorReposting } from "./errors";
 
-interface PostInteractionsProps {
+export interface PostInteractionsProps {
   postId: string;
-  initialLikes: number;
-  initialComments: number;
-  initialReposts: number;
+  count: {
+    comments: number;
+    likes: number;
+    reposts: number;
+  };
 }
 
-export const PostInteractions = ({
-  postId,
-  initialLikes,
-  initialComments,
-  initialReposts,
-}: PostInteractionsProps) => {
-  const { toast } = useToast();
+export interface InteractionsState {
+  isLiked: boolean;
+  isReposted: boolean;
+}
+
+export interface PostMetricsState {
+  likes: number;
+  reposts: number;
+  comments: number;
+}
+
+export const PostInteractions = ({ postId, count }: PostInteractionsProps) => {
   const {
     authenticatedUser,
     getLikesForAuthenticatedUser,
     getRepostsForAuthenticatedUser,
+    restrictActionToLoggedInUsers,
   } = useAuthContext();
 
-  const [isLiked, setIsLiked] = useState(false);
-  const [isReposted, setIsReposted] = useState(false);
+  const [postMetrics, setPostMetrics] = useState<PostMetricsState>({
+    likes: count.likes,
+    reposts: count.reposts,
+    comments: count.comments,
+  });
+  const { likes, comments, reposts } = postMetrics;
 
-  const [likeCount, setLikeCount] = useState(initialLikes);
-  const [repostCount, setRepostCount] = useState(initialReposts);
+  const [interactions, setInteractions] = useState<InteractionsState>({
+    isLiked: false,
+    isReposted: false,
+  });
+  const { isLiked, isReposted } = interactions;
 
   useEffect(() => {
     const checkInteractionStatus = async () => {
-      const likes = await getLikesForAuthenticatedUser();
-      const postLiked = likes.some((elem: any) => elem.id === postId);
-      setIsLiked(postLiked);
+      const [likes, reposts] = await Promise.all([
+        getLikesForAuthenticatedUser(),
+        getRepostsForAuthenticatedUser(),
+      ]);
 
-      const reposts = await getRepostsForAuthenticatedUser();
-      const postReposted = reposts.some((elem: any) => elem.id === postId);
-      setIsReposted(postReposted);
+      const newInteractions = {
+        isLiked: likes.some((elem: any) => elem.id === postId),
+        isReposted: reposts.some((elem: any) => elem.id === postId),
+      };
+
+      setInteractions((prev) => ({ ...prev, ...newInteractions }));
     };
 
     if (authenticatedUser) {
@@ -49,73 +68,56 @@ export const PostInteractions = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const updatePostState = (
+    newInteractions: Partial<InteractionsState>,
+    newMetrics: Partial<PostMetricsState>
+  ) => {
+    setInteractions((prev) => ({ ...prev, ...newInteractions }));
+    setPostMetrics((prev) => ({ ...prev, ...newMetrics }));
+  };
+
   const handleLike = async () => {
-    if (!authenticatedUser) {
-      toast({ title: "You must be logged in to like." });
-      return;
-    }
+    if (!restrictActionToLoggedInUsers("like")) return;
+
+    const action = isLiked ? deleteLike : postLike;
 
     try {
-      if (isLiked) {
-        await deleteLike(postId);
-        setLikeCount(likeCount - 1);
-      } else {
-        await postLike(postId);
-        setLikeCount(likeCount + 1);
-      }
-      setIsLiked(!isLiked);
+      await action(postId);
+      updatePostState(
+        { isLiked: !isLiked },
+        { likes: likes + (isLiked ? -1 : 1) }
+      );
     } catch (error) {
-      console.error("Error liking/unliking post:", error);
-      toast({
-        title: "Something went wrong.",
-        description: "There was an error liking/unliking the post.",
-      });
+      errorLiking(error);
     }
   };
 
   const handleRepost = async () => {
-    if (!authenticatedUser) {
-      toast({ title: "You must be logged in to repost." });
-      return;
-    }
+    if (!restrictActionToLoggedInUsers("repost")) return;
+
+    const action = isReposted ? deleteRepost : postRepost;
 
     try {
-      if (isReposted) {
-        await deleteRepost(postId);
-        setRepostCount(likeCount - 1);
-      } else {
-        await postRepost(postId);
-        setRepostCount(repostCount + 1);
-      }
-      setIsReposted(!isLiked);
+      await action(postId);
+      updatePostState(
+        { isReposted: !isReposted },
+        { reposts: reposts + (isReposted ? -1 : 1) }
+      );
     } catch (error) {
-      console.error("Error reposting/unreposting post:", error);
-      toast({
-        title: "Something went wrong.",
-        description: "There was an error reposting/unreposting the post.",
-      });
+      errorReposting(error);
     }
   };
 
   return (
     <div className="self-end flex gap-2">
-      {isLiked ? (
-        <ThumbsUp fill="#4d7a86" onClick={() => handleLike()} />
-      ) : (
-        <ThumbsUp onClick={() => handleLike()} />
-      )}
-      <h2>{likeCount}</h2>
+      <ThumbsUp fill={isLiked ? "#4d7a86" : "none"} onClick={handleLike} />
+      <h2>{likes}</h2>
 
-      {isReposted ? (
-        <Repeat2 fill="#4d7a86" onClick={() => handleRepost()} />
-      ) : (
-        <Repeat2 onClick={() => handleRepost()} />
-      )}
-
-      <h2>{repostCount}</h2>
+      <Repeat2 fill={isReposted ? "#4d7a86" : "none"} onClick={handleRepost} />
+      <h2>{reposts}</h2>
 
       <MessageSquare />
-      <h2>{initialComments}</h2>
+      <h2>{comments}</h2>
     </div>
   );
 };

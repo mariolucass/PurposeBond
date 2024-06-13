@@ -44,13 +44,7 @@ export const PostComponent = ({ post, pageType }: any) => {
           <p className="text-gray-800 max-w-64">{post.content}</p>
 
           <div ref={interactionsRef} className="self-end flex gap-2">
-            <PostInteractions
-              postId={post.id}
-              initialComments={post._count.comments}
-              initialLikes={post._count.likes}
-              initialReposts={post._count.reposts}
-            />
-            p
+            <PostInteractions postId={post.id} count={post._count} />
           </div>
         </div>
       </div>

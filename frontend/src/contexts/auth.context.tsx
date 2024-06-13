@@ -1,3 +1,4 @@
+import { toast } from "@/components/ui/use-toast";
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import {
   getProfileComments,
@@ -13,12 +14,14 @@ import {
   SetStateAction,
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
 
 interface IAuthContext {
   authenticatedUser: any | null;
   setAuthenticatedUser: Dispatch<SetStateAction<any | null>>;
+  restrictActionToLoggedInUsers: (interaction?: string) => boolean;
 
   getLikesForAuthenticatedUser: () => Promise<any>;
   getPostsForAuthenticatedUser: () => Promise<any>;
@@ -33,6 +36,8 @@ const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 export const AuthProvider = ({ children }: ChildrenInterface) => {
   const [authenticatedUser, setAuthenticatedUser] = useState<any | null>(null);
+
+  useEffect(() => {});
 
   const getProfileData = async (
     propertyName: keyof any,
@@ -68,11 +73,21 @@ export const AuthProvider = ({ children }: ChildrenInterface) => {
   const getFollowingForAuthenticatedUser = async () =>
     getProfileData("following", getProfileFollowing) as Promise<any[]>;
 
+  const restrictActionToLoggedInUsers = (interaction: string = "interact") => {
+    if (!authenticatedUser) {
+      toast({ title: `You must be logged in to ${interaction}.` });
+      return false;
+    }
+
+    return true;
+  };
+
   return (
     <AuthContext.Provider
       value={{
         authenticatedUser,
         setAuthenticatedUser,
+        restrictActionToLoggedInUsers,
 
         getLikesForAuthenticatedUser,
         getPostsForAuthenticatedUser,

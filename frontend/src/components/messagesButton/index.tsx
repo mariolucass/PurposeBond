@@ -1,12 +1,11 @@
 import { useModalContext } from "@/contexts/modal.context";
-import { motion } from "framer-motion";
 import { Mail } from "lucide-react";
 
 export const MessageButton = () => {
   const { setIsDialogMessagesOpen } = useModalContext();
 
   return (
-    <motion.div className="fixed inset-0 flex justify-center items-end pointer-events-none">
+    <div className="fixed inset-0 flex justify-center items-end pointer-events-none">
       <div className="relative w-full max-w-7xl pointer-events-auto">
         <div className="absolute bottom-5 right-0 z-50">
           <button
@@ -19,6 +18,6 @@ export const MessageButton = () => {
           </button>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
