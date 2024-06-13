@@ -10,7 +10,6 @@ import { useAuthContext } from "@/contexts/auth.context";
 import { useModalContext } from "@/contexts/modal.context";
 import { UserInterface } from "@/interfaces/users.interfaces";
 import { getFollowingByUser } from "@/services/follow.services";
-
 import { Fragment, useEffect, useState } from "react";
 
 export const FollowingDialog = ({ user, isProfile }: any) => {

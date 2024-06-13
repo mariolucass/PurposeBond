@@ -7,13 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Separator } from "../ui/separator";
 
 export const CommentComponent = ({ comment, postId }: any) => {
-  const { authenticatedUser } = useAuthContext();
-
-  let userIsOwnerOfComment = false;
-
-  if (authenticatedUser) {
-    userIsOwnerOfComment = authenticatedUser!.id === comment.author.id;
-  }
+  const { verifyOwnership } = useAuthContext();
 
   return (
     <Fragment>
@@ -38,7 +32,7 @@ export const CommentComponent = ({ comment, postId }: any) => {
                 </div>
               </div>
 
-              {userIsOwnerOfComment && (
+              {verifyOwnership(comment.author.id) && (
                 <Ellipsis
                   className=" self-start relative top-0 right-0"
                   onClick={() => {}}

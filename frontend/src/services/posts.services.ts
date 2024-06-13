@@ -10,6 +10,10 @@ export const getPostsByUser = async (userId: string) => {
   return handleApiResponse<PostInterface[]>(api.get(`users/${userId}/posts`));
 };
 
+export const getMediaByUser = async (userId: string) => {
+  return handleApiResponse<any>(api.get(`users/${userId}/media`));
+};
+
 export const getPosts = async () => {
   return handleApiResponse<PostInterface[]>(api.get("/posts"));
 };

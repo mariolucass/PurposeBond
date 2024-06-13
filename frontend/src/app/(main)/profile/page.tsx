@@ -21,8 +21,6 @@ const ProfilePage = () => {
     return <div>User not found or not logged in.</div>;
   }
 
-  console.log(authenticatedUser);
-
   return (
     <section className="gap-4 min-w-full w-full flex flex-col justify-start">
       <UserSectionProfile isProfile />

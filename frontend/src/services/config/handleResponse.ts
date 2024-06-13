@@ -8,11 +8,10 @@ export async function handleApiResponse<T>(promise: Promise<any>): Promise<T> {
   } catch (error) {
     if (error instanceof AxiosError) {
       console.log(error);
+
       if (error.response) {
         const { status, data } = error.response;
         throw new ApiError(`${error.message}`, status);
-      } else if (error.request) {
-        throw new Error("Network Error: No response received from the server.");
       } else {
         throw new Error("Request Setup Error: " + error.message);
       }

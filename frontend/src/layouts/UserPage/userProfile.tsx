@@ -10,11 +10,11 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
   const { setIsDialogFollowersOpen, setIsDialogFollowingOpen } =
     useModalContext();
 
-  const handleFollowersDialog = () => {
+  const openFollowersDialog = () => {
     setIsDialogFollowersOpen(true);
   };
 
-  const handleFollowingDialog = () => {
+  const openFollowingDialog = () => {
     setIsDialogFollowingOpen(true);
   };
 
@@ -69,14 +69,14 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
         <div className="w-5/12 flex justify-between">
           <span
             className="hover:underline cursor-pointer"
-            onClick={handleFollowingDialog}
+            onClick={openFollowingDialog}
           >
             {displayedUser._count.following} following
           </span>
 
           <span
             className="hover:underline cursor-pointer"
-            onClick={handleFollowersDialog}
+            onClick={openFollowersDialog}
           >
             {displayedUser._count.followers} followers
           </span>

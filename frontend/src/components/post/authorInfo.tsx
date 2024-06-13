@@ -9,17 +9,12 @@ interface PostAuthorInfoProps {
     name: string;
     username: string;
   };
+
   createdAt: Date;
 }
 
 export const PostAuthorInfo = ({ author, createdAt }: PostAuthorInfoProps) => {
-  const { authenticatedUser } = useAuthContext();
-
-  let isPostOwner = false;
-
-  if (authenticatedUser) {
-    isPostOwner = authenticatedUser.id === author.id;
-  }
+  const { verifyOwnership } = useAuthContext();
 
   return (
     <div className="flex items-center justify-between">
@@ -38,7 +33,7 @@ export const PostAuthorInfo = ({ author, createdAt }: PostAuthorInfoProps) => {
         </div>
       </div>
 
-      {isPostOwner && (
+      {verifyOwnership(author.id) && (
         <Ellipsis
           className=" self-start relative top-0 right-0"
           onClick={() => {}}

@@ -8,10 +8,8 @@ import { Fragment, useEffect, useState } from "react";
 
 export const TabPosts = ({ userId }: { userId: string }) => {
   const [posts, setPosts] = useState<PostInterface[]>([]);
-
-  const [isLoading, setIsLoading] = useState(true);
-
   const [errorCode, setErrorCode] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchPosts = async () => {

@@ -28,6 +28,7 @@ const Dashboard = () => {
 
           <div className="col-span-3 flex justify-start h-full">
             <SideBarRight />
+
             <MessageButton />
             <MessagesModal />
           </div>

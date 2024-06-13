@@ -49,6 +49,8 @@ export const FollowersDialog = ({ user, isProfile }: any) => {
           <DialogTitle>{displayedUser.username} Followers</DialogTitle>
         </DialogHeader>
 
+        <Separator />
+
         <div className="grid gap-4 py-4">
           <ul className="flex flex-col gap-4 min-h-200 overflow-y-auto">
             {followers.map((user: any) => (
@@ -60,6 +62,8 @@ export const FollowersDialog = ({ user, isProfile }: any) => {
             ))}
           </ul>
         </div>
+
+        <Separator />
       </DialogContent>
     </Dialog>
   );

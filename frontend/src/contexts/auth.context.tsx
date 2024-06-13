@@ -22,6 +22,7 @@ interface IAuthContext {
   authenticatedUser: any | null;
   setAuthenticatedUser: Dispatch<SetStateAction<any | null>>;
   restrictActionToLoggedInUsers: (interaction?: string) => boolean;
+  verifyOwnership: (userId: string) => boolean;
 
   getLikesForAuthenticatedUser: () => Promise<any>;
   getPostsForAuthenticatedUser: () => Promise<any>;
@@ -52,6 +53,18 @@ export const AuthProvider = ({ children }: ChildrenInterface) => {
     return data;
   };
 
+  const restrictActionToLoggedInUsers = (interaction: string = "interact") => {
+    if (!authenticatedUser) {
+      toast({ title: `You must be logged in to ${interaction}.` });
+      return false;
+    }
+    return true;
+  };
+
+  const verifyOwnership = (authorId: string) => {
+    return Boolean(authenticatedUser && authenticatedUser.id === authorId);
+  };
+
   const getLikesForAuthenticatedUser = async () =>
     getProfileData("likes", getProfileLikes) as Promise<any[]>;
 
@@ -73,21 +86,13 @@ export const AuthProvider = ({ children }: ChildrenInterface) => {
   const getFollowingForAuthenticatedUser = async () =>
     getProfileData("following", getProfileFollowing) as Promise<any[]>;
 
-  const restrictActionToLoggedInUsers = (interaction: string = "interact") => {
-    if (!authenticatedUser) {
-      toast({ title: `You must be logged in to ${interaction}.` });
-      return false;
-    }
-
-    return true;
-  };
-
   return (
     <AuthContext.Provider
       value={{
         authenticatedUser,
         setAuthenticatedUser,
         restrictActionToLoggedInUsers,
+        verifyOwnership,
 
         getLikesForAuthenticatedUser,
         getPostsForAuthenticatedUser,

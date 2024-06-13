@@ -1,5 +1,6 @@
 import { PostComponent } from "@/components/post";
-import { api } from "@/services/config/api";
+import { ApiError } from "@/services/config/apiError";
+import { getMediaByUser } from "@/services/posts.services";
 
 import { useEffect, useState } from "react";
 
@@ -11,15 +12,17 @@ export const TabMedia = ({ userId }: { userId: string }) => {
   useEffect(() => {
     const fetchMedia = async () => {
       try {
-        const response = await api.get(`users/${userId}/media/`);
-        setMedia(response.data);
+        const fetchedMedia = await getMediaByUser(userId);
+        setMedia(fetchedMedia);
       } catch (error) {
-        console.error("Error fetching post:", error);
-        setError(true);
+        if (error instanceof ApiError) {
+          console.error(error);
+        }
       } finally {
         setIsLoading(false);
       }
     };
+
     fetchMedia();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
