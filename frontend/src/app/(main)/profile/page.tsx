@@ -10,7 +10,6 @@ import { UserSectionProfile } from "@/layouts/UserPage/userProfile";
 
 const ProfilePage = () => {
   const { authenticatedUser } = useAuthContext();
-
   const { isLoadingCurrentProfile, error } = useFetchProfile();
 
   if (isLoadingCurrentProfile) {
