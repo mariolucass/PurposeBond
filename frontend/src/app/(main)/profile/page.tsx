@@ -1,5 +1,6 @@
 "use client";
 
+import { LoadingComponent } from "@/components/loading";
 import { Separator } from "@/components/ui/separator";
 import { useAuthContext } from "@/contexts/auth.context";
 import { useFetchProfile } from "@/hooks/user.hook";
@@ -13,7 +14,7 @@ const ProfilePage = () => {
   const { isLoadingCurrentProfile, error } = useFetchProfile();
 
   if (isLoadingCurrentProfile) {
-    return <div>Loading...</div>;
+    return <LoadingComponent />;
   }
 
   if (error || !authenticatedUser) {

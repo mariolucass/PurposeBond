@@ -1,3 +1,4 @@
+import { LoadingComponent } from "@/components/loading";
 import { PostComponent } from "@/components/post";
 import { Separator } from "@/components/ui/separator";
 import { PostInterface } from "@/interfaces/posts.interfaces";
@@ -30,7 +31,7 @@ export const TabPosts = ({ userId }: { userId: string }) => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingComponent />;
   }
 
   if (errorCode) {

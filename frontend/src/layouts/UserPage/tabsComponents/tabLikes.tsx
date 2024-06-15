@@ -1,3 +1,4 @@
+import { LoadingComponent } from "@/components/loading";
 import { PostComponent } from "@/components/post";
 import { Separator } from "@/components/ui/separator";
 import { ApiError } from "@/services/config/apiError";
@@ -28,7 +29,7 @@ export const TabLikes = ({ userId }: { userId: string }) => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingComponent />;
   }
 
   if (error) {
@@ -36,7 +37,7 @@ export const TabLikes = ({ userId }: { userId: string }) => {
   }
 
   return (
-    <ul>
+    <ul className="flex flex-col gap-4 w-full">
       {likes.map((e: any, index) => (
         <Fragment key={e.id}>
           <PostComponent post={e} key={e.id} />

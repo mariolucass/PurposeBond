@@ -1,14 +1,13 @@
 import { api } from "./config/api";
 import { handleApiResponse } from "./config/handleResponse";
 
-export const getSearch = async ({
-  query,
-  type,
-}: {
+interface GetSearchProps {
   query: string;
   type: string;
-}) => {
-  return handleApiResponse<any>(
-    api.get("/search", { params: { q: query, type: type } })
-  );
+}
+
+export const getSearch = async ({ query, type }: GetSearchProps) => {
+  const paramsOptions = { params: { q: query, type: type } };
+
+  return handleApiResponse<any>(api.get("/search", paramsOptions));
 };

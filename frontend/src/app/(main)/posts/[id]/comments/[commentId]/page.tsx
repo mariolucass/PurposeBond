@@ -1,6 +1,8 @@
 "use client";
 
 import { CommentComponent } from "@/components/comment";
+import { LoadingComponent } from "@/components/loading";
+import { Separator } from "@/components/ui/separator";
 import { useCommentContext } from "@/contexts/comment.context";
 import { useFetchComment } from "@/hooks/comment.hook";
 
@@ -17,7 +19,7 @@ const CommentPage = ({ params: { id, commentId } }: CommentPageProps) => {
   const { currentComment } = useCommentContext();
 
   if (isLoadingCurrentComment) {
-    return <div>Loading...</div>;
+    return <LoadingComponent />;
   }
 
   if (fetchCommentError) {
@@ -26,7 +28,13 @@ const CommentPage = ({ params: { id, commentId } }: CommentPageProps) => {
 
   return (
     <section className="gap-4 flex flex-col justify-start">
-      <CommentComponent comment={currentComment} />
+      <div className="w-full flex">
+        <Separator orientation="vertical" />
+
+        <div className="ml-12 w-full">
+          <CommentComponent comment={currentComment} />
+        </div>
+      </div>
     </section>
   );
 };
