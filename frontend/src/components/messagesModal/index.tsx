@@ -22,9 +22,9 @@ export const MessagesModal = () => {
 
   return (
     <DropdownMenu
-      open={isDialogMessagesOpen}
-      onOpenChange={closeModal}
       modal={true}
+      onOpenChange={closeModal}
+      open={isDialogMessagesOpen}
     >
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>

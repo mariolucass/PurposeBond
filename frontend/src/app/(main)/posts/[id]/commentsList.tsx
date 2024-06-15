@@ -1,4 +1,5 @@
 import { CommentComponent } from "@/components/comment";
+import { LoadingComponent } from "@/components/loading";
 import { Separator } from "@/components/ui/separator";
 import { useCommentContext } from "@/contexts/comment.context";
 import { CommentInterface } from "@/interfaces/comments.interfaces";
@@ -36,7 +37,7 @@ export const CommentsList = ({ postId }: { postId: string }) => {
   }, [shouldFetchComments]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingComponent />;
   }
 
   if (error) {

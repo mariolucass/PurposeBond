@@ -109,15 +109,24 @@ export const PostInteractions = ({ postId, count }: PostInteractionsProps) => {
   };
 
   return (
-    <div className="self-end flex gap-2">
-      <ThumbsUp fill={isLiked ? "#4d7a86" : "none"} onClick={handleLike} />
-      <h2>{likes}</h2>
+    <div className="flex gap-24">
+      <div className="flex flex-col justify-center">
+        <ThumbsUp fill={isLiked ? "#4d7a86" : "none"} onClick={handleLike} />
+        <h2 className="self-center">{likes}</h2>
+      </div>
 
-      <Repeat2 fill={isReposted ? "#4d7a86" : "none"} onClick={handleRepost} />
-      <h2>{reposts}</h2>
+      <div className="flex flex-col justify-center">
+        <Repeat2
+          fill={isReposted ? "#4d7a86" : "none"}
+          onClick={handleRepost}
+        />
+        <h2 className="self-center">{reposts}</h2>
+      </div>
 
-      <MessageSquare />
-      <h2>{comments}</h2>
+      <div className="flex flex-col justify-center">
+        <MessageSquare />
+        <h2 className="self-center">{comments}</h2>
+      </div>
     </div>
   );
 };

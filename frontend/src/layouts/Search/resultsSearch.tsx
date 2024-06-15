@@ -1,3 +1,4 @@
+import { LoadingComponent } from "@/components/loading";
 import { PostComponent } from "@/components/post";
 import { Separator } from "@/components/ui/separator";
 import { UserCard } from "@/components/userCard";
@@ -48,7 +49,7 @@ export const SearchResults = ({
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingComponent />;
   }
 
   if (errorCode) {
@@ -60,10 +61,11 @@ export const SearchResults = ({
       {results[type].map((item: UserInterface | PostInterface, index) => (
         <Fragment key={item.id}>
           {isUserSearch ? (
-            <UserCard user={item} />
+            <UserCard user={item as UserInterface} />
           ) : (
-            <PostComponent post={item} />
+            <PostComponent post={item as PostInterface} />
           )}
+
           {index < results[type].length - 1 && <Separator />}
         </Fragment>
       ))}

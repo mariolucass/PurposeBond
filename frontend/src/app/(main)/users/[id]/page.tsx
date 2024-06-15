@@ -1,5 +1,6 @@
 "use client";
 
+import { LoadingComponent } from "@/components/loading";
 import { Separator } from "@/components/ui/separator";
 import { UserInterface } from "@/interfaces/users.interfaces";
 import { FollowersDialog } from "@/layouts/UserPage/followersDialog";
@@ -33,7 +34,7 @@ const UserPage = ({ params: { id } }: UserPageProps) => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingComponent />;
   }
 
   if (!user) {

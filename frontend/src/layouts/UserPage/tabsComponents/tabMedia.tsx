@@ -1,8 +1,10 @@
+import { LoadingComponent } from "@/components/loading";
 import { PostComponent } from "@/components/post";
+import { Separator } from "@/components/ui/separator";
 import { ApiError } from "@/services/config/apiError";
 import { getMediaByUser } from "@/services/posts.services";
 
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 export const TabMedia = ({ userId }: { userId: string }) => {
   const [media, setMedia] = useState([]);
@@ -28,7 +30,7 @@ export const TabMedia = ({ userId }: { userId: string }) => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingComponent />;
   }
 
   if (error) {
@@ -36,9 +38,12 @@ export const TabMedia = ({ userId }: { userId: string }) => {
   }
 
   return (
-    <ul>
-      {media.map((e: any) => (
-        <PostComponent post={e} key={e.id} />
+    <ul className="flex flex-col gap-4 w-full">
+      {media.map((e: any, index) => (
+        <Fragment key={e.id}>
+          <PostComponent post={e} key={e.id} />
+          {index !== media.length - 1 && <Separator />}
+        </Fragment>
       ))}
     </ul>
   );

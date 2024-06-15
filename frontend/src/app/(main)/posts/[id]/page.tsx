@@ -7,6 +7,7 @@ import { usePostContext } from "@/contexts/post.context";
 import { useFetchPost } from "@/hooks/post.hook";
 import { CommentsList } from "./commentsList";
 import { FormCreateComment } from "./formCreateComment";
+import { LoadingComponent } from "@/components/loading";
 
 interface PostPageProps {
   params: { id: string };
@@ -20,7 +21,7 @@ const PostPage = ({ params: { id } }: PostPageProps) => {
   const { isLoadingCurrentPost, fetchPostError } = useFetchPost(id);
 
   if (isLoadingCurrentPost) {
-    return <div>Loading...</div>;
+    return <LoadingComponent />;
   }
 
   if (fetchPostError || !currentPost) {

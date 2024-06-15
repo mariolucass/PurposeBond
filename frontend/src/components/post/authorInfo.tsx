@@ -9,13 +9,11 @@ interface PostAuthorInfoProps {
     name: string;
     username: string;
   };
-
   createdAt: Date;
 }
 
 export const PostAuthorInfo = ({ author, createdAt }: PostAuthorInfoProps) => {
   const { verifyOwnership } = useAuthContext();
-
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center">
