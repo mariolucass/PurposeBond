@@ -2,44 +2,62 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useAuthContext } from "@/contexts/auth.context";
 import { useModalContext } from "@/contexts/modal.context";
+import { UserInterface } from "@/interfaces/users.interfaces";
+import { followUser, unfollowUser } from "@/services/follow.services";
+import { useEffect, useState } from "react";
 
 export const UserSectionProfile = ({ user, isProfile }: any) => {
-  const { authenticatedUser } = useAuthContext();
+  const {
+    authenticatedUser,
+    restrictActionToLoggedInUsers,
+    getFollowingForAuthenticatedUser,
+  } = useAuthContext();
+
+  const [isFollowing, setIsFollowing] = useState(false);
   const displayedUser = isProfile ? authenticatedUser : user;
+
+  useEffect(() => {
+    const verifyIsFollowing = async () => {
+      if (authenticatedUser) {
+        const followers = await getFollowingForAuthenticatedUser();
+        console.log(followers);
+
+        setIsFollowing(
+          followers.some((elem: UserInterface) => elem.id === user.id)
+        );
+      }
+    };
+
+    if (!isProfile) {
+      verifyIsFollowing();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const { setIsDialogFollowersOpen, setIsDialogFollowingOpen } =
     useModalContext();
 
-  const openFollowersDialog = () => {
-    setIsDialogFollowersOpen(true);
+  const handleFollowing = async () => {
+    if (!restrictActionToLoggedInUsers("follow")) return;
+
+    try {
+      isFollowing ? await unfollowUser(user.id) : await followUser(user.id);
+      setIsFollowing(!isFollowing);
+    } catch (error) {
+      console.error("Error following/unfollowing:", error);
+    }
   };
-
-  const openFollowingDialog = () => {
-    setIsDialogFollowingOpen(true);
-  };
-
-  const followUser = async () => {};
-
-  const unfollowUser = async () => {};
 
   const RenderFollowButton = () => {
     if (isProfile) {
       return;
     }
 
-    if (!authenticatedUser) {
-      return <Button>Follow</Button>;
-    }
-
-    const userIsFollowed = authenticatedUser.following.find(
-      (elem: any) => elem.id === user.id
+    return (
+      <Button onClick={() => handleFollowing()}>
+        {isFollowing ? "Unfollow" : "Follow"}
+      </Button>
     );
-
-    if (userIsFollowed) {
-      return <Button onClick={unfollowUser}>Unfollow</Button>;
-    }
-
-    return <Button onClick={followUser}>Follow</Button>;
   };
 
   return (
@@ -69,14 +87,18 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
         <div className="w-5/12 flex justify-between">
           <span
             className="hover:underline cursor-pointer"
-            onClick={openFollowingDialog}
+            onClick={() => {
+              setIsDialogFollowingOpen(true);
+            }}
           >
             {displayedUser._count.following} following
           </span>
 
           <span
             className="hover:underline cursor-pointer"
-            onClick={openFollowersDialog}
+            onClick={() => {
+              setIsDialogFollowersOpen(true);
+            }}
           >
             {displayedUser._count.followers} followers
           </span>
