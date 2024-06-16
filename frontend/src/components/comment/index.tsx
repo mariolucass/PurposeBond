@@ -1,4 +1,3 @@
-import { useAuthContext } from "@/contexts/auth.context";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
 import { CommentAuthorInfo } from "./authorInfo";
@@ -8,8 +7,6 @@ export const CommentComponent = ({ comment, postId }: any) => {
   const router = useRouter();
   const authorInfoRef = useRef<HTMLDivElement>(null);
   const interactionsRef = useRef<HTMLDivElement>(null);
-
-  const { verifyOwnership } = useAuthContext();
 
   const handleCommentContentClick = (
     event: React.MouseEvent<HTMLDivElement>

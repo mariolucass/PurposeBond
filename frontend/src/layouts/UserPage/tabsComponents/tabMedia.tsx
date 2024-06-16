@@ -3,7 +3,6 @@ import { PostComponent } from "@/components/post";
 import { Separator } from "@/components/ui/separator";
 import { ApiError } from "@/services/config/apiError";
 import { getMediaByUser } from "@/services/posts.services";
-
 import { Fragment, useEffect, useState } from "react";
 
 export const TabMedia = ({ userId }: { userId: string }) => {

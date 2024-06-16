@@ -14,9 +14,18 @@ export const TabsUserPage = ({ userId, isProfile }: TabsUserPage) => {
   const displayedUserId = isProfile ? authenticatedUser.id : userId;
 
   const tabs = [
-    { name: "posts", component: <TabPosts userId={displayedUserId} /> },
-    { name: "likes", component: <TabLikes userId={displayedUserId} /> },
-    { name: "media", component: <TabMedia userId={displayedUserId} /> },
+    {
+      name: "posts",
+      component: <TabPosts userId={displayedUserId} />,
+    },
+    {
+      name: "likes",
+      component: <TabLikes userId={displayedUserId} />,
+    },
+    {
+      name: "media",
+      component: <TabMedia userId={displayedUserId} />,
+    },
   ];
 
   if (!isProfile) {
