@@ -2,23 +2,23 @@ import { Request, Response } from "express";
 import { FollowServices } from "../../services/social/follow.services";
 
 export class FollowController {
+  static getFollowersByUser = async (_: Request, res: Response) => {
+    const userParamsId = res.locals.reqParamsUser.id;
+    const data = await FollowServices.getFollowersByUser(userParamsId);
+
+    return res.json(data);
+  };
+
+  static getFollowingByUser = async (_: Request, res: Response) => {
+    const userParamsId = res.locals.reqParamsUser.id;
+    const data = await FollowServices.getFollowingByUser(userParamsId);
+
+    return res.json(data);
+  };
+
   static getRecommendedUsers = async (_: Request, res: Response) => {
     const userAuthId = res.locals.user.id;
     const data = await FollowServices.getRecommendedUsers(userAuthId);
-
-    return res.json(data);
-  };
-
-  static getFollowedUsers = async (_: Request, res: Response) => {
-    const userAuthId = res.locals.user.id;
-    const data = await FollowServices.getFollowedUsers(userAuthId);
-
-    return res.json(data);
-  };
-
-  static getFollowingUsers = async (_: Request, res: Response) => {
-    const userAuthId = res.locals.user.id;
-    const data = await FollowServices.getFollowingUsers(userAuthId);
 
     return res.json(data);
   };

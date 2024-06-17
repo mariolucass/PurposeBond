@@ -2,8 +2,9 @@ import { z } from "zod";
 import { postModel } from "../../database/models";
 import { PostCreateInterface } from "../../interfaces/posts.interfaces";
 import { userRefSchema } from "../../schemas/users.schemas";
-import { countSchema } from "../../schemas/utils.schemas";
-import { commentRefSelect, postSelect } from "../../utils/prismaHelpers";
+import { countPostSchema } from "../../schemas/utils.schemas";
+import { commentRefSelect } from "../../utils/interactions.selects";
+import { postSelect } from "../../utils/posts.selects";
 import { FollowServices } from "../social/follow.services";
 
 const postReturnSchema = z.object({
@@ -12,7 +13,7 @@ const postReturnSchema = z.object({
   createdAt: z.date(),
 
   author: userRefSchema,
-  _count: countSchema,
+  _count: countPostSchema,
 });
 
 export class PostsServices {
@@ -30,7 +31,7 @@ export class PostsServices {
     userAuthenticatedId: string,
     createdAt: Date
   ) => {
-    const followingUsers = await FollowServices.getFollowingUsers(
+    const followingUsers = await FollowServices.getFollowingByUser(
       userAuthenticatedId
     );
     const followingIds = followingUsers.map((user: any) => user.id);
@@ -42,7 +43,7 @@ export class PostsServices {
   };
 
   static getDashboardPosts = async (userAuthenticatedId: string) => {
-    const followingUsers = await FollowServices.getFollowingUsers(
+    const followingUsers = await FollowServices.getFollowingByUser(
       userAuthenticatedId
     );
     const followingIds = followingUsers.map((user: any) => user.id);

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { userModel } from "../../database/models";
 import { AppError } from "../../errors/appError";
-import { userRefSelect } from "../../utils/prismaHelpers";
+import { userRefSelect } from "../../utils/users.selects";
 
 export class UsersMiddlewares {
   static verifyUserExistence = async (

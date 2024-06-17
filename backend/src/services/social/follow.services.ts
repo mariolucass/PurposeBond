@@ -1,6 +1,6 @@
 import { userModel } from "../../database/models";
 import { userRefSchema } from "../../schemas/users.schemas";
-import { userRefSelect } from "../../utils/prismaHelpers";
+import { userRefSelect } from "../../utils/users.selects";
 
 export class FollowServices {
   private static async fetchUserWithFollowData(userId: string) {
@@ -8,7 +8,7 @@ export class FollowServices {
       where: { id: userId },
       select: {
         ...userRefSelect,
-        followedBy: { select: userRefSelect },
+        followers: { select: userRefSelect },
         following: { select: userRefSelect },
       },
     });
@@ -16,12 +16,12 @@ export class FollowServices {
     return user!;
   }
 
-  static async getFollowedUsers(userId: string) {
-    const { followedBy } = await this.fetchUserWithFollowData(userId);
-    return userRefSchema.array().parse(followedBy);
+  static async getFollowersByUser(userId: string) {
+    const { followers } = await this.fetchUserWithFollowData(userId);
+    return userRefSchema.array().parse(followers);
   }
 
-  static async getFollowingUsers(userId: string) {
+  static async getFollowingByUser(userId: string) {
     const { following } = await this.fetchUserWithFollowData(userId);
     return userRefSchema.array().parse(following);
   }
@@ -30,7 +30,7 @@ export class FollowServices {
     const user = await this.fetchUserWithFollowData(userAuthenticatedId);
 
     const connectedUserIds = [
-      ...user.followedBy.map((elem) => elem.id),
+      ...user.followers.map((elem) => elem.id),
       ...user.following.map((elem) => elem.id),
       user.id,
     ];

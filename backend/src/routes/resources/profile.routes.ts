@@ -19,3 +19,7 @@ profileRouter.get("/reposts", ProfileController.getRepostedPosts);
 profileRouter.get("/media", ProfileController.getMedia);
 
 profileRouter.get("/messages", ProfileController.getMessages);
+
+profileRouter.get("/followers", ProfileController.getFollowers);
+
+profileRouter.get("/following", ProfileController.getFollowing);

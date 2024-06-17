@@ -8,7 +8,7 @@ export const likesRouter = Router();
 
 likesRouter.use(AuthMiddlewares.validateToken);
 
-likesRouter.use("/:id", [PostsMiddlewares.verifyPostExistence]);
+likesRouter.use("/:id", PostsMiddlewares.verifyPostExistence);
 
 likesRouter.post(
   "/:id",

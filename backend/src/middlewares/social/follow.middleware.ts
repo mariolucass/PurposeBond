@@ -30,9 +30,9 @@ export class FollowMiddlewares {
       user: { id: userAuthId },
     } = res.locals;
 
-    const followedBy = await FollowServices.getFollowedUsers(userToFollow.id);
+    const followers = await FollowServices.getFollowersByUser(userToFollow.id);
 
-    const existingFollow = followedBy.some(
+    const existingFollow = followers.some(
       (follow: { id: string }) => follow.id === userAuthId
     );
 
@@ -53,9 +53,11 @@ export class FollowMiddlewares {
       user: { id: userAuthId },
     } = res.locals;
 
-    const followedBy = await FollowServices.getFollowedUsers(userToUnfollow.id);
+    const followers = await FollowServices.getFollowersByUser(
+      userToUnfollow.id
+    );
 
-    const followRelationship = followedBy.find(
+    const followRelationship = followers.find(
       (follow: { id: string }) => follow.id === userAuthId
     );
 

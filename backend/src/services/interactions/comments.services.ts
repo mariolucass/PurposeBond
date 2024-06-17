@@ -1,7 +1,7 @@
 import { commentModel } from "../../database/models";
 import { CommentCreateInterface } from "../../interfaces/comments.interfaces";
 import { commentReturnSchema } from "../../schemas/comments.schemas";
-import { commentSelect } from "../../utils/prismaHelpers";
+import { commentSelect } from "../../utils/interactions.selects";
 
 export class CommentsServices {
   static getComments = async (postId: string) => {

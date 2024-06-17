@@ -1,6 +1,6 @@
 import { messageModel } from "../../database/models";
 import { messageReturnSchema } from "../../schemas/messages.schemas";
-import { messageSelect } from "../../utils/prismaHelpers";
+import { messageSelect } from "../../utils/social.selects";
 
 export class MessagesServices {
   private static async fetchMessages(whereClause: any) {

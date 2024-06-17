@@ -11,7 +11,7 @@ export class LikesController {
 
   static postLike = async (_: Request, res: Response) => {
     const { user, post } = res.locals;
-    const like = await LikesServices.postLike(post.id, user.id);
+    const like = await LikesServices.postLike(user.id, post.id);
 
     return res.status(201).json(like);
   };

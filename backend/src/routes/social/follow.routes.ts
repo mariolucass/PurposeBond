@@ -10,10 +10,6 @@ followRouter.use(AuthMiddlewares.validateToken);
 
 followRouter.get("/recommended", FollowController.getRecommendedUsers);
 
-followRouter.get("/followers", FollowController.getFollowedUsers);
-
-followRouter.get("/following", FollowController.getFollowingUsers);
-
 followRouter.use("/follow/:id", [
   UsersMiddlewares.verifyUserExistence,
   FollowMiddlewares.preventSelfFollow,

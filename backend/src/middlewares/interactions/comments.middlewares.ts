@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { commentModel } from "../../database/models";
 import { AppError } from "../../errors/appError";
-import { commentSelect } from "../../utils/prismaHelpers";
+import { commentSelect } from "../../utils/interactions.selects";
 
 export class CommentsMiddlewares {
   static verifyCommentExistence = async (

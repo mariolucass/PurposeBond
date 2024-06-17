@@ -4,7 +4,6 @@ import "express-async-errors";
 import helmet from "helmet";
 import "reflect-metadata";
 import { ErrorHandler } from "./errors/errorHandler";
-
 import {
   authRouter,
   commentsRouter,
@@ -13,8 +12,10 @@ import {
   messagesRouter,
   postsRouter,
   profileRouter,
+  searchRouter,
   usersRouter,
 } from "./routes";
+import { repostsRouter } from "./routes/interactions/reposts.routes";
 
 export const app = express();
 
@@ -33,9 +34,13 @@ app.use("/profile", profileRouter);
 app.use("/user", followRouter);
 app.use("/users", usersRouter);
 
+app.use("/search", searchRouter);
+
 app.use("/comments", commentsRouter);
 
 app.use("/likes", likesRouter);
+
+app.use("/reposts", repostsRouter);
 
 app.use("/posts", postsRouter);
 
