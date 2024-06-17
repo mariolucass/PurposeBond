@@ -13,7 +13,7 @@ const userSchema = z.object({
   password: z.string(),
 
   _count: z.object({
-    followedBy: z.number(),
+    followers: z.number(),
     following: z.number(),
   }),
 });
@@ -24,23 +24,23 @@ export const userRefSchema = userSchema.pick({
   username: true,
 });
 
-export const userFullSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  username: z.string(),
-  email: z.string(),
-  description: z.string(),
-  phone: z.string(),
+// export const userFullSchema = z.object({
+//   id: z.string(),
+//   name: z.string(),
+//   username: z.string(),
+//   email: z.string(),
+//   description: z.string(),
+//   phone: z.string(),
 
-  posts: postRefSchema.array(),
-  comments: commentRefSchema.array(),
-  likes: postRefSchema.array(),
+//   posts: postRefSchema.array(),
+//   comments: commentRefSchema.array(),
+//   likes: postRefSchema.array(),
 
-  _count: z.object({
-    followedBy: z.number(),
-    following: z.number(),
-  }),
-});
+//   _count: z.object({
+//     followers: z.number(),
+//     following: z.number(),
+//   }),
+// });
 
 export const userCreateSchema = userSchema;
 

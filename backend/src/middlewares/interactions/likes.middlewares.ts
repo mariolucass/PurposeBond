@@ -9,8 +9,6 @@ export class LikesMiddlewares {
   ) => {
     const { post, user } = res.locals;
 
-    console.log(res.locals);
-
     const haveLike = post.likes.some((like: any) => like.authorId === user.id);
 
     if (haveLike) {

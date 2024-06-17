@@ -6,11 +6,10 @@ import {
   repostModel,
   userModel,
 } from "../../database/models";
-import {
-  commentRefSelect,
-  postRefSelect,
-  userSelect,
-} from "../../utils/prismaHelpers";
+import { commentRefSelect } from "../../utils/interactions.selects";
+import { postRefSelect } from "../../utils/posts.selects";
+import { userSelect } from "../../utils/users.selects";
+import { FollowServices } from "../social/follow.services";
 
 export class ProfileServices {
   static getProfile = async (id: string) => {
@@ -48,7 +47,7 @@ export class ProfileServices {
       select: { post: { select: postRefSelect } },
     });
 
-    const repostedPosts = reposts.map((like) => like.post);
+    const repostedPosts = reposts.map((like: any) => like.post);
     return repostedPosts;
   };
 
@@ -58,7 +57,7 @@ export class ProfileServices {
       select: { post: { select: postRefSelect } },
     });
 
-    const likedPosts = likes.map((like) => like.post);
+    const likedPosts = likes.map((like: any) => like.post);
     return likedPosts;
   };
 
@@ -84,7 +83,7 @@ export class ProfileServices {
       take: 10,
     });
 
-    const postsReposted = reposts.map((repost) => repost.post);
+    const postsReposted = reposts.map((repost: any) => repost.post);
 
     const discussionsOrderedByCreatedAt = [
       ...posts,
@@ -107,5 +106,17 @@ export class ProfileServices {
     });
 
     return messages;
+  };
+
+  static getFollowers = async (id: string) => {
+    const followers = await FollowServices.getFollowersByUser(id);
+
+    return followers;
+  };
+
+  static getFollowing = async (id: string) => {
+    const following = await FollowServices.getFollowingByUser(id);
+
+    return following;
   };
 }

@@ -3,7 +3,8 @@ import { sign } from "jsonwebtoken";
 import { userModel } from "../../database/models";
 import { AppError } from "../../errors/appError";
 import { userReturnSchema } from "../../schemas/users.schemas";
-import { userSelect } from "../../utils/prismaHelpers";
+import { userSelect } from "../../utils/users.selects";
+
 
 export class AuthServices {
   static loginService = async (body: { email: string; password: string }) => {

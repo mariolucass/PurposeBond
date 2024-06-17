@@ -1,6 +1,6 @@
 import { userModel } from "../../database/models";
 import { userReturnSchema } from "../../schemas/users.schemas";
-import { userSelect } from "../../utils/prismaHelpers";
+import { userSelect } from "../../utils/users.selects";
 
 export class UsersServices {
   static getUsers = async () => {
@@ -15,7 +15,7 @@ export class UsersServices {
       select: userSelect,
     });
 
-    return user;
+    return userReturnSchema.parse(user);
   };
 
   static patchUser = async (id: string, body: {}) => {

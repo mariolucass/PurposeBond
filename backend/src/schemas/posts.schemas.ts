@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { userRefSchema } from "./users.schemas";
-import { countSchema } from "./utils.schemas";
+import { countPostSchema } from "./utils.schemas";
 
 const postSchema = z.object({
   id: z.string(),
@@ -8,7 +8,7 @@ const postSchema = z.object({
   createdAt: z.date(),
 
   author: userRefSchema,
-  _count: countSchema,
+  _count: countPostSchema,
 });
 
 export const postRefSchema = postSchema.omit({ author: true });

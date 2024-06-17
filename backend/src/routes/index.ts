@@ -1,3 +1,5 @@
+export { searchRouter } from "./core/search.routes";
+
 export { authRouter } from "./core/auth.routes";
 
 export { commentsRouter } from "./interactions/comments.routes";

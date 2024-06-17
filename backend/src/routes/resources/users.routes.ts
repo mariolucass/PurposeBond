@@ -21,16 +21,18 @@ usersRouter.get("/:id/likes", LikesController.getLikesByUser);
 
 usersRouter.get("/:id/posts", PostsController.getPostsByUser);
 
-usersRouter.get("/:id/media", FollowController.getFollowingUsers);
+usersRouter.get("/:id/followers", FollowController.getFollowersByUser);
 
-usersRouter.patch(
-  "/:id",
-  UsersMiddlewares.confirmUserIdentity,
-  UsersController.patchUser
-);
+usersRouter.get("/:id/following", FollowController.getFollowingByUser);
 
-usersRouter.delete(
-  "/:id",
-  UsersMiddlewares.confirmUserIdentity,
-  UsersController.deleteUser
-);
+// usersRouter.patch(
+//   "/:id",
+//   UsersMiddlewares.confirmUserIdentity,
+//   UsersController.patchUser
+// );
+
+// usersRouter.delete(
+//   "/:id",
+//   UsersMiddlewares.confirmUserIdentity,
+//   UsersController.deleteUser
+// );

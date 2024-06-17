@@ -9,44 +9,44 @@ datasource db {
 
 
 model User {
-  id String @id @default(uuid())
-  username String @db.VarChar(50) @unique
-  name String @db.VarChar(100)
-  email String @db.VarChar(100) @unique
-  password String @db.VarChar(128)
+  id                 String @id @default(uuid())
+  username           String @db.VarChar(50) @unique
+  name               String @db.VarChar(100)
+  email              String @db.VarChar(100) @unique
+  password           String @db.VarChar(128)
 
-  profileImage String?   @db.VarChar(254) 
-  address String? @db.VarChar(100)
-  phone String? @db.VarChar(15)
-  birthdate DateTime? 
-  description String? @db.Text()
+  profileImage       String?   @db.VarChar(254) 
+  address            String? @db.VarChar(100)
+  phone              String? @db.VarChar(15)
+  birthdate          DateTime? 
+  description        String? @db.Text()
 
-  settings Settings[] 
+  settings           Settings[] 
 
-  posts     Post[]
-  postViews PostView[] 
+  posts              Post[]
+  postViews          PostView[] 
 
-  comments  Comment[]
-  likes     Like[]
+  comments           Comment[]
+  likes              Like[]
 
-  followers User[]  @relation("Follows")
-  following  User[]  @relation("Follows")
+  followers          User[]  @relation("Follows")
+  following          User[]  @relation("Follows")
 
-  messagesSent     Message[] @relation("Sent")
-  messagesReceived Message[] @relation("Received")
+  messagesSent       Message[] @relation("Sent")
+  messagesReceived   Message[] @relation("Received")
 
-  reposts    Repost[] 
-  notifications Notification[]
-  mentions Mention[]
+  reposts            Repost[] 
+  notifications      Notification[]
+  mentions           Mention[]
 
   @@map("users")
 }
 
 model Settings {
-  id        String  @id @default(uuid())
+  id                 String  @id @default(uuid())
 
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String  @unique
+  user               User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId             String  @unique
 
   emailNotifications Boolean   @default(true) 
   privateProfile     Boolean   @default(false) 
@@ -61,48 +61,36 @@ model Settings {
 }
 
 model Post {
-  id String @id @default(uuid())
-  content   String @db.Text()
-  createdAt DateTime @default(now())
+  id         String @id @default(uuid())
+  content    String @db.Text()
+  createdAt  DateTime @default(now())
  
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  String
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   String
 
   media      Media[]  
   
-  likes     Like[]
+  likes      Like[]
   reposts    Repost[] 
-  comments  Comment[]
-  mentions Mention[]
+  comments   Comment[]
 
-  views     PostView[]
+  mentions   Mention[]
+
+  views      PostView[]
 
   @@map("posts")
 }
 
 model Mention {
-  id        String @id @default(uuid())
+  id         String @id @default(uuid())
 
-  user      User   @relation(fields: [userId], references: [id])
-  userId    String
+  user       User   @relation(fields: [userId], references: [id])
+  userId     String
 
-  post      Post   @relation(fields: [postId], references: [id])
-  postId    String
+  post       Post   @relation(fields: [postId], references: [id])
+  postId     String
 
   @@map("mentions")
-}
-
-model Repost {
-  id         String   @id @default(uuid())
-  createdAt DateTime @default(now())
-
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  String
-
-  post       Post     @relation(fields: [postId], references: [id])
-  postId     String 
-
-  @@map("reposts")
 }
 
 enum MediaType { 
@@ -110,63 +98,77 @@ enum MediaType {
   VIDEO
 }
 model Media {  
-  id        String    @id @default(uuid())
-  url       String    @db.VarChar(254) 
-  type      MediaType 
+  id         String    @id @default(uuid())
+  url        String    @db.VarChar(254) 
+  type       MediaType 
 
-  post      Post      @relation(fields: [postId], references: [id])
-  postId    String
+  post       Post      @relation(fields: [postId], references: [id])
+  postId     String
 }
 
 model PostView {
-  id          String   @id @default(uuid())
-  viewedAt    DateTime @default(now())
+  id         String   @id @default(uuid())
+  viewedAt   DateTime @default(now())
 
-  user        User     @relation(fields: [userId], references: [id])
-  userId      String
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
 
-  post        Post     @relation(fields: [postId], references: [id])
-  postId      String
+  post       Post     @relation(fields: [postId], references: [id])
+  postId     String
 
   @@unique([userId, postId])
   @@map("postviews")
 }
 
+model Repost {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   String
+
+  post       Post    @relation(fields: [postId], references: [id])
+  postId     String 
+
+  @@map("reposts")
+}
+
 model Comment {
-  id String @id @default(uuid())
-  content   String @db.Text()
-  createdAt DateTime @default(now())
+  id         String @id @default(uuid())
+  content    String @db.Text()
+  createdAt  DateTime @default(now())
 
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  String
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   String
 
-  post      Post     @relation(fields: [postId], references: [id])
-  postId    String
+  post       Post     @relation(fields: [postId], references: [id])
+  postId     String
 
   @@map("comments")
 }
 
 model Like {
-  id String @id @default(uuid())
+  id         String @id @default(uuid())
+  createdAt  DateTime @default(now())
 
-  author      User     @relation(fields: [authorId], references: [id])
-  authorId    String
+  author     User   @relation(fields: [authorId], references: [id])
+  authorId   String
 
-  post      Post     @relation(fields: [postId], references: [id])
-  postId    String
+  post       Post     @relation(fields: [postId], references: [id])
+  postId     String
  
   @@map("likes")
 }
 
 model Message {
-  id String @id @default(uuid())
-  content String @db.Text()
-  createdAt DateTime @default(now())
+  id         String @id @default(uuid())
+  content    String @db.Text()
+  createdAt  DateTime @default(now())
 
-  sender    User     @relation("Sent", fields: [senderId], references: [id])
-  senderId  String
+  sender     User     @relation("Sent", fields: [senderId], references: [id])
+  senderId   String
 
-  receiver  User     @relation("Received", fields: [receiverId], references: [id])
+  receiver   User     @relation("Received", fields: [receiverId], references: [id])
   receiverId String 
   
   @@map("messages")

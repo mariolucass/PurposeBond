@@ -50,4 +50,18 @@ export class ProfileController {
 
     return res.json(media);
   };
+
+  static getFollowers = async (_: Request, res: Response) => {
+    const userId = res.locals.user.id;
+    const followers = await ProfileServices.getFollowers(userId);
+
+    return res.json(followers);
+  };
+
+  static getFollowing = async (_: Request, res: Response) => {
+    const userId = res.locals.user.id;
+    const following = await ProfileServices.getFollowing(userId);
+
+    return res.json(following);
+  };
 }
