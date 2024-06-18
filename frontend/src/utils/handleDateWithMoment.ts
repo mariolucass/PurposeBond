@@ -16,5 +16,5 @@ export const handleDateWithMoment = (date: Date | string) => {
     return moment(date).format("MMM D");
   }
 
-  return moment(date, "YYYY-MM-DDTHH:mm").startOf("hour").fromNow();
+  return moment(date, "YYYY-MM-DDTHH:mm").startOf("minute").fromNow();
 };

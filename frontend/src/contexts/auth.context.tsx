@@ -1,5 +1,6 @@
 import { toast } from "@/components/ui/use-toast";
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
+import { api } from "@/services/config/api";
 import {
   getProfileComments,
   getProfileDiscussions,
@@ -9,6 +10,7 @@ import {
   getProfilePosts,
   getProfileReposts,
 } from "@/services/profile.services";
+import { useRouter } from "next/navigation";
 import {
   Dispatch,
   SetStateAction,
@@ -36,9 +38,36 @@ interface IAuthContext {
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 export const AuthProvider = ({ children }: ChildrenInterface) => {
+  const router = useRouter();
+
   const [authenticatedUser, setAuthenticatedUser] = useState<any | null>(null);
 
-  useEffect(() => {});
+  useEffect(() => {
+    const autoLogin = async () => {
+      const token = localStorage.getItem("tokenRedeSocial");
+
+      if (token) {
+        try {
+          const response = await api.get("/profile", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+
+          setAuthenticatedUser(response.data);
+        } catch (error) {
+          localStorage.removeItem("tokenRedeSocial");
+          router.push("/login");
+
+          toast({
+            title: "Something went wrong.",
+            description:
+              "There was an error in autologin, please do login again.",
+          });
+        }
+      }
+    };
+
+    autoLogin();
+  }, []);
 
   const getProfileData = async (
     propertyName: keyof any,
