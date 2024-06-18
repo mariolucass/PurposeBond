@@ -16,6 +16,8 @@ interface HoverCardAuthorProps {
 }
 
 export const HoverCardAuthor = ({ author }: HoverCardAuthorProps) => {
+  console.log(author);
+
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
@@ -34,6 +36,7 @@ export const HoverCardAuthor = ({ author }: HoverCardAuthorProps) => {
         <div className="flex justify-between space-x-4">
           <Avatar>
             <AvatarImage src="https://github.com/vercel.png" />
+
             <AvatarFallback>VC</AvatarFallback>
           </Avatar>
 

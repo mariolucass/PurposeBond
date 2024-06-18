@@ -6,6 +6,7 @@ const userRefSchema = z.object({
   id: z.string(),
   name: z.string(),
   username: z.string(),
+  profileImage: z.string(),
 });
 
 const postSchema = z.object({

@@ -14,7 +14,7 @@ export const UserCard = ({ user }: any) => {
   return (
     <li className="flex items-center" onClick={closeModal}>
       <Avatar className="mr-4">
-        <AvatarImage src="https://github.com/shadcn.png" />
+        <AvatarImage src={user.profileImage} />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
 
