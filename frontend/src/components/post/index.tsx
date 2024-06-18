@@ -1,6 +1,7 @@
+import { useAuthContext } from "@/contexts/auth.context";
 import { PostInterface } from "@/interfaces/posts.interfaces";
 import { useRouter } from "next/navigation";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { PostAuthorInfo } from "./authorInfo";
 import { PostInteractions } from "./interactions";
 
@@ -12,6 +13,7 @@ export const PostComponent = ({ post }: PostProps) => {
   const router = useRouter();
   const authorInfoRef = useRef<HTMLDivElement>(null);
   const interactionsRef = useRef<HTMLDivElement>(null);
+  const { verifyOwnership } = useAuthContext();
 
   const handlePostContentClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const userHasClickedOutsideInteractionsAndAuthor = [
@@ -27,6 +29,10 @@ export const PostComponent = ({ post }: PostProps) => {
   const handleClickAuthor = () => {
     router.push(`/users/${post.author.id}`);
   };
+
+  if (verifyOwnership(post.author.id)) {
+    const [optionsMenuOpen, setOptionsMenuOpen] = useState();
+  }
 
   return (
     <div
