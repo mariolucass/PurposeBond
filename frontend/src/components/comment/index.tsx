@@ -1,7 +1,6 @@
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
 import { CommentAuthorInfo } from "./authorInfo";
-import { CommentInteractions } from "./interactions";
 
 export const CommentComponent = ({ comment, postId }: any) => {
   const router = useRouter();
@@ -34,9 +33,7 @@ export const CommentComponent = ({ comment, postId }: any) => {
           />
         </div>
 
-        <p className="text-gray-800">{comment.content}</p>
-
-        <CommentInteractions commentId={comment.id} count={comment._count} />
+        <p className="text-gray-800 ml-14 min-h-24">{comment.content}</p>
       </div>
     </div>
   );

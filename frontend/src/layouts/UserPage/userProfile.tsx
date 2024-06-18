@@ -20,7 +20,6 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
     const verifyIsFollowing = async () => {
       if (authenticatedUser) {
         const followers = await getFollowingForAuthenticatedUser();
-        console.log(followers);
 
         setIsFollowing(
           followers.some((elem: UserInterface) => elem.id === user.id)
@@ -65,8 +64,8 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
       <div className="absolute top-0 left-0 w-full h-1/3 bg-primary z-10 rounded-t-2xl" />
 
       <div className="flex flex-col md:flex-row items-center my-6 gap-6 relative z-20 ml-4 mt-12">
-        <Avatar className="w-[120px] h-[120px]">
-          <AvatarImage src="https://avatars.githubusercontent.com/u/105565220?v=4" />
+        <Avatar className="w-[120px] h-[120px] border-primary border-4">
+          <AvatarImage src={displayedUser.profileImage} />
         </Avatar>
 
         <div className="mt-24">

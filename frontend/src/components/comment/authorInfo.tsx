@@ -8,7 +8,9 @@ interface CommentAuthorInfoProps {
     id: string;
     name: string;
     username: string;
+    profileImage: string;
   };
+
   createdAt: Date;
 }
 
@@ -21,8 +23,9 @@ export const CommentAuthorInfo = ({
     <div className="flex items-center justify-between">
       <div className="flex items-center">
         <Avatar className="mr-4">
-          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarImage src={author.profileImage} />
         </Avatar>
+
         <div>
           <h2 className="text-lg font-semibold">
             {author.name}{" "}

@@ -1,3 +1,4 @@
+import { NoSearchResults } from "@/components/_emptyComponents/noSearchResults";
 import { LoadingComponent } from "@/components/loading";
 import { PostComponent } from "@/components/post";
 import { Separator } from "@/components/ui/separator";
@@ -58,17 +59,22 @@ export const SearchResults = ({
 
   return (
     <ul className="flex flex-col gap-4 w-full">
-      {results[type].map((item: UserInterface | PostInterface, index) => (
-        <Fragment key={item.id}>
-          {isUserSearch ? (
-            <UserCard user={item as UserInterface} />
-          ) : (
-            <PostComponent post={item as PostInterface} />
-          )}
+      {!results[type].length ? (
+        <NoSearchResults typeSearch={type} search={query} />
+      ) : (
+        results[type].map((item: UserInterface | PostInterface, index) => (
+          <Fragment key={item.id}>
+            {isUserSearch ? (
+              <UserCard user={item as UserInterface} />
+            ) : (
+              <PostComponent post={item as PostInterface} />
+            )}
 
-          {index < results[type].length - 1 && <Separator />}
-        </Fragment>
-      ))}
+            {index < results[type].length - 1 && <Separator />}
+          </Fragment>
+        ))
+      )}
+      {}
     </ul>
   );
 };
