@@ -21,7 +21,7 @@ export const HoverCardAuthor = ({ author }: HoverCardAuthorProps) => {
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <div className="flex gap-2 items-center h-[32px]">
+        <div className="flex gap-2 items-center h-[32px] w-[224px] justify-evenly">
           <h2 className="cursor-pointer">{author.name}</h2>
 
           <Separator orientation="vertical" />

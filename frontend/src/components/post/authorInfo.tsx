@@ -24,7 +24,7 @@ export const PostAuthorInfo = ({ author, createdAt }: PostAuthorInfoProps) => {
           <AvatarImage src={author.profileImage} />
         </Avatar>
 
-        <div className="flex gap-2 items-center h-[32px] min-w-[350px] justify-between">
+        <div className="flex gap-2 items-center h-[32px] w-[330px] justify-between">
           <HoverCardAuthor author={author} />
 
           <span className="text-bgmodal text-sm">
