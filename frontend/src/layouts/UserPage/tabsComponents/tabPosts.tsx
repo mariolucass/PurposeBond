@@ -1,3 +1,4 @@
+import { EmptyPosts } from "@/components/_emptyComponents/emptyPosts";
 import { LoadingComponent } from "@/components/loading";
 import { PostComponent } from "@/components/post";
 import { Separator } from "@/components/ui/separator";
@@ -7,7 +8,14 @@ import { getPostsByUser } from "@/services/posts.services";
 import Error from "next/error";
 import { Fragment, useEffect, useState } from "react";
 
-export const TabPosts = ({ userId }: { userId: string }) => {
+interface TabPostsProps {
+  user: {
+    id: string;
+    username: string;
+  };
+}
+
+export const TabPosts = ({ user }: TabPostsProps) => {
   const [posts, setPosts] = useState<PostInterface[]>([]);
   const [errorCode, setErrorCode] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -15,7 +23,7 @@ export const TabPosts = ({ userId }: { userId: string }) => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const fetchedPosts = await getPostsByUser(userId);
+        const fetchedPosts = await getPostsByUser(user.id);
         setPosts(fetchedPosts);
       } catch (error) {
         if (error instanceof ApiError) {
@@ -38,7 +46,7 @@ export const TabPosts = ({ userId }: { userId: string }) => {
     return <Error statusCode={errorCode} />;
   }
 
-  return (
+  return posts.length ? (
     <ul className="flex flex-col gap-4 w-full">
       {posts.map((e: any, index) => (
         <Fragment key={e.id}>
@@ -47,5 +55,7 @@ export const TabPosts = ({ userId }: { userId: string }) => {
         </Fragment>
       ))}
     </ul>
+  ) : (
+    <EmptyPosts username={user.username} />
   );
 };

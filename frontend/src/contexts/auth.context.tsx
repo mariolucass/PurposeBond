@@ -45,18 +45,15 @@ export const AuthProvider = ({ children }: ChildrenInterface) => {
   useEffect(() => {
     const autoLogin = async () => {
       const token = localStorage.getItem("tokenRedeSocial");
-
       if (token) {
         try {
           const response = await api.get("/profile", {
             headers: { Authorization: `Bearer ${token}` },
           });
-
           setAuthenticatedUser(response.data);
         } catch (error) {
           localStorage.removeItem("tokenRedeSocial");
           router.push("/login");
-
           toast({
             title: "Something went wrong.",
             description:
@@ -65,7 +62,6 @@ export const AuthProvider = ({ children }: ChildrenInterface) => {
         }
       }
     };
-
     autoLogin();
   }, []);
 

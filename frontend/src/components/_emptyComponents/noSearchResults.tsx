@@ -1,13 +1,15 @@
+interface NoSearchResultsProps {
+  typeSearch: string;
+  search: string;
+}
+
 export const NoSearchResults = ({
   typeSearch,
   search,
-}: {
-  typeSearch: string;
-  search: string;
-}) => {
+}: NoSearchResultsProps) => {
   return (
     <div className="flex flex-col gap-4 items-center justify-center">
-      <h1 className="text-2xl">
+      <h1 className="text-2xl font-bold">
         No results for "{search}" in {typeSearch} results.
       </h1>
 

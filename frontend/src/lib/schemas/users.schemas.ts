@@ -5,7 +5,7 @@ const userSchema = z.object({
   name: z.string(),
   username: z.string(),
   email: z.string(),
-  description: z.string().nullable(),
+  description: z.string().nullish(),
   phone: z.string(),
   address: z.string(),
   password: z.string(),
@@ -42,7 +42,7 @@ export const userRefSchema = userSchema.pick({
 
 export const userCreateSchema = userSchema;
 
-export const userUpdateSchema = userSchema;
+export const userUpdateSchema = userSchema.omit({ id: true, _count: true });
 
 export const userReturnSchema = userSchema.omit({
   password: true,

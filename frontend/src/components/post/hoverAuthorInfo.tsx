@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
   HoverCard,
   HoverCardContent,
@@ -16,8 +16,6 @@ interface HoverCardAuthorProps {
 }
 
 export const HoverCardAuthor = ({ author }: HoverCardAuthorProps) => {
-  console.log(author);
-
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
@@ -35,9 +33,7 @@ export const HoverCardAuthor = ({ author }: HoverCardAuthorProps) => {
       <HoverCardContent className="w-80">
         <div className="flex justify-between space-x-4">
           <Avatar>
-            <AvatarImage src="https://github.com/vercel.png" />
-
-            <AvatarFallback>VC</AvatarFallback>
+            <AvatarImage src={author.profileImage} />
           </Avatar>
 
           <div className="space-y-1">

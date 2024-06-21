@@ -1,3 +1,4 @@
+import { EmptyFollowing } from "@/components/_emptyComponents/user/emptyFollowing";
 import {
   Dialog,
   DialogContent,
@@ -52,14 +53,18 @@ export const FollowingDialog = ({ user, isProfile }: any) => {
         <Separator />
 
         <div className="grid gap-4 py-4">
-          <ul className="flex flex-col gap-4 min-h-200 overflow-y-auto">
-            {following.map((user: any) => (
-              <Fragment key={user.id}>
-                <UserCard user={user} />
-                <Separator />
-              </Fragment>
-            ))}
-          </ul>
+          {following.length ? (
+            <ul className="flex flex-col gap-4 min-h-200 overflow-y-auto">
+              {following.map((user: any) => (
+                <Fragment key={user.id}>
+                  <UserCard user={user} />
+                  <Separator />
+                </Fragment>
+              ))}
+            </ul>
+          ) : (
+            <EmptyFollowing username={displayedUser.username} />
+          )}
         </div>
 
         <Separator />
