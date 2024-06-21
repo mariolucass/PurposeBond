@@ -109,7 +109,7 @@ export const PostInteractions = ({ postId, count }: PostInteractionsProps) => {
   };
 
   return (
-    <div className="w-full flex justify-around">
+    <div className="w-[80px] flex gap-8">
       <div className="flex flex-col justify-center">
         <ThumbsUp fill={isLiked ? "#4d7a86" : "none"} onClick={handleLike} />
         <h2 className="self-center">{likes}</h2>

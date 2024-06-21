@@ -10,16 +10,32 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { loginFieldsConfig, registerFieldsConfig } from "./configs";
+import {
+  loginFieldsConfig,
+  registerFieldsConfig,
+  updateProfileFieldsConfig,
+} from "./configs";
 
 interface FormFieldsProps {
   control: Control<any>;
-  type: "login" | "register";
+  type: "login" | "register" | "userUpdate";
 }
 
+const handleType = (type: "login" | "register" | "userUpdate") => {
+  switch (type) {
+    case "login":
+      return loginFieldsConfig;
+    case "register":
+      return registerFieldsConfig;
+    case "userUpdate":
+      return updateProfileFieldsConfig;
+    default:
+      return loginFieldsConfig;
+  }
+};
+
 export const FormFields = ({ control, type }: FormFieldsProps) => {
-  const fieldsConfig =
-    type === "register" ? registerFieldsConfig : loginFieldsConfig;
+  const fieldsConfig = handleType(type);
 
   return fieldsConfig.map((fieldConfig) => (
     <FormField
@@ -28,7 +44,7 @@ export const FormFields = ({ control, type }: FormFieldsProps) => {
       name={fieldConfig.name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{fieldConfig.label}</FormLabel>
+          <FormLabel className="font-semibold">{fieldConfig.label}</FormLabel>
 
           <FormControl>
             <Input

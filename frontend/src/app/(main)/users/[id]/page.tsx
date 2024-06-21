@@ -2,12 +2,14 @@
 
 import { LoadingComponent } from "@/components/loading";
 import { Separator } from "@/components/ui/separator";
+import { useAuthContext } from "@/contexts/auth.context";
 import { UserInterface } from "@/interfaces/users.interfaces";
 import { FollowersDialog } from "@/layouts/UserPage/followersDialog";
 import { FollowingDialog } from "@/layouts/UserPage/followingDialog";
 import { TabsUserPage } from "@/layouts/UserPage/tabs";
 import { UserSectionProfile } from "@/layouts/UserPage/userProfile";
 import { getUser } from "@/services/users.services";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface UserPageProps {
@@ -17,8 +19,17 @@ interface UserPageProps {
 const UserPage = ({ params: { id } }: UserPageProps) => {
   const [user, setUser] = useState<UserInterface>({} as UserInterface);
   const [isLoading, setIsLoading] = useState(true);
+  const { authenticatedUser } = useAuthContext();
+
+  const router = useRouter();
 
   useEffect(() => {
+    if (authenticatedUser) {
+      if (id === authenticatedUser.id) {
+        router.push("/profile");
+      }
+    }
+
     const fetchUser = async () => {
       try {
         const fetchedUser = await getUser(id);
@@ -29,6 +40,7 @@ const UserPage = ({ params: { id } }: UserPageProps) => {
         setIsLoading(false);
       }
     };
+
     fetchUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -47,7 +59,7 @@ const UserPage = ({ params: { id } }: UserPageProps) => {
 
       <Separator />
 
-      <TabsUserPage userId={user.id} />
+      <TabsUserPage user={{ id: user.id, username: user.username }} />
 
       <FollowersDialog user={user} />
 

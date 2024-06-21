@@ -2,12 +2,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { UserCard } from "@/components/userCard";
+import { useAuthContext } from "@/contexts/auth.context";
 import { getFollowRecommendations } from "@/services/follow.services";
 import { useRouter } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export const SideBarRight = () => {
+  const { authenticatedUser } = useAuthContext();
   const [recommendations, setRecommendations] = useState([]);
   const router = useRouter();
 

@@ -10,6 +10,7 @@ interface PostAuthorInfoProps {
     name: string;
     username: string;
     profileImage: string;
+    description?: string;
   };
   createdAt: Date;
 }

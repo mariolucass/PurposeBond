@@ -5,6 +5,7 @@ import { useModalContext } from "@/contexts/modal.context";
 import { UserInterface } from "@/interfaces/users.interfaces";
 import { followUser, unfollowUser } from "@/services/follow.services";
 import { useEffect, useState } from "react";
+import { EditProfile } from "./editProfile";
 
 export const UserSectionProfile = ({ user, isProfile }: any) => {
   const {
@@ -42,6 +43,10 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
     try {
       isFollowing ? await unfollowUser(user.id) : await followUser(user.id);
       setIsFollowing(!isFollowing);
+
+      const updateCount = isFollowing ? -1 : 1;
+
+      displayedUser._count.followers += updateCount;
     } catch (error) {
       console.error("Error following/unfollowing:", error);
     }
@@ -63,27 +68,31 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
     <div className="relative">
       <div className="absolute top-0 left-0 w-full h-1/3 bg-primary z-10 rounded-t-2xl" />
 
-      <div className="flex flex-col md:flex-row items-center my-6 gap-6 relative z-20 ml-4 mt-12">
-        <Avatar className="w-[120px] h-[120px] border-primary border-4">
-          <AvatarImage src={displayedUser.profileImage} />
-        </Avatar>
+      <div className="flex flex-row items-center my-6 justify-between pr-8 relative z-20 ml-4 mt-12">
+        <div className="flex flex-row gap-6">
+          <Avatar className="w-[120px] h-[120px] border-primary border-4 mt-4">
+            <AvatarImage src={displayedUser.profileImage} />
+          </Avatar>
 
-        <div className="mt-24">
-          <h1 className="text-3xl font-bold">{displayedUser.name}</h1>
-          <h2 className="text-lg text-gray-500">@{displayedUser.username}</h2>
+          <div className="mt-28">
+            <h1 className="text-3xl font-bold">{displayedUser.name}</h1>
+            <h2 className="text-lg text-gray-500">@{displayedUser.username}</h2>
+          </div>
         </div>
+
+        {isProfile && <EditProfile />}
       </div>
 
-      <div className="flex flex-col rounded-lg p-4 mb-4 relative z-20 justify-between h-36">
+      <div className="flex flex-col rounded-lg p-4 mb-4 relative z-20 justify-between h-36 px-8">
         <div className="flex w-full ">
           <p className="w-1/2">{displayedUser.description || "No bio yet."}</p>
 
-          <div className="w-1/2 flex justify-end items-center ">
+          <div className="w-1/2 flex justify-end items-center">
             <RenderFollowButton />
           </div>
         </div>
 
-        <div className="w-5/12 flex justify-between">
+        <div className="w-5/12 flex justify-between self-end">
           <span
             className="hover:underline cursor-pointer"
             onClick={() => {

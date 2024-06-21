@@ -5,33 +5,36 @@ import { useAuthContext } from "@/contexts/auth.context";
 import { TabLikes, TabMedia, TabMessage, TabPosts } from "./tabsComponents";
 
 interface TabsUserPage {
-  userId?: string;
+  user?: {
+    id: string;
+    username: string;
+  };
   isProfile?: boolean;
 }
 
-export const TabsUserPage = ({ userId, isProfile }: TabsUserPage) => {
+export const TabsUserPage = ({ user, isProfile }: TabsUserPage) => {
   const { authenticatedUser } = useAuthContext();
-  const displayedUserId = isProfile ? authenticatedUser.id : userId;
+  const displayedUser = isProfile ? authenticatedUser : user;
 
   const tabs = [
     {
       name: "posts",
-      component: <TabPosts userId={displayedUserId} />,
+      component: <TabPosts user={displayedUser} />,
     },
     {
       name: "likes",
-      component: <TabLikes userId={displayedUserId} />,
+      component: <TabLikes user={displayedUser} />,
     },
     {
       name: "media",
-      component: <TabMedia userId={displayedUserId} />,
+      component: <TabMedia user={displayedUser} />,
     },
   ];
 
   if (!isProfile) {
     tabs.push({
       name: "message",
-      component: <TabMessage userId={displayedUserId} />,
+      component: <TabMessage user={displayedUser} />,
     });
   }
 

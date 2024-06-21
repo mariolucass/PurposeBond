@@ -1,8 +1,8 @@
-export const EmptyLikes = ({ username }: { username: string }) => {
+export const EmptyMedia = ({ username }: { username: string }) => {
   return (
     <div className="flex flex-col gap-4 items-center justify-center p-12">
       <h1 className="text-2xl text-center font-bold">
-        @{username} has not liked yet.
+        @{username} has not media yet.
       </h1>
 
       <p className="text-center">

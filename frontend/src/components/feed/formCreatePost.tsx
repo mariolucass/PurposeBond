@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
+import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 
 export const FormCreatePost = () => {
@@ -26,7 +27,7 @@ export const FormCreatePost = () => {
     <Form {...postFormMethods}>
       <form
         onSubmit={postFormMethods.handleSubmit(createPost)}
-        className="grid w-full gap-2 p-6"
+        className="flex flex-col w-full gap-2 p-6"
       >
         <FormField
           control={postFormMethods.control}
@@ -34,12 +35,23 @@ export const FormCreatePost = () => {
           render={({ field }) => (
             <FormItem className="w-full">
               <FormControl>
-                <Textarea placeholder="Type your post here." {...field} />
+                <>
+                  <Label htmlFor="postCreate" className="font-bold ml-2">
+                    Your post
+                  </Label>
+                  <Textarea
+                    placeholder="Type your post here."
+                    id="postCreate"
+                    {...field}
+                  />
+                </>
               </FormControl>
             </FormItem>
           )}
         />
-        <Button type="submit">Post</Button>
+        <Button type="submit" className="w-1/3 self-end">
+          Post
+        </Button>
       </form>
     </Form>
   );

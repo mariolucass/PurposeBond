@@ -1,3 +1,4 @@
+import { EmptyFollowers } from "@/components/_emptyComponents/user/emptyFollowers";
 import {
   Dialog,
   DialogContent,
@@ -52,15 +53,19 @@ export const FollowersDialog = ({ user, isProfile }: any) => {
         <Separator />
 
         <div className="grid gap-4 py-4">
-          <ul className="flex flex-col gap-4 min-h-200 overflow-y-auto">
-            {followers.map((user: any) => (
-              <Fragment key={user.id}>
-                <UserCard user={user} />
+          {followers.length ? (
+            <ul className="flex flex-col gap-4 min-h-200 overflow-y-auto">
+              {followers.map((user: any) => (
+                <Fragment key={user.id}>
+                  <UserCard user={user} />
 
-                <Separator />
-              </Fragment>
-            ))}
-          </ul>
+                  <Separator />
+                </Fragment>
+              ))}
+            </ul>
+          ) : (
+            <EmptyFollowers username={displayedUser.username} />
+          )}
         </div>
 
         <Separator />
