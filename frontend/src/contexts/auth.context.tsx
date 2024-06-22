@@ -3,6 +3,7 @@ import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import { api } from "@/services/config/api";
 import {
   getProfileComments,
+  getProfileCountProperty,
   getProfileDiscussions,
   getProfileFollowers,
   getProfileFollowing,
@@ -39,7 +40,6 @@ const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 export const AuthProvider = ({ children }: ChildrenInterface) => {
   const router = useRouter();
-
   const [authenticatedUser, setAuthenticatedUser] = useState<any | null>(null);
 
   useEffect(() => {
@@ -69,13 +69,29 @@ export const AuthProvider = ({ children }: ChildrenInterface) => {
     propertyName: keyof any,
     fetchFunction: () => Promise<any[]>
   ) => {
-    if (authenticatedUser && authenticatedUser[propertyName]) {
-      return authenticatedUser[propertyName] as any[];
+    const hasNotPropertyInAuthenticatedUser =
+      !authenticatedUser.hasOwnProperty(propertyName);
+
+    if (!authenticatedUser || hasNotPropertyInAuthenticatedUser) {
+      const data = await fetchFunction();
+      setAuthenticatedUser((user: any) => ({ ...user, [propertyName]: data }));
+      return data;
     }
 
-    const data = await fetchFunction();
-    setAuthenticatedUser((user: any) => ({ ...user, [propertyName]: data }));
-    return data;
+    const newCountProperty: any = await getProfileCountProperty(
+      propertyName as string
+    );
+
+    const hasDifferenceinCountProperty =
+      newCountProperty[propertyName] !== authenticatedUser[propertyName].length;
+
+    if (hasDifferenceinCountProperty) {
+      const data = await fetchFunction();
+      setAuthenticatedUser((user: any) => ({ ...user, [propertyName]: data }));
+      return data;
+    }
+
+    return authenticatedUser[propertyName];
   };
 
   const restrictActionToLoggedInUsers = (interaction: string = "interact") => {

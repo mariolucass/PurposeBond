@@ -46,9 +46,8 @@ export const SideBarLeft = () => {
 
         <ul className="w-full flex flex-col space-y-8 p-4">
           {navigationLinks.map((link) => (
-            <Link href={link.href}>
+            <Link href={link.href} key={link.href}>
               <li
-                key={link.href}
                 className={
                   isOnPath(link.href)
                     ? `${defaultNavigationClass} text-decoration-line: underline font-bold `
