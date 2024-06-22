@@ -1,20 +1,15 @@
 import { FormFields } from "@/components/formFields";
+import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { SheetClose, SheetFooter } from "@/components/ui/sheet";
+import { useAuthContext } from "@/contexts/auth.context";
 import { UserUpdateType } from "@/interfaces/users.interfaces";
 import { userUpdateSchema } from "@/lib/schemas/users.schemas";
+import { patchUser } from "@/services/users.services";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { useForm } from "react-hook-form";
 
-export const FormEditProfile = ({ user }: { user: UserUpdateType }) => {
-  type EditProfileForm = {
-    [K in (typeof fieldNames)[number]]: string;
-  };
-
-  const editProfile = async (form: EditProfileForm) => {
-    console.log(form);
-  };
-
+export const FormEditProfile = () => {
   const fieldNames = [
     "name",
     "username",
@@ -26,21 +21,49 @@ export const FormEditProfile = ({ user }: { user: UserUpdateType }) => {
     "profileImage",
   ];
 
-  const defaultValues = () => {
-    const newObject: any = {};
-
-    fieldNames.forEach((name) => {
-      newObject[name] = "";
-    });
-
-    return newObject;
+  type EditProfileForm = {
+    [K in (typeof fieldNames)[number]]: string | null;
   };
 
-  console.log(defaultValues());
+  const { authenticatedUser } = useAuthContext();
+
+  const filteredUser = fieldNames.reduce((acc, fieldName) => {
+    acc[fieldName] =
+      (authenticatedUser as Record<string, any>)[fieldName] || "";
+    return acc;
+  }, {} as Record<string, string>);
+
+  const editProfile = async (form: EditProfileForm) => {
+    const isString = (value: any) => {
+      return typeof value === "string";
+    };
+
+    const isValidString = (key: string, value: any) => {
+      return value.trim() !== "" && value !== authenticatedUser[key];
+    };
+
+    const isValidValue = (key: string, value: any) => {
+      return ![undefined, null, authenticatedUser[key]].includes(value);
+    };
+
+    const formStrip = Object.fromEntries(
+      Object.entries(form).filter(([key, value]) => {
+        return isString(value)
+          ? isValidString(key, value)
+          : isValidValue(key, value);
+      })
+    );
+
+    try {
+      const updatedProfile = await patchUser(formStrip, authenticatedUser.id);
+
+      console.log(updatedProfile);
+    } catch (error) {}
+  };
 
   const profileFormMethods = useForm<UserUpdateType>({
     resolver: zodResolver(userUpdateSchema),
-    defaultValues: defaultValues(),
+    defaultValues: filteredUser,
   });
 
   return (
@@ -50,6 +73,12 @@ export const FormEditProfile = ({ user }: { user: UserUpdateType }) => {
         className="flex flex-col w-full gap-4 p-6"
       >
         <FormFields control={profileFormMethods.control} type={"userUpdate"} />
+
+        <SheetFooter>
+          <SheetClose asChild>
+            <Button type="submit">Save changes</Button>
+          </SheetClose>
+        </SheetFooter>
       </form>
     </Form>
   );

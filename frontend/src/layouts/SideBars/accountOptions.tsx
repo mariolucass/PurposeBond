@@ -5,14 +5,34 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { useAuthContext } from "@/contexts/auth.context";
 import { Ellipsis, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export const AccountOptions = () => {
   const router = useRouter();
+
+  const { authenticatedUser, setAuthenticatedUser } = useAuthContext();
+
   const handleLogout = () => {
     router.push("/login");
 
+    const accountsString = localStorage.getItem("accounts");
+    const accounts = accountsString ? JSON.parse(accountsString) : [];
+
+    const { profileImage, username, name } = authenticatedUser;
+    const token = localStorage.getItem("tokenRedeSocial");
+
+    const haveAccount = accounts.some(
+      (account: any) => account.username === username
+    );
+
+    if (!haveAccount) {
+      accounts.push({ profileImage, username, name, token });
+      localStorage.setItem("accounts", JSON.stringify(accounts));
+    }
+
+    setAuthenticatedUser(null);
     localStorage.removeItem("tokenRedeSocial");
   };
 

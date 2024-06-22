@@ -54,7 +54,7 @@ export const FollowingDialog = ({ user, isProfile }: any) => {
 
         <div className="grid gap-4 py-4">
           {following.length ? (
-            <ul className="flex flex-col gap-4 min-h-200 overflow-y-auto">
+            <ul className="flex flex-col gap-4 h-96 overflow-y-auto">
               {following.map((user: any) => (
                 <Fragment key={user.id}>
                   <UserCard user={user} />

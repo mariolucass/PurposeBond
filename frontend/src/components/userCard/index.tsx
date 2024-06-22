@@ -1,18 +1,9 @@
-import { useModalContext } from "@/contexts/modal.context";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export const UserCard = ({ user }: any) => {
-  const { setIsDialogFollowersOpen, setIsDialogFollowingOpen } =
-    useModalContext();
-
-  const closeModal = () => {
-    setIsDialogFollowersOpen(false);
-    setIsDialogFollowingOpen(false);
-  };
-
   return (
-    <li className="flex items-center" onClick={closeModal}>
+    <li className="flex items-center">
       <Avatar className="mr-4">
         <AvatarImage src={user.profileImage} />
         <AvatarFallback>CN</AvatarFallback>

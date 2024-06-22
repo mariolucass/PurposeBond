@@ -40,3 +40,9 @@ export const getProfileFollowers = async () => {
 export const getProfileFollowing = async () => {
   return handleApiResponse<PostInterface[]>(api.get(`/profile/following/`));
 };
+
+export const getProfileCountProperty = async (property: string) => {
+  return handleApiResponse<UserInterface[]>(
+    api.get(`/profile/count/`, { params: { property: property } })
+  );
+};

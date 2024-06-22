@@ -85,9 +85,11 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
 
       <div className="flex flex-col rounded-lg p-4 mb-4 relative z-20 justify-between h-36 px-8">
         <div className="flex w-full ">
-          <p className="w-1/2">{displayedUser.description || "No bio yet."}</p>
+          <p className="w-2/3 break-words">
+            {displayedUser.description || "No bio yet."}
+          </p>
 
-          <div className="w-1/2 flex justify-end items-center">
+          <div className="w-1/3 flex justify-end items-center">
             <RenderFollowButton />
           </div>
         </div>

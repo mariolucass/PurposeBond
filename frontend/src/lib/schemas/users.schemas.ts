@@ -42,7 +42,9 @@ export const userRefSchema = userSchema.pick({
 
 export const userCreateSchema = userSchema;
 
-export const userUpdateSchema = userSchema.omit({ id: true, _count: true });
+export const userUpdateSchema = userSchema
+  .omit({ id: true, _count: true })
+  .partial();
 
 export const userReturnSchema = userSchema.omit({
   password: true,
