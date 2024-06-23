@@ -18,7 +18,7 @@ export const SearchForm = ({ query }: { query: string | null }) => {
 
   return (
     <form
-      className="w-full flex items-center space-x-2 "
+      className="w-full flex items-center space-x-2 p-4"
       onSubmit={handleSubmit(handleSearch)}
     >
       <Input type="search" placeholder="Search" {...register("search")} />

@@ -67,10 +67,10 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
 
   return (
     <div className="relative">
-      <div className="absolute top-0 left-0 w-full h-1/3 bg-primary z-10 rounded-t-2xl" />
+      <div className="absolute top-0 left-0 w-full h-1/3 bg-primary z-10" />
 
-      <div className="flex flex-row items-center my-6 justify-between pr-8 relative z-20 ml-4 mt-12">
-        <div className="flex flex-row gap-6">
+      <div className="flex flex-row items-center my-6 justify-between pr-8 relative z-20 ml-4">
+        <div className="flex flex-row gap-4">
           <Avatar className="w-[120px] h-[120px] border-primary border-4 mt-4">
             <AvatarImage src={displayedUser.profileImage} />
           </Avatar>
@@ -101,25 +101,29 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
             {displayedUser.address || "somewhere"}
           </span>
 
-          <div className="w-5/12 flex justify-between self-end">
-            <span
-              className="hover:underline cursor-pointer"
-              onClick={() => {
-                setIsDialogFollowingOpen(true);
-              }}
-            >
-              {displayedUser._count.following} following
-            </span>
+          <ul className="flex gap-4 self-end">
+            <li>
+              <span
+                className="hover:underline cursor-pointer font-semibold"
+                onClick={() => {
+                  setIsDialogFollowingOpen(true);
+                }}
+              >
+                {displayedUser._count.following} following
+              </span>
+            </li>
 
-            <span
-              className="hover:underline cursor-pointer"
-              onClick={() => {
-                setIsDialogFollowersOpen(true);
-              }}
-            >
-              {displayedUser._count.followers} followers
-            </span>
-          </div>
+            <li>
+              <span
+                className="hover:underline cursor-pointer font-semibold"
+                onClick={() => {
+                  setIsDialogFollowersOpen(true);
+                }}
+              >
+                {displayedUser._count.followers} followers
+              </span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

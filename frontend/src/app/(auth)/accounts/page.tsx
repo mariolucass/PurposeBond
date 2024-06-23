@@ -60,9 +60,9 @@ const AccountsPage = () => {
 
       <div className="w-full border-2 h-28 p-4 flex justify-center items-center rounded-sm">
         <span className="self-center">
-          Don't have an account?{" "}
-          <Link href="/signup" className="font-bold">
-            Sign up
+          Already have an account?{" "}
+          <Link href="/login" className="font-bold">
+            Login
           </Link>
         </span>
       </div>

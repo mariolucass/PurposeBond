@@ -4,9 +4,8 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { handleJoinedAtDate } from "@/utils/handleDateWithMoment";
 import { CalendarDays } from "lucide-react";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
 
 interface HoverCardAuthorProps {
   author: {
@@ -14,6 +13,7 @@ interface HoverCardAuthorProps {
     username: string;
     profileImage?: string;
     description?: string;
+    joinedAt: string;
   };
 }
 
@@ -21,14 +21,14 @@ export const HoverCardAuthor = ({ author }: HoverCardAuthorProps) => {
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <div className="flex gap-2 items-center h-[32px] w-[224px] justify-evenly">
-          <h2 className="cursor-pointer">{author.name}</h2>
+        <div className="flex gap-4 items-center justify-evenly">
+          <div>
+            <h2 className="cursor-pointer text-lg font-semibold">
+              {author.name}
+            </h2>
 
-          <Separator orientation="vertical" />
-
-          <p className="cursor-pointer">@{author.username}</p>
-
-          <Separator orientation="vertical" />
+            <p className="cursor-pointer text-gray-500">@{author.username}</p>
+          </div>
         </div>
       </HoverCardTrigger>
 
@@ -42,17 +42,13 @@ export const HoverCardAuthor = ({ author }: HoverCardAuthorProps) => {
             <h4 className="text-sm font-semibold">@{author.username}</h4>
 
             <p className="text-sm">
-              {author.description
-                ? author.description
-                : "The React Framework – created and maintained by @vercel."}
+              {author.description ? author.description : "No description."}
             </p>
 
-            <Button>Follow</Button>
-
             <div className="flex items-center pt-2">
-              <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
+              <CalendarDays className="mr-2 h-4 w-4 opacity-70" />
               <span className="text-xs text-muted-foreground">
-                Joined December 2021
+                Joined {handleJoinedAtDate(author.joinedAt)}.
               </span>
             </div>
           </div>

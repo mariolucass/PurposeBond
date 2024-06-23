@@ -1,5 +1,6 @@
 "use client";
 
+import { Navigator } from "@/components/navigator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SearchProvider } from "@/contexts/search.context";
 import { SearchResults } from "@/layouts/Search/resultsSearch";
@@ -43,14 +44,16 @@ const SearchPage = () => {
 
   return (
     <SearchProvider>
-      <section className="w-full min-w-full flex flex-col gap-4 justify-start p-4">
+      <section className="w-full min-w-full flex flex-col justify-start">
+        <Navigator name={"Search"} />
+
         <SearchForm query={query} />
 
         <Tabs
           defaultValue={type ? type : "popular"}
-          className="min-w-full flex flex-col items-center"
+          className="min-w-full flex flex-col items-center p-4"
         >
-          <TabsList className="w-full flex justify-between p-4 my-8">
+          <TabsList className="w-full flex justify-between p-4 ">
             {tabs.map((item) => (
               <TabsTrigger
                 value={item.name}

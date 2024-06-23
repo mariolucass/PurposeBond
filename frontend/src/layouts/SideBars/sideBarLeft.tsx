@@ -23,8 +23,8 @@ export const SideBarLeft = () => {
   if (authenticatedUser) {
     navigationLinks.push(
       { href: "/profile", label: "Profile", icon: <UserIcon /> },
-      { href: "/messages", label: "Messages", icon: <MessageSquareText /> },
       { href: "/notifications", label: "Notifications", icon: <Bell /> },
+      { href: "/messages", label: "Messages", icon: <MessageSquareText /> },
       { href: "/settings", label: "Settings", icon: <SettingsIcon /> }
     );
   } else {
@@ -58,7 +58,7 @@ export const SideBarLeft = () => {
               <li
                 className={
                   isOnPath(link.href)
-                    ? `${defaultNavigationClass} text-decoration-line: underline font-bold `
+                    ? `${defaultNavigationClass} text-decoration-line: underline font-semibold `
                     : `${defaultNavigationClass} `
                 }
               >

@@ -35,13 +35,13 @@ export const AccountOptions = () => {
           <Ellipsis className="relative top-0 right-0" />
         </MenubarTrigger>
 
-        <MenubarContent className="flex flex-col gap-2">
-          <MenubarItem className="flex gap-2" onClick={handleLogout}>
+        <MenubarContent className="flex flex-col gap-4">
+          <MenubarItem className="flex gap-4" onClick={handleLogout}>
             <LogOut />
             Logout
           </MenubarItem>
 
-          <MenubarItem className="flex gap-2" onClick={handleChangeAccount}>
+          <MenubarItem className="flex gap-4" onClick={handleChangeAccount}>
             <LogOut />
             Switch Account
           </MenubarItem>

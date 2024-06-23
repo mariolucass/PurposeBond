@@ -1,12 +1,12 @@
 "use client";
 
 import { EmptyNotifications } from "@/components/_emptyComponents/emptyNotifications";
+import { Navigator } from "@/components/navigator";
 import { NotificationCard } from "@/components/notificationCard";
-import { Separator } from "@/components/ui/separator";
 import { ApiError } from "@/services/config/apiError";
 import { getNotifications } from "@/services/notifications.services";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState<any[]>([]);
@@ -35,15 +35,16 @@ const Notifications = () => {
   }, []);
 
   return (
-    <section className="w-full min-w-full flex flex-col gap-4 justify-start p-4">
-      {notifications.length ? (
-        <ul className="flex flex-col w-full p-2 gap-4">
-          {notifications.map((notification) => (
-            <React.Fragment key={notification.id}>
-              <NotificationCard notification={notification} />
+    <section className="w-full min-w-full flex flex-col gap-4 justify-start">
+      <Navigator name={"Notifications"} />
 
-              <Separator />
-            </React.Fragment>
+      {notifications.length ? (
+        <ul className="flex flex-col w-full">
+          {notifications.map((notification) => (
+            <NotificationCard
+              notification={notification}
+              key={notification.id}
+            />
           ))}
         </ul>
       ) : (

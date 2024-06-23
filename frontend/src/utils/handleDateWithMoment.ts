@@ -18,3 +18,7 @@ export const handleDateWithMoment = (date: Date | string) => {
 
   return moment(date, "YYYY-MM-DDTHH:mm").startOf("minute").fromNow();
 };
+
+export const handleJoinedAtDate = (date: Date | string) => {
+  return moment(date, "YYYY").year();
+};

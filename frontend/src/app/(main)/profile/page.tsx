@@ -1,6 +1,7 @@
 "use client";
 
 import { LoadingComponent } from "@/components/loading";
+import { Navigator } from "@/components/navigator";
 import { Separator } from "@/components/ui/separator";
 import { useAuthContext } from "@/contexts/auth.context";
 import { useFetchProfile } from "@/hooks/user.hook";
@@ -22,7 +23,9 @@ const ProfilePage = () => {
   }
 
   return (
-    <section className="gap-4 min-w-full w-full flex flex-col justify-start">
+    <section className="min-w-full w-full flex flex-col justify-start">
+      <Navigator name={"Profile"} />
+
       <UserSectionProfile isProfile />
 
       <Separator />

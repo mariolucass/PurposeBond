@@ -3,6 +3,7 @@ import { deleteLike, postLike } from "@/services/likes.services";
 import { deleteRepost, postRepost } from "@/services/reposts.services";
 import { MessageSquare, Repeat2, ThumbsUp } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
 import { errorLiking, errorReposting } from "./errors";
 
 export interface PostInteractionsProps {
@@ -108,24 +109,42 @@ export const PostInteractions = ({ postId, count }: PostInteractionsProps) => {
     }
   };
 
+  const spanClass = "self-center font-semibold mt-2";
+
   return (
-    <div className="w-[80px] flex gap-8">
+    <div className="flex gap-4 mr-[12px]">
       <div className="flex flex-col justify-center">
-        <ThumbsUp fill={isLiked ? "#4d7a86" : "none"} onClick={handleLike} />
-        <h2 className="self-center">{likes}</h2>
+        <Button className="w-[48px]" onClick={handleLike}>
+          <ThumbsUp fill={isLiked ? "#4d7a86" : "none"} />
+        </Button>
+
+        <span
+          className={isLiked ? `${spanClass} text-[#4d7a86]` : `${spanClass}`}
+        >
+          {likes}
+        </span>
       </div>
 
       <div className="flex flex-col justify-center">
-        <Repeat2
-          fill={isReposted ? "#4d7a86" : "none"}
-          onClick={handleRepost}
-        />
-        <h2 className="self-center">{reposts}</h2>
+        <Button className="w-[48px]" onClick={handleRepost}>
+          <Repeat2 fill={isReposted ? "#4d7a86" : "none"} />
+        </Button>
+
+        <span
+          className={
+            isReposted ? `${spanClass} text-[#4d7a86]` : `${spanClass}`
+          }
+        >
+          {reposts}
+        </span>
       </div>
 
       <div className="flex flex-col justify-center">
-        <MessageSquare />
-        <h2 className="self-center">{comments}</h2>
+        <Button className="w-[48px]">
+          <MessageSquare />
+        </Button>
+
+        <span className={`${spanClass}`}>{comments}</span>
       </div>
     </div>
   );

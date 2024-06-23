@@ -52,7 +52,7 @@ export const FormCreatePost = () => {
     <Form {...postFormMethods}>
       <form
         onSubmit={postFormMethods.handleSubmit(createPost)}
-        className="flex flex-col w-full gap-2 p-6"
+        className="flex flex-col w-full gap-4 p-6"
       >
         <FormField
           control={postFormMethods.control}
@@ -75,7 +75,7 @@ export const FormCreatePost = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-1/3 self-end">
+        <Button type="submit" className="w-3/12 self-end">
           Post
         </Button>
       </form>

@@ -24,12 +24,10 @@ export const Feed = () => {
         }
       }
     };
-
     if (shouldFetchPosts) {
       fetchPosts();
       setShouldFetchPosts(false);
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldFetchPosts]);
 
