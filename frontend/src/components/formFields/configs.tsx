@@ -21,74 +21,47 @@ interface FormFieldUpdateProfileConfig extends BaseFieldConfig {
   name: keyof UserUpdateType;
 }
 
-export const registerFieldsConfig: FormFieldRegisterConfig[] = [
-  {
-    label: "Email",
-    name: "email",
-    placeholder: "Enter your email address.",
-    type: "email",
-  },
-  {
-    label: "Password",
-    name: "password",
-    placeholder: "Enter your password.",
-    type: "password",
-  },
-  {
-    label: "Confirm Password",
-    name: "confirmPassword",
-    placeholder: "Confirm your password.",
-    type: "password",
-  },
-];
+const registerFields = ["email", "username", "password", "confirmPassword"];
+export const registerFieldsConfig: FormFieldRegisterConfig[] =
+  registerFields.map((fieldName) => {
+    const capitalizedFieldName =
+      fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
 
-export const loginFieldsConfig: FormFieldLoginConfig[] = [
-  {
-    label: "Email",
-    name: "email",
-    placeholder: "Enter your email address.",
-    type: "email",
-  },
-  {
-    label: "Password",
-    name: "password",
-    placeholder: "Enter your password.",
-    type: "password",
-  },
-];
+    const type = fieldName === "password" ? "password" : "input";
 
-// export const updateProfileFieldsConfig: FormFieldUpdateProfileConfig[] = [
-//   {
-//     label: "Email",
-//     name: "email",
-//     placeholder: "Enter your email address.",
-//     type: "email",
-//   },
-//   {
-//     label: "Password",
-//     name: "password",
-//     placeholder: "Enter your password.",
-//     type: "password",
-//   },
-//   {
-//     label: "Confirm Password",
-//     name: "confirmPassword",
-//     placeholder: "Confirm your password.",
-//     type: "password",
-//   },
-// ];
+    return {
+      label: capitalizedFieldName,
+      name: fieldName as keyof RegisterType,
+      placeholder: `Enter your ${fieldName}.`,
+      type,
+    };
+  });
+
+const loginFields = ["email", "password"];
+export const loginFieldsConfig: FormFieldLoginConfig[] = loginFields.map(
+  (fieldName) => {
+    const capitalizedFieldName =
+      fieldName.charAt(0).toUpperCase() + fieldName.slice(1);
+
+    const type = fieldName === "password" ? "password" : "input";
+
+    return {
+      label: capitalizedFieldName,
+      name: fieldName as keyof LoginType,
+      placeholder: `Enter your ${fieldName}.`,
+      type,
+    };
+  }
+);
 
 const updateProfileFields = [
   "name",
-  "username",
-  "email",
   "description",
   "phone",
   "address",
   "password",
   "profileImage",
 ];
-
 export const updateProfileFieldsConfig: FormFieldUpdateProfileConfig[] =
   updateProfileFields.map((fieldName) => {
     const capitalizedFieldName =

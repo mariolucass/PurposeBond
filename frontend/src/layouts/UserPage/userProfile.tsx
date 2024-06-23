@@ -4,6 +4,7 @@ import { useAuthContext } from "@/contexts/auth.context";
 import { useModalContext } from "@/contexts/modal.context";
 import { UserInterface } from "@/interfaces/users.interfaces";
 import { followUser, unfollowUser } from "@/services/follow.services";
+import { MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
 import { EditProfile } from "./editProfile";
 
@@ -94,24 +95,31 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
           </div>
         </div>
 
-        <div className="w-5/12 flex justify-between self-end">
-          <span
-            className="hover:underline cursor-pointer"
-            onClick={() => {
-              setIsDialogFollowingOpen(true);
-            }}
-          >
-            {displayedUser._count.following} following
+        <div className="w-full flex justify-between">
+          <span className="flex gap-2">
+            <MapPin />
+            {displayedUser.address || "somewhere"}
           </span>
 
-          <span
-            className="hover:underline cursor-pointer"
-            onClick={() => {
-              setIsDialogFollowersOpen(true);
-            }}
-          >
-            {displayedUser._count.followers} followers
-          </span>
+          <div className="w-5/12 flex justify-between self-end">
+            <span
+              className="hover:underline cursor-pointer"
+              onClick={() => {
+                setIsDialogFollowingOpen(true);
+              }}
+            >
+              {displayedUser._count.following} following
+            </span>
+
+            <span
+              className="hover:underline cursor-pointer"
+              onClick={() => {
+                setIsDialogFollowersOpen(true);
+              }}
+            >
+              {displayedUser._count.followers} followers
+            </span>
+          </div>
         </div>
       </div>
     </div>

@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { RegisterType } from "@/interfaces/auth.interfaces";
 import { registerSchema } from "@/lib/schemas/auth.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { FormProvider, useForm } from "react-hook-form";
 
 export const RegisterForm = () => {
@@ -23,13 +22,7 @@ export const RegisterForm = () => {
       >
         <FormFields control={registerFormMethods.control} type={"register"} />
 
-        <div className="self-end flex gap-4">
-          <Button type="submit">Register</Button>
-        </div>
-
-        <span className="self-center">
-          Already have an account? <Link href="/login">Login</Link>
-        </span>
+        <Button type="submit">Register</Button>
       </form>
     </FormProvider>
   );

@@ -5,6 +5,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { CalendarDays } from "lucide-react";
+import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 
 interface HoverCardAuthorProps {
@@ -12,6 +13,7 @@ interface HoverCardAuthorProps {
     name: string;
     username: string;
     profileImage?: string;
+    description?: string;
   };
 }
 
@@ -40,8 +42,12 @@ export const HoverCardAuthor = ({ author }: HoverCardAuthorProps) => {
             <h4 className="text-sm font-semibold">@{author.username}</h4>
 
             <p className="text-sm">
-              The React Framework – created and maintained by @vercel.
+              {author.description
+                ? author.description
+                : "The React Framework – created and maintained by @vercel."}
             </p>
+
+            <Button>Follow</Button>
 
             <div className="flex items-center pt-2">
               <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}

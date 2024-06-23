@@ -1,15 +1,23 @@
-import { Fragment } from "react";
+import Link from "next/link";
 import { LoginForm } from "./formLogin";
 
 const LoginPage = () => {
   return (
-    <Fragment>
-      <LoginForm />
-
-      <div className="w-full shadow-sm h-32">
-        <div></div>
+    <section className="w-1/2 h-full flex flex-col gap-4 shadow-sm mx-auto r">
+      <div className="w-full border-2 flex flex-col gap-4 p-4 rounded-sm">
+        <h1 className="text-2xl text-center">PurposeBond</h1>
+        <LoginForm />
       </div>
-    </Fragment>
+
+      <div className="w-full border-2 h-28 p-4 flex justify-center items-center rounded-sm">
+        <span className="self-center">
+          Don't have an account?{" "}
+          <Link href="/signup" className="font-bold">
+            Sign up
+          </Link>
+        </span>
+      </div>
+    </section>
   );
 };
 

@@ -17,20 +17,12 @@ export const AccountOptions = () => {
   const handleLogout = () => {
     router.push("/login");
 
-    const accountsString = localStorage.getItem("accounts");
-    const accounts = accountsString ? JSON.parse(accountsString) : [];
+    setAuthenticatedUser(null);
+    localStorage.removeItem("tokenRedeSocial");
+  };
 
-    const { profileImage, username, name } = authenticatedUser;
-    const token = localStorage.getItem("tokenRedeSocial");
-
-    const haveAccount = accounts.some(
-      (account: any) => account.username === username
-    );
-
-    if (!haveAccount) {
-      accounts.push({ profileImage, username, name, token });
-      localStorage.setItem("accounts", JSON.stringify(accounts));
-    }
+  const handleChangeAccount = () => {
+    router.push("/accounts");
 
     setAuthenticatedUser(null);
     localStorage.removeItem("tokenRedeSocial");
@@ -49,7 +41,7 @@ export const AccountOptions = () => {
             Logout
           </MenubarItem>
 
-          <MenubarItem className="flex gap-2" onClick={handleLogout}>
+          <MenubarItem className="flex gap-2" onClick={handleChangeAccount}>
             <LogOut />
             Switch Account
           </MenubarItem>
