@@ -38,9 +38,9 @@ export const PostComponent = ({ post }: PostProps) => {
           <PostAuthorInfo author={post.author} createdAt={post.createdAt} />
         </div>
 
-        <p className="text-gray-800 max-w-56 ml-14 min-h-24">{post.content}</p>
+        <p className="text-gray-800 max-w-56 ml-16">{post.content}</p>
 
-        <div ref={interactionsRef} className="w-4/12 flex self-end ml-14">
+        <div ref={interactionsRef} className=" flex self-end">
           <PostInteractions postId={post.id} count={post._count} />
         </div>
       </div>

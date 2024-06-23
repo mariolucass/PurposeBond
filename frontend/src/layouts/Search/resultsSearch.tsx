@@ -58,7 +58,7 @@ export const SearchResults = ({
   }
 
   return (
-    <ul className="flex flex-col gap-4 w-full">
+    <ul className="flex flex-col gap-4 w-full p-4">
       {!results[type].length ? (
         <NoSearchResults typeSearch={type} search={query} />
       ) : (
@@ -74,7 +74,6 @@ export const SearchResults = ({
           </Fragment>
         ))
       )}
-      {}
     </ul>
   );
 };

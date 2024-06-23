@@ -4,10 +4,11 @@ import { PostComponent } from "@/components/post";
 import { Separator } from "@/components/ui/separator";
 import { usePostContext } from "@/contexts/post.context";
 
+import { LoadingComponent } from "@/components/loading";
+import { Navigator } from "@/components/navigator";
 import { useFetchPost } from "@/hooks/post.hook";
 import { CommentsList } from "./commentsList";
 import { FormCreateComment } from "./formCreateComment";
-import { LoadingComponent } from "@/components/loading";
 
 interface PostPageProps {
   params: { id: string };
@@ -30,6 +31,8 @@ const PostPage = ({ params: { id } }: PostPageProps) => {
 
   return (
     <section className="gap-4 w-full flex flex-col justify-start">
+      <Navigator name={"Post"} />
+
       <PostComponent post={currentPost} />
 
       <Separator />

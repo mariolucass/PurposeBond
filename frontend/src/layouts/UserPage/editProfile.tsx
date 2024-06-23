@@ -7,7 +7,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Edit2Icon } from "lucide-react";
 import { FormEditProfile } from "./formEditProfile";
 
 export const EditProfile = () => {
@@ -15,9 +14,7 @@ export const EditProfile = () => {
     <Sheet>
       <SheetTrigger asChild>
         <div className="self-end mb-4">
-          <Button className="w-[48px] h-[48px]">
-            <Edit2Icon />
-          </Button>
+          <Button>Edit Profile</Button>
         </div>
       </SheetTrigger>
 

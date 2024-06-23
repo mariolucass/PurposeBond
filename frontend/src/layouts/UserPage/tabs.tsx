@@ -43,7 +43,7 @@ export const TabsUserPage = ({ user, isProfile }: TabsUserPage) => {
       defaultValue="posts"
       className="min-w-full flex flex-col items-center"
     >
-      <TabsList className="w-11/12 flex justify-between p-4 mb-4">
+      <TabsList className="w-11/12 flex justify-between p-4 my-4">
         {tabs.map((item) => (
           <TabsTrigger value={item.name} key={item.name}>
             {item.name.charAt(0).toUpperCase() + item.name.slice(1)}

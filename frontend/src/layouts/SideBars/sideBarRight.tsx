@@ -47,18 +47,20 @@ export const SideBarRight = () => {
         <Button type="submit">Search</Button>
       </form>
 
-      <div className="border-4 gap-4 flex w-full flex-col rounded-2xl h-96 justify-center p-4">
-        <h1>Recommendations</h1>
+      {recommendations.length > 0 && (
+        <div className="border-2 gap-4 flex w-full flex-col rounded-radius justify-center p-4">
+          <h1 className="text-xl font-semibold">Recommendations</h1>
 
-        <ul className="space-y-4 w-full">
-          {recommendations.map((user: any, index: any) => (
-            <Fragment key={user.id}>
-              <UserCard user={user} />
-              {index != recommendations.length - 1 && <Separator />}
-            </Fragment>
-          ))}
-        </ul>
-      </div>
+          <ul className="space-y-4 w-full">
+            {recommendations.map((user: any, index: any) => (
+              <Fragment key={user.id}>
+                <UserCard user={user} />
+                {index != recommendations.length - 1 && <Separator />}
+              </Fragment>
+            ))}
+          </ul>
+        </div>
+      )}
     </section>
   );
 };

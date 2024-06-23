@@ -12,10 +12,10 @@ export const TabMessage = ({ user }: TabMessageProps) => {
   const sendMessage = () => {};
 
   return (
-    <div className="w-9/12 flex flex-col self-center m-auto gap-6 p-6">
+    <div className="w-9/12 flex flex-col self-center m-auto gap-4 p-6">
       <h1 className="text-2xl">Send a message!</h1>
 
-      <div className="w-full grid gap-2">
+      <div className="w-full grid gap-4">
         <Textarea placeholder="Type your message here." />
         <Button onClick={() => {}}>Send message</Button>
       </div>

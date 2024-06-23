@@ -1,6 +1,7 @@
 "use client";
 
 import { LoadingComponent } from "@/components/loading";
+import { Navigator } from "@/components/navigator";
 import { Separator } from "@/components/ui/separator";
 import { useAuthContext } from "@/contexts/auth.context";
 import { UserInterface } from "@/interfaces/users.interfaces";
@@ -55,6 +56,8 @@ const UserPage = ({ params: { id } }: UserPageProps) => {
 
   return (
     <section className="gap-4 min-w-full w-full flex flex-col justify-start">
+      <Navigator name={user.username} />
+
       <UserSectionProfile user={user} />
 
       <Separator />

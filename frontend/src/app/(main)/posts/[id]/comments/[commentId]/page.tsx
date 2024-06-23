@@ -2,6 +2,7 @@
 
 import { CommentComponent } from "@/components/comment";
 import { LoadingComponent } from "@/components/loading";
+import { Navigator } from "@/components/navigator";
 import { Separator } from "@/components/ui/separator";
 import { useCommentContext } from "@/contexts/comment.context";
 import { useFetchComment } from "@/hooks/comment.hook";
@@ -28,6 +29,8 @@ const CommentPage = ({ params: { id, commentId } }: CommentPageProps) => {
 
   return (
     <section className="gap-4 flex flex-col justify-start">
+      <Navigator name={"Comment"} />
+
       <div className="w-full flex">
         <Separator orientation="vertical" />
 
