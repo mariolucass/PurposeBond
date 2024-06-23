@@ -25,7 +25,7 @@ export const FormEditProfile = () => {
     [K in (typeof fieldNames)[number]]: string | null;
   };
 
-  const { authenticatedUser } = useAuthContext();
+  const { authenticatedUser, setAuthenticatedUser } = useAuthContext();
 
   const filteredUser = fieldNames.reduce((acc, fieldName) => {
     acc[fieldName] =
@@ -58,7 +58,13 @@ export const FormEditProfile = () => {
       const updatedProfile = await patchUser(formStrip, authenticatedUser.id);
 
       console.log(updatedProfile);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
+
+    setAuthenticatedUser((user: any) => {
+      return { ...user, ...formStrip };
+    });
   };
 
   const profileFormMethods = useForm<UserUpdateType>({

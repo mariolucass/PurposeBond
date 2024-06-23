@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarImage } from "../ui/avatar";
 
 export const UserCard = ({ user }: any) => {
   return (
     <li className="flex items-center">
       <Avatar className="mr-4">
         <AvatarImage src={user.profileImage} />
-        <AvatarFallback>CN</AvatarFallback>
       </Avatar>
 
       <Link href={`/users/${user.id}`}>

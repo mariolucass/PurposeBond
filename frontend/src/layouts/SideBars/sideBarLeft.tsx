@@ -2,7 +2,14 @@
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useAuthContext } from "@/contexts/auth.context";
-import { HomeIcon, LogInIcon, SettingsIcon, UserIcon } from "lucide-react";
+import {
+  Bell,
+  HomeIcon,
+  LogInIcon,
+  MessageSquareText,
+  SettingsIcon,
+  UserIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AccountOptions } from "./accountOptions";
@@ -16,7 +23,8 @@ export const SideBarLeft = () => {
   if (authenticatedUser) {
     navigationLinks.push(
       { href: "/profile", label: "Profile", icon: <UserIcon /> },
-      { href: "/notifications", label: "Notifications", icon: <HomeIcon /> },
+      { href: "/messages", label: "Messages", icon: <MessageSquareText /> },
+      { href: "/notifications", label: "Notifications", icon: <Bell /> },
       { href: "/settings", label: "Settings", icon: <SettingsIcon /> }
     );
   } else {
