@@ -112,7 +112,7 @@ export const PostInteractions = ({ postId, count }: PostInteractionsProps) => {
   const spanClass = "self-center font-semibold mt-2";
 
   return (
-    <div className="flex gap-4 mr-[12px]">
+    <div className="flex gap-4">
       <div className="flex flex-col justify-center">
         <Button className="w-[48px]" onClick={handleLike}>
           <ThumbsUp fill={isLiked ? "#4d7a86" : "none"} />

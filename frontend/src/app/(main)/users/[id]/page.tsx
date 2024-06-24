@@ -55,8 +55,8 @@ const UserPage = ({ params: { id } }: UserPageProps) => {
   }
 
   return (
-    <section className="gap-4 min-w-full w-full flex flex-col justify-start">
-      <Navigator name={user.username} />
+    <section className="min-w-full w-full flex flex-col justify-start">
+      <Navigator name={user.name} description={`@${user.username}`} />
 
       <UserSectionProfile user={user} />
 

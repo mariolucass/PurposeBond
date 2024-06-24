@@ -3,7 +3,6 @@ import { handleDateWithMoment } from "@/utils/handleDateWithMoment";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Separator } from "../ui/separator";
 import { HoverCardAuthor } from "./hoverAuthorInfo";
-import { PostMenuOptions } from "./menuOptions";
 
 interface PostAuthorInfoProps {
   author: {
@@ -37,8 +36,8 @@ export const PostAuthorInfo = ({ author, createdAt }: PostAuthorInfoProps) => {
           </span>
         </div>
       </div>
-
-      {verifyOwnership(author.id) && <PostMenuOptions />}
+      {/* 
+      {verifyOwnership(author.id) && } */}
     </div>
   );
 };

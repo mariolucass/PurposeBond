@@ -45,7 +45,7 @@ const SearchPage = () => {
   return (
     <SearchProvider>
       <section className="w-full min-w-full flex flex-col justify-start">
-        <Navigator name={"Search"} />
+        <Navigator name={"Search"} description={`${query}`} />
 
         <SearchForm query={query} />
 

@@ -56,8 +56,6 @@ export const FormEditProfile = () => {
 
     try {
       const updatedProfile = await patchUser(formStrip, authenticatedUser.id);
-
-      console.log(updatedProfile);
     } catch (error) {
       console.log(error);
     }

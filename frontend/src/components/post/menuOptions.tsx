@@ -21,7 +21,7 @@ export const PostMenuOptions = () => {
 
   return (
     <>
-      <Menubar className="border-none">
+      <Menubar className="border-none self-end">
         <MenubarMenu>
           <MenubarTrigger className="hover:bg-slate-200">
             <Ellipsis className="relative top-0 right-0" />

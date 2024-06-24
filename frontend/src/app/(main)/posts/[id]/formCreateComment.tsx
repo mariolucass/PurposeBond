@@ -50,7 +50,7 @@ export const FormCreateComment = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Post</Button>
+        <Button type="submit">Comment</Button>
       </form>
     </Form>
   );
