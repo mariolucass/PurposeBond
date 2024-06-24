@@ -40,11 +40,11 @@ export const SideBarLeft = () => {
     "w-[210px] flex gap-4 hover:bg-slate-600 p-4 rounded-lg hover:text-white hover:border-r-slate-800 hover:border-b-slate-800 hover:border-r-2 border-b-2 border-r-2 ";
 
   return (
-    <section className="side-bar-left flex flex-col justify-start items-center gap-16 fixed mx-auto mt-8">
-      <div className="w-full gap-4 flex flex-col justify-start rounded-2xl h-96 p-4 pt-0 items-center">
+    <section className="side-bar-left flex flex-col justify-center items-center gap-16 fixed mx-auto">
+      <div className="w-full gap-4 flex flex-col justify-start items-center h-96 p-4 pt-0">
         {authenticatedUser && (
-          <div className="flex p-4 border-b-2 border-r-2 rounded-2xl rounded-t-none items-center justify-between w-[210px]">
-            <Avatar className="w-[64px] h-[64px] border-primary">
+          <div className="flex p-4 border-b-2 border-r-2  items-center justify-between w-[210px] h-[86px]">
+            <Avatar className="w-[48px] h-[48px] border-primary">
               <AvatarImage src={authenticatedUser.profileImage} />
             </Avatar>
 

@@ -24,7 +24,10 @@ const ProfilePage = () => {
 
   return (
     <section className="min-w-full w-full flex flex-col justify-start">
-      <Navigator name={"Profile"} />
+      <Navigator
+        name={"Profile"}
+        description={`@${authenticatedUser.username}`}
+      />
 
       <UserSectionProfile isProfile />
 

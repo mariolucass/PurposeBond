@@ -16,15 +16,11 @@ const config = {
         "2xl": "1400px",
       },
     },
-    // colors: {
-    //   primary: "#4d7a86",
-    //   secondary: "#2b4c5a",
-    //   accent: "#81c5ca",
-    //   background: "#f3f6f4",
-    //   text: "#333333",
-    // },
-
     extend: {
+      height: {
+        screenMinus86: "calc(100vh - 86px)",
+        screenMinus172: "calc(100vh - 172px)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

@@ -55,7 +55,6 @@ export const LoginForm = () => {
         expiresIn,
       };
 
-      console.log(accounts);
       localStorage.setItem("accounts", JSON.stringify(accounts));
     } else {
       accounts.push({

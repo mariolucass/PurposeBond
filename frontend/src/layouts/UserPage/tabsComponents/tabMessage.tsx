@@ -1,5 +1,8 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 
 interface TabMessageProps {
   user: {
@@ -9,7 +12,7 @@ interface TabMessageProps {
 }
 
 export const TabMessage = ({ user }: TabMessageProps) => {
-  const sendMessage = () => {};
+  const [message, setMessage] = useState("");
 
   return (
     <div className="w-9/12 flex flex-col self-center m-auto gap-4 p-6">

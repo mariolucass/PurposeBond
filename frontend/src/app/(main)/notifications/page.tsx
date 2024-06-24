@@ -22,7 +22,6 @@ const Notifications = () => {
           );
         });
 
-        console.log(notificationsStrip);
         setNotifications(notificationsStrip);
       } catch (error) {
         if (error instanceof ApiError) {

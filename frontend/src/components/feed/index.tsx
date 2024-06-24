@@ -34,7 +34,7 @@ export const Feed = () => {
   const postsRender = posts.map((e: PostReturnType, index) => (
     <Fragment key={e.id}>
       <PostComponent post={e} />
-      {index !== posts.length - 1 && <Separator />}
+      <Separator />
     </Fragment>
   ));
 
