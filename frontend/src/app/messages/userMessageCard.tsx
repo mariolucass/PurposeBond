@@ -3,15 +3,16 @@ import { useMessageContext } from "@/contexts/message.context";
 import { handleDateWithMoment } from "@/utils/handleDateWithMoment";
 
 export const UserMessageCard = ({ user, message }: any) => {
-  const { setCurrentChat } = useMessageContext();
+  const { setCurrentChat, setShouldFetchMessages } = useMessageContext();
 
   const handleChangeChat = () => {
+    setShouldFetchMessages(true);
     setCurrentChat(user);
   };
 
   return (
     <li
-      className="w-full flex flex-col p-4 gap-2 cursor-pointer"
+      className="min-h-component2x w-full flex flex-col p-4 gap-2 cursor-pointer border-b-2"
       onClick={handleChangeChat}
     >
       <span className="self-end text-gray-500 text-sm">
@@ -24,7 +25,6 @@ export const UserMessageCard = ({ user, message }: any) => {
 
         <div>
           <h2 className="text-lg font-semibold ">{user.name}</h2>
-
           <p className="text-bgmodal text-gray-500 ">@{user.username}</p>
         </div>
       </div>

@@ -1,7 +1,6 @@
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuthContext } from "@/contexts/auth.context";
-
 import { TabLikes, TabMedia, TabMessage, TabPosts } from "./tabsComponents";
 
 interface TabsUserPage {
@@ -20,6 +19,10 @@ export const TabsUserPage = ({ user, isProfile }: TabsUserPage) => {
     {
       name: "posts",
       component: <TabPosts user={displayedUser} />,
+    },
+    {
+      name: "discussions",
+      component: <TabLikes user={displayedUser} />,
     },
     {
       name: "likes",
@@ -43,9 +46,9 @@ export const TabsUserPage = ({ user, isProfile }: TabsUserPage) => {
       defaultValue="posts"
       className="min-w-full flex flex-col items-center"
     >
-      <TabsList className="w-11/12 flex justify-between p-4 my-4">
+      <TabsList className="w-full h-component flex justify-around p-4">
         {tabs.map((item) => (
-          <TabsTrigger value={item.name} key={item.name}>
+          <TabsTrigger value={item.name} key={item.name} className="h-full">
             {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
           </TabsTrigger>
         ))}

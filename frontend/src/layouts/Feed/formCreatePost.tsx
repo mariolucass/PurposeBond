@@ -5,10 +5,15 @@ import { postPost } from "@/services/posts.services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { KeyboardEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Button } from "../ui/button";
-import { Form, FormControl, FormField, FormItem } from "../ui/form";
-import { Label } from "../ui/label";
-import { Textarea } from "../ui/textarea";
+import { Button } from "../../components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+} from "../../components/ui/form";
+import { Label } from "../../components/ui/label";
+import { Textarea } from "../../components/ui/textarea";
 
 export const FormCreatePost = () => {
   const { setShouldFetchPosts } = usePostContext();
@@ -52,7 +57,7 @@ export const FormCreatePost = () => {
     <Form {...postFormMethods}>
       <form
         onSubmit={postFormMethods.handleSubmit(createPost)}
-        className="flex flex-col w-full gap-4 p-6"
+        className="w-full h-component3x flex flex-col justify-around gap-4 p-4 border-b-2"
       >
         <FormField
           control={postFormMethods.control}
@@ -61,13 +66,14 @@ export const FormCreatePost = () => {
             <FormItem className="w-full">
               <FormControl>
                 <>
-                  <Label htmlFor="postCreate" className="font-bold ml-2">
+                  <Label htmlFor="postCreate" className="font-bold ">
                     Your new post
                   </Label>
                   <Textarea
                     placeholder="Type your post here."
                     id="postCreate"
                     onKeyUp={handleKeyDown}
+                    className="h-component"
                     {...field}
                   />
                 </>

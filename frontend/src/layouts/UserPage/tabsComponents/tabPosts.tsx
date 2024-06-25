@@ -1,21 +1,14 @@
 import { EmptyPosts } from "@/components/_emptyComponents/emptyPosts";
 import { LoadingComponent } from "@/components/loading";
 import { PostComponent } from "@/components/post";
-import { Separator } from "@/components/ui/separator";
 import { PostInterface } from "@/interfaces/posts.interfaces";
 import { ApiError } from "@/services/config/apiError";
 import { getPostsByUser } from "@/services/posts.services";
 import Error from "next/error";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { TabProps } from "./interfaces";
 
-interface TabPostsProps {
-  user: {
-    id: string;
-    username: string;
-  };
-}
-
-export const TabPosts = ({ user }: TabPostsProps) => {
+export const TabPosts = ({ user }: TabProps) => {
   const [posts, setPosts] = useState<PostInterface[]>([]);
   const [errorCode, setErrorCode] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -35,7 +28,6 @@ export const TabPosts = ({ user }: TabPostsProps) => {
     };
 
     fetchPosts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isLoading) {
@@ -46,16 +38,15 @@ export const TabPosts = ({ user }: TabPostsProps) => {
     return <Error statusCode={errorCode} />;
   }
 
-  return posts.length ? (
+  if (!posts.length) {
+    return <EmptyPosts username={user.username} />;
+  }
+
+  return (
     <ul className="flex flex-col gap-4 w-full">
-      {posts.map((e: any, index) => (
-        <Fragment key={e.id}>
-          <PostComponent post={e} key={e.id} />
-          {index !== posts.length - 1 && <Separator />}
-        </Fragment>
+      {posts.map((e: any) => (
+        <PostComponent post={e} key={e.id} />
       ))}
     </ul>
-  ) : (
-    <EmptyPosts username={user.username} />
   );
 };

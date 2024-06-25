@@ -1,27 +1,27 @@
 "use client";
 
 import { Navigator } from "@/components/navigator";
-import { Separator } from "@/components/ui/separator";
-import { UserInterface } from "@/interfaces/users.interfaces";
+import { useMessageContext } from "@/contexts/message.context";
 import { getUsersWhoHaveMessage } from "@/services/messages.services";
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { UserMessageCard } from "./userMessageCard";
 
 const MessagesPage = () => {
-  const [usersWhoHaveMessage, setUsersWhoHaveMessage] = useState<
-    UserInterface[]
-  >([]);
+  const {
+    usersWhoHaveMessage,
+    setUsersWhoHaveMessage,
+    sortUsersWhoHaveMessage,
+  } = useMessageContext();
 
   useEffect(() => {
     const fetchUsersThatHaveMessage = async () => {
       try {
-        const fetchedUsers = await getUsersWhoHaveMessage();
-        setUsersWhoHaveMessage(fetchedUsers);
+        const fetchedUsers: any = await getUsersWhoHaveMessage();
+        setUsersWhoHaveMessage(sortUsersWhoHaveMessage(fetchedUsers));
       } catch (error) {
         console.log(error);
       }
     };
-
     fetchUsersThatHaveMessage();
   }, []);
 
@@ -29,12 +29,9 @@ const MessagesPage = () => {
     <section className="w-full min-w-full flex flex-col justify-start">
       <Navigator name={"Messages"} />
 
-      <ul className="flex flex-col overflow-y-auto">
+      <ul className="h-screenMinus176 flex flex-col overflow-y-auto ">
         {usersWhoHaveMessage.map((user: any) => (
-          <React.Fragment key={user.id}>
-            <UserMessageCard user={user} message={user.message} />
-            <Separator />
-          </React.Fragment>
+          <UserMessageCard user={user} message={user.message} key={user.id} />
         ))}
       </ul>
     </section>

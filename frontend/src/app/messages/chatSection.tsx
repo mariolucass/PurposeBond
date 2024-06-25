@@ -5,17 +5,18 @@ import { getConversationWithUser } from "@/services/messages.services";
 import { SquareUser } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { FormCreateMessage } from "./formCreateMessage";
 import { Message } from "./message";
 
 export const ChatSection = () => {
-  const { currentChat } = useMessageContext();
+  const { currentChat, shouldFetchMessages, setShouldFetchMessages } =
+    useMessageContext();
   const router = useRouter();
 
   const [conversationWithUser, setConversationWithUser] = useState<any>([]);
 
   useEffect(() => {
     const fetchConversationWithUser = async () => {
-      console.log(currentChat);
       if (!currentChat) return;
 
       try {
@@ -23,18 +24,21 @@ export const ChatSection = () => {
         console.log(messages);
 
         setConversationWithUser(messages);
+        setShouldFetchMessages(false);
       } catch (error) {
         console.log(error);
       }
     };
 
-    fetchConversationWithUser();
-  }, [currentChat]);
+    if (shouldFetchMessages) {
+      fetchConversationWithUser();
+    }
+  }, [currentChat, shouldFetchMessages]);
 
   return (
     <section className="w-full min-w-full flex flex-col justify-start">
       {currentChat ? (
-        <div className="flex px-8 border-b-2 items-center py-4 justify-between">
+        <div className="h-component flex px-8 border-b-2 items-center py-4 justify-between">
           <div className="flex flex-col">
             <h1 className="text-xl font-bold">{currentChat.name}</h1>
 
@@ -54,14 +58,22 @@ export const ChatSection = () => {
         <EmptyCurrentChat />
       )}
 
-      <ul className="flex flex-col gap-2 p-4 bg-primary h-screenMinus172 overflow-y-auto">
+      <ul
+        className={
+          currentChat
+            ? "h-screenMinus176 flex flex-col gap-2 p-4 bg-primary overflow-y-auto"
+            : "h-screenMinus176 flex flex-col gap-2 p-4"
+        }
+      >
         {conversationWithUser.length > 0 &&
           conversationWithUser.map((message: any) => {
             return <Message user={currentChat} message={message} />;
           })}
       </ul>
 
-      <div className="flex gap-4 p-4 border-b-2 items-center h-[86px]"></div>
+      <div className="flex gap-4 p-4 border-b-2 items-center h-component">
+        {currentChat && <FormCreateMessage />}
+      </div>
     </section>
   );
 };
