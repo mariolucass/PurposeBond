@@ -55,7 +55,7 @@ export const NotificationCard = ({ notification }: NotificationProps) => {
 
   return (
     <li
-      className="w-full flex p-4 justify-around cursor-pointer border-y-2 border-t-0"
+      className="w-full flex p-4 justify-around cursor-pointer border-y-2 border-t-0 h-[163.5px]"
       onClick={handleNotificationClick}
     >
       <div className="w-1/3 flex items-center -space-x-8 ">

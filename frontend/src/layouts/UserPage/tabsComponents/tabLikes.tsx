@@ -1,19 +1,12 @@
 import { EmptyLikes } from "@/components/_emptyComponents/emptyLikes";
 import { LoadingComponent } from "@/components/loading";
 import { PostComponent } from "@/components/post";
-import { Separator } from "@/components/ui/separator";
 import { ApiError } from "@/services/config/apiError";
 import { getLikesByUser } from "@/services/likes.services";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { TabProps } from "./interfaces";
 
-interface TabLikesProps {
-  user: {
-    id: string;
-    username: string;
-  };
-}
-
-export const TabLikes = ({ user }: TabLikesProps) => {
+export const TabLikes = ({ user }: TabProps) => {
   const [likes, setLikes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -33,7 +26,6 @@ export const TabLikes = ({ user }: TabLikesProps) => {
     };
 
     fetchLikes();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isLoading) {
@@ -44,16 +36,15 @@ export const TabLikes = ({ user }: TabLikesProps) => {
     return <div>Post not found.</div>;
   }
 
-  return likes.length ? (
+  if (!likes.length) {
+    return <EmptyLikes username={user.username} />;
+  }
+
+  return (
     <ul className="flex flex-col gap-4 w-full">
-      {likes.map((e: any, index) => (
-        <Fragment key={e.id}>
-          <PostComponent post={e} key={e.id} />
-          {index !== likes.length - 1 && <Separator />}
-        </Fragment>
+      {likes.map((e: any) => (
+        <PostComponent post={e} key={e.id} />
       ))}
     </ul>
-  ) : (
-    <EmptyLikes username={user.username} />
   );
 };

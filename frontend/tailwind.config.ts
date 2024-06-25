@@ -1,5 +1,3 @@
-import type { Config } from "tailwindcss";
-
 const config = {
   darkMode: ["class"],
   content: [
@@ -17,9 +15,26 @@ const config = {
       },
     },
     extend: {
+      minHeight: {
+        halfComponent: "44px",
+        component: "88px",
+        component2x: "176px",
+        component3x: "264px",
+        component4x: "352px",
+      },
       height: {
-        screenMinus86: "calc(100vh - 86px)",
-        screenMinus172: "calc(100vh - 172px)",
+        screenMinus88: "calc(100vh - 88px)",
+        screenMinus176: "calc(100vh - 176px)",
+
+        halfComponent: "44px",
+        component: "88px",
+        component2x: "176px",
+        component3x: "264px",
+        component4x: "352px",
+      },
+
+      margin: {
+        component: "",
       },
       colors: {
         border: "hsl(var(--border))",

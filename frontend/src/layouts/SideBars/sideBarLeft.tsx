@@ -37,13 +37,13 @@ export const SideBarLeft = () => {
   const isOnPath = (href: string) => pathname === href;
 
   const defaultNavigationClass =
-    "w-[210px] flex gap-4 hover:bg-slate-600 p-4 rounded-lg hover:text-white hover:border-r-slate-800 hover:border-b-slate-800 hover:border-r-2 border-b-2 border-r-2 ";
+    "w-[210px] h-component flex items-center gap-4 hover:bg-slate-600 p-4 hover:text-white hover:border-r-slate-800 hover:border-b-slate-800 hover:border-r-2 border-b-2 ";
 
   return (
-    <section className="side-bar-left flex flex-col justify-center items-center gap-16 fixed mx-auto">
-      <div className="w-full gap-4 flex flex-col justify-start items-center h-96 p-4 pt-0">
+    <section className="h-screen side-bar-left flex flex-col items-center fixed mx-auto">
+      <div className="w-full flex flex-col justify-start items-center pt-0">
         {authenticatedUser && (
-          <div className="flex p-4 border-b-2 border-r-2  items-center justify-between w-[210px] h-[86px]">
+          <div className="w-[210px] h-component flex p-4 border-b-2 items-center justify-between">
             <Avatar className="w-[48px] h-[48px] border-primary">
               <AvatarImage src={authenticatedUser.profileImage} />
             </Avatar>
@@ -52,13 +52,13 @@ export const SideBarLeft = () => {
           </div>
         )}
 
-        <ul className="w-full flex flex-col space-y-8 p-4">
+        <ul className="w-full flex flex-col">
           {navigationLinks.map((link) => (
             <Link href={link.href} key={link.href}>
               <li
                 className={
                   isOnPath(link.href)
-                    ? `${defaultNavigationClass} text-decoration-line: underline font-semibold `
+                    ? `${defaultNavigationClass} font-bold`
                     : `${defaultNavigationClass} `
                 }
               >

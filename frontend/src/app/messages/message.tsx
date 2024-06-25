@@ -1,11 +1,8 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { useAuthContext } from "@/contexts/auth.context";
 import { handleDateWithMoment } from "@/utils/handleDateWithMoment";
 
 export const Message = ({ message, user }: any) => {
-  const { authenticatedUser } = useAuthContext();
-
-  const defaultLiClass = "flex flex-row p-4 gap-4";
+  const defaultLiClass = "h-component2x flex flex-row p-4 gap-4";
 
   return message.areSender ? (
     <li className={`${defaultLiClass} self-end`}>

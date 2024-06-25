@@ -32,7 +32,7 @@ export const PostComponent = ({ post }: PostProps) => {
 
   return (
     <div
-      className="flex flex-row w-full p-6 bg-white rounded-lg min-h-[200px] gap-8"
+      className="h-component3x flex flex-row w-full p-4 bg-white rounded-lg min-h-[200px] gap-8 border-b-2"
       onClick={handlePostContentClick}
     >
       <div className="w-2/3">
@@ -47,7 +47,7 @@ export const PostComponent = ({ post }: PostProps) => {
 
       <Separator orientation="vertical" />
 
-      <div className="w-1/3 flex flex-col justify-between">
+      <div className="w-1/3 h-full flex flex-col justify-between">
         <div ref={interactionsRef} className="flex flex-col justify-between">
           <PostMenuOptions />
 

@@ -1,8 +1,8 @@
 "use client";
 
-import { Feed } from "@/components/feed";
 import { ModalProvider } from "@/contexts/modal.context";
 import { PostProvider } from "@/contexts/post.context";
+import { Feed } from "@/layouts/Feed";
 import { SideBarLeft } from "@/layouts/SideBars/sideBarLeft";
 import { SideBarRight } from "@/layouts/SideBars/sideBarRight";
 
@@ -15,7 +15,7 @@ const Dashboard = () => {
             <SideBarLeft />
           </div>
 
-          <div className="col-span-6 p-2 border-r-2">
+          <div className="col-span-6 border-r-2">
             <PostProvider>
               <Feed />
             </PostProvider>

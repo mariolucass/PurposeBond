@@ -38,17 +38,24 @@ export const SideBarRight = () => {
   const { handleSubmit, register } = useForm<{ search: string }>({});
 
   return (
-    <section className="side-bar-right flex flex-col justify-start items-center gap-16 fixed mt-8 mx-auto z-40">
+    <section className="side-bar-right flex flex-col justify-start items-center gap-4 fixed mx-auto z-40">
       <form
-        className="flex w-full max-w-sm items-center space-x-2 "
+        className="h-component flex w-full max-w-sm items-center space-x-2 p-4"
         onSubmit={handleSubmit(handleSearch)}
       >
-        <Input type="search" placeholder="Search" {...register("search")} />
-        <Button type="submit">Search</Button>
+        <Input
+          type="search"
+          placeholder="Search"
+          {...register("search")}
+          className="h-full"
+        />
+        <Button type="submit" className="h-full">
+          Search
+        </Button>
       </form>
 
       {recommendations.length > 0 && (
-        <div className="border-2 gap-4 flex w-full flex-col rounded-radius justify-center p-4">
+        <div className="h-[440px] border-2 flex w-full flex-col rounded-radius justify-around p-4">
           <h1 className="text-xl font-semibold">Recommendations</h1>
 
           <ul className="space-y-4 w-full">

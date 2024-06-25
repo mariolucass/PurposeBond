@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 export const AccountOptions = () => {
   const router = useRouter();
 
-  const { authenticatedUser, setAuthenticatedUser } = useAuthContext();
+  const { setAuthenticatedUser } = useAuthContext();
 
   const handleLogout = () => {
     router.push("/login");

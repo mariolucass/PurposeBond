@@ -1,19 +1,12 @@
 import { EmptyMedia } from "@/components/_emptyComponents/emptyMedia";
 import { LoadingComponent } from "@/components/loading";
 import { PostComponent } from "@/components/post";
-import { Separator } from "@/components/ui/separator";
 import { ApiError } from "@/services/config/apiError";
 import { getMediaByUser } from "@/services/posts.services";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { TabProps } from "./interfaces";
 
-interface TabMediaProps {
-  user: {
-    id: string;
-    username: string;
-  };
-}
-
-export const TabMedia = ({ user }: TabMediaProps) => {
+export const TabMedia = ({ user }: TabProps) => {
   const [media, setMedia] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -31,9 +24,7 @@ export const TabMedia = ({ user }: TabMediaProps) => {
         setIsLoading(false);
       }
     };
-
     fetchMedia();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isLoading) {
@@ -44,16 +35,15 @@ export const TabMedia = ({ user }: TabMediaProps) => {
     return <div>Post not found.</div>;
   }
 
-  return media.length ? (
+  if (!media.length) {
+    return <EmptyMedia username={user.username} />;
+  }
+
+  return (
     <ul className="flex flex-col gap-4 w-full">
-      {media.map((e: any, index) => (
-        <Fragment key={e.id}>
-          <PostComponent post={e} key={e.id} />
-          {index !== media.length - 1 && <Separator />}
-        </Fragment>
+      {media.map((e: any) => (
+        <PostComponent post={e} key={e.id} />
       ))}
     </ul>
-  ) : (
-    <EmptyMedia username={user.username} />
   );
 };

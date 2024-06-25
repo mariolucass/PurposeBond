@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 import {
   loginFieldsConfig,
   registerFieldsConfig,
@@ -47,11 +48,15 @@ export const FormFields = ({ control, type }: FormFieldsProps) => {
           <FormLabel className="font-semibold">{fieldConfig.label}</FormLabel>
 
           <FormControl>
-            <Input
-              placeholder={fieldConfig.placeholder}
-              type={fieldConfig.type}
-              {...field}
-            />
+            {fieldConfig.type === "textarea" ? (
+              <Textarea placeholder={fieldConfig.placeholder} {...field} />
+            ) : (
+              <Input
+                placeholder={fieldConfig.placeholder}
+                type={fieldConfig.type}
+                {...field}
+              />
+            )}
           </FormControl>
 
           {fieldConfig.description && (

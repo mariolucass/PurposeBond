@@ -74,7 +74,7 @@ export const FormEditProfile = () => {
     <Form {...profileFormMethods}>
       <form
         onSubmit={profileFormMethods.handleSubmit(editProfile)}
-        className="flex flex-col w-full gap-4 p-6"
+        className="flex flex-col w-full gap-4 p-4"
       >
         <FormFields control={profileFormMethods.control} type={"userUpdate"} />
 

@@ -67,15 +67,15 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
 
   return (
     <div className="relative">
-      <div className="absolute top-0 left-0 w-full h-1/3 bg-primary z-10" />
+      <div className="w-full h-component2x absolute top-0 left-0 bg-primary z-10" />
 
-      <div className="flex flex-row items-center my-6 justify-between pr-8 relative z-20 ml-4">
+      <div className="h-component2x flex flex-row items-center justify-between relative z-20 p-8 mt-28">
         <div className="flex flex-row gap-4">
-          <Avatar className="w-[120px] h-[120px] border-primary border-4 mt-4">
+          <Avatar className="w-[120px] h-[120px] border-primary border-2 mt-4">
             <AvatarImage src={displayedUser.profileImage} />
           </Avatar>
 
-          <div className="mt-28">
+          <div className="mt-16">
             <h1 className="text-3xl font-bold">{displayedUser.name}</h1>
             <h2 className="text-lg text-gray-500">@{displayedUser.username}</h2>
           </div>
@@ -84,7 +84,7 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
         {isProfile && <EditProfile />}
       </div>
 
-      <div className="flex flex-col rounded-lg p-4 mb-4 relative z-20 justify-between h-36 px-8">
+      <div className="h-component2x flex flex-col rounded-lg p-4 relative z-20 justify-between h-36 px-8">
         <div className="flex w-full ">
           <p className="w-2/3 break-words">
             {displayedUser.description || "No bio yet."}
