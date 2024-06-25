@@ -22,7 +22,7 @@ export const CommentComponent = ({ comment, postId }: any) => {
 
   return (
     <div
-      className="w-full flex flex-col p-4 bg-white rounded-lg"
+      className="w-full flex flex-col p-4  rounded-lg"
       onClick={handleCommentContentClick}
     >
       <div className="flex flex-col space-y-4 gap-4">

@@ -1,5 +1,5 @@
-import { useAuthContext } from "@/contexts/auth.context";
 import { handleDateWithMoment } from "@/utils/handleDateWithMoment";
+import { CalendarClock } from "lucide-react";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Separator } from "../ui/separator";
 import { HoverCardAuthor } from "./hoverAuthorInfo";
@@ -17,27 +17,25 @@ interface PostAuthorInfoProps {
 }
 
 export const PostAuthorInfo = ({ author, createdAt }: PostAuthorInfoProps) => {
-  const { verifyOwnership } = useAuthContext();
-
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-4">
+    <div className="min-w-full flex items-center justify-between">
+      <div className="min-w-full flex items-center gap-4">
         <Avatar className="w-[48px] h-[48px]">
           <AvatarImage src={author.profileImage} />
         </Avatar>
 
-        <div className="flex gap-4 items-center justify-between">
+        <div className="w-full flex gap-4 items-center justify-between">
           <HoverCardAuthor author={author} />
 
           <Separator orientation="vertical" />
 
-          <span className="text-bgmodal text-sm">
+          <span className="w-[104px] text-bgmodal justify-around text-sm flex items-center ">
+            <CalendarClock />
+
             {handleDateWithMoment(createdAt)}
           </span>
         </div>
       </div>
-      {/* 
-      {verifyOwnership(author.id) && } */}
     </div>
   );
 };

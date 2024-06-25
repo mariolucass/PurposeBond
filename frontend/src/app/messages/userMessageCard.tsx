@@ -12,10 +12,10 @@ export const UserMessageCard = ({ user, message }: any) => {
 
   return (
     <li
-      className="min-h-component2x w-full flex flex-col p-4 gap-2 cursor-pointer border-b-2"
+      className="h-component2x relative w-full flex flex-col p-4 gap-2 cursor-pointer border-b-2"
       onClick={handleChangeChat}
     >
-      <span className="self-end text-gray-500 text-sm">
+      <span className="self-end absolute text-gray-500 text-sm">
         {handleDateWithMoment(message.createdAt)}
       </span>
       <div className="flex">

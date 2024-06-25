@@ -55,9 +55,16 @@ export const NotificationCard = ({ notification }: NotificationProps) => {
 
   return (
     <li
-      className="w-full flex p-4 justify-around cursor-pointer border-y-2 border-t-0 h-[163.5px]"
+      className="w-full h-component2x relative flex p-4 justify-around cursor-pointer border-y-2 border-t-0 "
       onClick={handleNotificationClick}
     >
+      <div className="absolute top-4 right-4 flex items-center">
+        <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
+        <span className="text-xs text-muted-foreground">
+          {handleDateWithMoment(notification.createdAt)}
+        </span>
+      </div>
+
       <div className="w-1/3 flex items-center -space-x-8 ">
         <AvatarGroup />
       </div>
@@ -66,13 +73,6 @@ export const NotificationCard = ({ notification }: NotificationProps) => {
         <NotificationTitle />
 
         <span className="seld-end">Check it now!</span>
-
-        <div className="flex items-center pt-2">
-          <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
-          <span className="text-xs text-muted-foreground">
-            {handleDateWithMoment(notification.createdAt)}
-          </span>
-        </div>
       </div>
     </li>
   );

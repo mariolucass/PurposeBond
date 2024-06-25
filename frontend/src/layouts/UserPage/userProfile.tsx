@@ -67,7 +67,7 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
 
   return (
     <div className="relative">
-      <div className="w-full h-component2x absolute top-0 left-0 bg-primary z-10" />
+      <div className="w-full h-component2x absolute top-0 left-0 bg-foreground z-10" />
 
       <div className="h-component2x flex flex-row items-center justify-between relative z-20 p-8 mt-28">
         <div className="flex flex-row gap-4">
@@ -84,7 +84,7 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
         {isProfile && <EditProfile />}
       </div>
 
-      <div className="h-component2x flex flex-col rounded-lg p-4 relative z-20 justify-between h-36 px-8">
+      <div className="h-component2x flex flex-col rounded-lg p-4 relative z-20 justify-between  px-8">
         <div className="flex w-full ">
           <p className="w-2/3 break-words">
             {displayedUser.description || "No bio yet."}

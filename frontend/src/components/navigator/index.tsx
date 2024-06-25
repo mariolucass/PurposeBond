@@ -20,11 +20,8 @@ export const Navigator = ({ name, description }: NavigatorProps) => {
     : name;
 
   return (
-    <div className="h-component bg-white flex z-20 gap-4 p-4 border-b-2 items-center pl-0">
-      <Button
-        onClick={() => router.back()}
-        className="bg-white text-black hover:text-white"
-      >
+    <div className="h-component flex z-20 gap-4 p-4 border-b-2 items-center pl-0">
+      <Button onClick={() => router.back()} variant="ghost">
         <ArrowLeft />
       </Button>
 

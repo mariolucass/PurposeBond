@@ -29,7 +29,7 @@ const MessagesPage = () => {
     <section className="w-full min-w-full flex flex-col justify-start">
       <Navigator name={"Messages"} />
 
-      <ul className="h-screenMinus176 flex flex-col overflow-y-auto ">
+      <ul className="h-screenMinus88 flex flex-col overflow-y-auto ">
         {usersWhoHaveMessage.map((user: any) => (
           <UserMessageCard user={user} message={user.message} key={user.id} />
         ))}

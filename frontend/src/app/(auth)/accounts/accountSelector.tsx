@@ -20,7 +20,7 @@ export const AccountSelector = ({ accounts }: any) => (
         {accounts.map((account: any) => (
           <SwiperSlide
             key={account.username}
-            className="border-2 bg-white rounded-2xl flex"
+            className="border-2rounded-2xl flex"
           >
             <AccountCard account={account} />
           </SwiperSlide>
