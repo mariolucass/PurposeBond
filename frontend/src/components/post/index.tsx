@@ -32,23 +32,24 @@ export const PostComponent = ({ post }: PostProps) => {
 
   return (
     <div
-      className="h-component3x flex flex-row w-full p-4 bg-white rounded-lg min-h-[200px] gap-8 border-b-2"
+      className="h-component3x flex flex-row w-full p-4 rounded-lg min-h-[200px] gap-4 border-b-2"
       onClick={handlePostContentClick}
     >
       <div className="w-2/3">
         <div className="w-full flex flex-col gap-4 ">
-          <div ref={authorInfoRef} onClick={handleClickAuthor}>
-            <PostAuthorInfo author={post.author} createdAt={post.createdAt} />
-          </div>
+          <PostAuthorInfo author={post.author} createdAt={post.createdAt} />
 
-          <p className="text-gray-800 max-w-56 ml-16">{post.content}</p>
+          <p className="max-w-56 ml-16">{post.content}</p>
         </div>
       </div>
 
       <Separator orientation="vertical" />
 
       <div className="w-1/3 h-full flex flex-col justify-between">
-        <div ref={interactionsRef} className="flex flex-col justify-between">
+        <div
+          ref={interactionsRef}
+          className=" h-full flex flex-col justify-between"
+        >
           <PostMenuOptions />
 
           <PostInteractions postId={post.id} count={post._count} />

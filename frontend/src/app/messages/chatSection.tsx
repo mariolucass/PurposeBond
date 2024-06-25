@@ -46,7 +46,7 @@ export const ChatSection = () => {
           </div>
 
           <Button
-            className="bg-white text-black hover:text-white border-2 px-2"
+            className=" text-black hover:text-white border-2 px-2"
             onClick={() => {
               router.push(`users/${currentChat.id}`);
             }}

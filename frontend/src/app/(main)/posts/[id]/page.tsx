@@ -1,7 +1,6 @@
 "use client";
 
 import { PostComponent } from "@/components/post";
-import { Separator } from "@/components/ui/separator";
 import { usePostContext } from "@/contexts/post.context";
 
 import { LoadingComponent } from "@/components/loading";
@@ -30,14 +29,12 @@ const PostPage = ({ params: { id } }: PostPageProps) => {
   }
 
   return (
-    <section className="gap-4 w-full flex flex-col justify-start">
+    <section className="w-full flex flex-col justify-start">
       <Navigator name={"Post"} />
 
       <PostComponent post={currentPost} />
 
-      <Separator />
-
-      <div className="w-full flex p-4 ">
+      <div className="w-full flex p-4">
         <FormCreateComment />
       </div>
 

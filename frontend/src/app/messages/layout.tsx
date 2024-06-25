@@ -12,7 +12,9 @@ const MainLayout = ({ children }: ChildrenInterface) => (
         <div className="col-span-2 flex justify-end border-r-2">
           <SideBarLeft />
         </div>
+
         <div className="col-span-4 border-r-2">{children}</div>
+
         <div className="col-span-6 flex border-r-2 justify-start h-full">
           <ChatSection />
         </div>

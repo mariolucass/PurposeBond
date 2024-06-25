@@ -34,7 +34,7 @@ const Notifications = () => {
   }, []);
 
   return (
-    <section className="w-full min-w-full flex flex-col gap-4 justify-start">
+    <section className="w-full min-w-full flex flex-col justify-start">
       <Navigator name={"Notifications"} />
 
       {notifications.length ? (

@@ -111,41 +111,49 @@ export const PostInteractions = ({ postId, count }: PostInteractionsProps) => {
 
   const spanClass = "self-center font-semibold mt-2";
 
+  const actions = [
+    {
+      icon: <ThumbsUp />,
+      onClick: handleLike,
+      count: likes,
+      active: isLiked,
+    },
+    {
+      icon: <Repeat2 />,
+      onClick: handleRepost,
+      count: reposts,
+      active: isReposted,
+    },
+    {
+      icon: <MessageSquare />,
+      onClick: () => {},
+      count: comments,
+      active: false,
+    },
+  ];
+
   return (
-    <div className="flex gap-4">
-      <div className="flex flex-col justify-center">
-        <Button className="w-[48px]" onClick={handleLike}>
-          <ThumbsUp fill={isLiked ? "#4d7a86" : "none"} />
-        </Button>
+    <ul className="flex justify-between">
+      {actions.map((action, index) => (
+        <li key={index} className="flex flex-col justify-center p-1">
+          <Button
+            onClick={action.onClick}
+            variant={action.active ? "default" : "ghost"}
+          >
+            {action.icon}
+          </Button>
 
-        <span
-          className={isLiked ? `${spanClass} text-[#4d7a86]` : `${spanClass}`}
-        >
-          {likes}
-        </span>
-      </div>
-
-      <div className="flex flex-col justify-center">
-        <Button className="w-[48px]" onClick={handleRepost}>
-          <Repeat2 fill={isReposted ? "#4d7a86" : "none"} />
-        </Button>
-
-        <span
-          className={
-            isReposted ? `${spanClass} text-[#4d7a86]` : `${spanClass}`
-          }
-        >
-          {reposts}
-        </span>
-      </div>
-
-      <div className="flex flex-col justify-center">
-        <Button className="w-[48px]">
-          <MessageSquare />
-        </Button>
-
-        <span className={`${spanClass}`}>{comments}</span>
-      </div>
-    </div>
+          <span
+            className={
+              action.active
+                ? `${spanClass} text-[#4d7a86] text-bold`
+                : `${spanClass}`
+            }
+          >
+            {action.count}
+          </span>
+        </li>
+      ))}
+    </ul>
   );
 };

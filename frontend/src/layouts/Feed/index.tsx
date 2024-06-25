@@ -33,7 +33,7 @@ export const Feed = () => {
 
   return (
     <section className="min-w-full w-full flex flex-col justify-start">
-      <div className="h-component bg-white flex z-20 gap-4 p-4 border-b-2 items-center pl-0">
+      <div className="h-component flex z-20 gap-4 p-4 border-b-2 items-center pl-0">
         <TabsFeed />
       </div>
 

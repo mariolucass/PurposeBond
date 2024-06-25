@@ -1,5 +1,6 @@
 "use client";
 
+import { ThemeProvider } from "@/components/themeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "@/contexts/auth.context";
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
@@ -18,16 +19,23 @@ const RootLayout = ({ children }: ChildrenInterface) => (
     <Head />
 
     <AuthProvider>
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.className
-        )}
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
       >
-        {children}
+        <body
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased",
+            fontSans.className
+          )}
+        >
+          {children}
 
-        <Toaster />
-      </body>
+          <Toaster />
+        </body>
+      </ThemeProvider>
     </AuthProvider>
   </html>
 );
