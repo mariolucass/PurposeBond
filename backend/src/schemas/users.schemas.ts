@@ -1,6 +1,4 @@
 import { z } from "zod";
-import { commentRefSchema } from "./comments.schemas";
-import { postRefSchema } from "./posts.schemas";
 
 const userSchema = z.object({
   id: z.string(),
@@ -11,6 +9,8 @@ const userSchema = z.object({
   phone: z.string(),
   address: z.string(),
   password: z.string(),
+  profileImage: z.string(),
+  joinedAt: z.date(),
 
   _count: z.object({
     followers: z.number(),
@@ -21,26 +21,11 @@ const userSchema = z.object({
 export const userRefSchema = userSchema.pick({
   id: true,
   name: true,
+  description: true,
   username: true,
+  profileImage: true,
+  joinedAt: true,
 });
-
-// export const userFullSchema = z.object({
-//   id: z.string(),
-//   name: z.string(),
-//   username: z.string(),
-//   email: z.string(),
-//   description: z.string(),
-//   phone: z.string(),
-
-//   posts: postRefSchema.array(),
-//   comments: commentRefSchema.array(),
-//   likes: postRefSchema.array(),
-
-//   _count: z.object({
-//     followers: z.number(),
-//     following: z.number(),
-//   }),
-// });
 
 export const userCreateSchema = userSchema;
 

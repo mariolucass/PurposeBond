@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { NotificationsServices } from "../../services";
 import { RepostsServices } from "./../../services/interactions/reposts.services";
 
 export class RepostsController {
@@ -11,9 +12,21 @@ export class RepostsController {
   };
 
   static postRepost = async (_: Request, res: Response) => {
-    const { user, post } = res.locals;
-    console.log(post);
-    const repost = await RepostsServices.postRepost(user.id, post.id);
+    const {
+      user: { id: userId },
+      post: {
+        id: postId,
+        author: { id: authorId },
+      },
+    } = res.locals;
+
+    const repost = await RepostsServices.postRepost(userId, postId);
+
+    await NotificationsServices.postNotificationPostReposted({
+      authorId: userId,
+      userId: authorId,
+      postId,
+    });
 
     return res.status(201).json(repost);
   };
@@ -22,6 +35,6 @@ export class RepostsController {
     const repostId = res.locals.repost.id;
     await RepostsServices.deleteRepost(repostId);
 
-    return res.status(204).send();
+    return res.sendStatus(204);
   };
 }

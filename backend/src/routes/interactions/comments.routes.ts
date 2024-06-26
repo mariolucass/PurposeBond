@@ -5,13 +5,10 @@ import { CommentsMiddlewares } from "../../middlewares/interactions/comments.mid
 
 export const commentsRouter = Router();
 
-commentsRouter.use(AuthMiddlewares.validateToken);
-
-commentsRouter.get("/", CommentsController.getComments);
-
-commentsRouter.post("/", CommentsController.postComment);
-
-commentsRouter.use("/:id", CommentsMiddlewares.verifyCommentExistence);
+commentsRouter.use("/:id", [
+  AuthMiddlewares.validateToken,
+  CommentsMiddlewares.verifyCommentExistence,
+]);
 
 commentsRouter.get("/:id", CommentsController.retrieveComment);
 

@@ -1,12 +1,12 @@
 import { userModel } from "../../database/models";
 import { userReturnSchema } from "../../schemas/users.schemas";
-import { userSelect } from "../../utils/users.selects";
+import { userRefSelect, userSelect } from "../../utils/users.selects";
 
 export class UsersServices {
   static getUsers = async () => {
-    const users = await userModel.findMany({ select: userSelect });
+    const users = await userModel.findMany({ select: userRefSelect });
 
-    return userReturnSchema.array().parse(users);
+    return users;
   };
 
   static retrieveUser = async (id: string) => {

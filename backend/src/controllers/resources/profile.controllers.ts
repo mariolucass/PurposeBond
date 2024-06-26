@@ -9,6 +9,18 @@ export class ProfileController {
     return res.json(user);
   };
 
+  static getCountStats = async (req: Request, res: Response) => {
+    const userId = res.locals.user.id;
+    const property = req.query.property;
+
+    const user = await ProfileServices.getCountStats(
+      userId,
+      property as string
+    );
+
+    return res.json(user);
+  };
+
   static getMessages = async (_: Request, res: Response) => {
     const userId = res.locals.user.id;
     const messages = await ProfileServices.getMessages(userId);

@@ -5,11 +5,14 @@ import { AppError } from "../../errors/appError";
 import { userReturnSchema } from "../../schemas/users.schemas";
 import { userSelect } from "../../utils/users.selects";
 
-
 export class AuthServices {
-  static loginService = async (body: { email: string; password: string }) => {
+  static loginService = async (body: {
+    email?: string;
+    username?: string;
+    password: string;
+  }) => {
     const user = await userModel.findFirst({
-      where: { email: body.email },
+      where: body.email ? { email: body.email } : { username: body.username! },
       select: { ...userSelect, password: true, email: true },
     });
 

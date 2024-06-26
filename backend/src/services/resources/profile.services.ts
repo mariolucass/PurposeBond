@@ -6,6 +6,7 @@ import {
   repostModel,
   userModel,
 } from "../../database/models";
+import { AppError } from "../../errors/appError";
 import { commentRefSelect } from "../../utils/interactions.selects";
 import { postRefSelect } from "../../utils/posts.selects";
 import { userSelect } from "../../utils/users.selects";
@@ -15,10 +16,38 @@ export class ProfileServices {
   static getProfile = async (id: string) => {
     const user = await userModel.findUnique({
       where: { id: id },
-      select: userSelect,
+      select: { ...userSelect, email: true },
     });
 
     return user;
+  };
+
+  static getCountStats = async (id: string, property: string) => {
+    const listPropertys = [
+      "following",
+      "followers",
+      "posts",
+      "likes",
+      "comments",
+      "reposts",
+    ];
+
+    if (!listPropertys.includes(property)) {
+      throw new AppError(400, "Invalid property: " + property);
+    }
+
+    const user = await userModel.findUnique({
+      where: { id: id },
+      select: {
+        _count: {
+          select: {
+            [property]: true,
+          },
+        },
+      },
+    });
+
+    return { [property]: user!._count[property] };
   };
 
   static getPosts = async (id: string) => {

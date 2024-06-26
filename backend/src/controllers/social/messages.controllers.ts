@@ -2,13 +2,6 @@ import { Request, Response } from "express";
 import { MessagesServices } from "../../services/social/messages.services";
 
 export class MessagesController {
-  static getMessages = async (_: Request, res: Response) => {
-    const senderId = res.locals.user.id;
-    const messages = await MessagesServices.getMessages(senderId);
-
-    return res.json(messages);
-  };
-
   static postMessage = async (req: Request, res: Response) => {
     const {
       user: { id: senderId },
@@ -26,10 +19,29 @@ export class MessagesController {
     return res.status(201).json(message);
   };
 
-  static deleteMessage = async (_: Request, res: Response) => {
-    const MessageId = res.locals.message.id;
-    await MessagesServices.deleteMessage(MessageId);
+  static getConversationWithUser = async (_: Request, res: Response) => {
+    const {
+      user: { id: userAuthId },
+      reqParamsUser: { id: userId },
+    } = res.locals;
 
-    return res.status(204);
+    const messages = await MessagesServices.getConversationWithUser(
+      userAuthId,
+      userId
+    );
+
+    return res.json(messages);
+  };
+
+  static getUsersWhoHasMessagesWithLastMessage = async (
+    _: Request,
+    res: Response
+  ) => {
+    const userAuthenticatedId = res.locals.user.id;
+    const users = await MessagesServices.getUsersWhoHasMessagesWithLastMessage(
+      userAuthenticatedId
+    );
+
+    return res.json(users);
   };
 }

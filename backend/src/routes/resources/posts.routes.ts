@@ -2,7 +2,7 @@ import { Router } from "express";
 import { PostsController } from "../../controllers/resources/posts.controllers";
 import { AuthMiddlewares } from "../../middlewares/core/auth.middlewares";
 import { PostsMiddlewares } from "../../middlewares/resources/posts.middlewares";
-import { commentsRouter } from "../interactions/comments.routes";
+import { commentsInPostRouter } from "../interactions/commentsInPost.routes";
 
 export const postsRouter = Router();
 
@@ -35,4 +35,4 @@ postsRouter.delete(
   PostsController.deletePost
 );
 
-postsRouter.use("/:id/comments/", commentsRouter);
+postsRouter.use("/:id/comments/", commentsInPostRouter);

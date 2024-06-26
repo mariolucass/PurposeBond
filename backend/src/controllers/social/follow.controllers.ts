@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { NotificationsServices } from "../../services";
 import { FollowServices } from "../../services/social/follow.services";
 
 export class FollowController {
@@ -31,6 +32,11 @@ export class FollowController {
 
     await FollowServices.followUser(userAuthId, userToFollowId);
 
+    await NotificationsServices.postNotificationNewFollower({
+      authorId: userAuthId,
+      userId: userToFollowId,
+    });
+
     return res.status(201).json({ message: "Followed successfully." });
   };
 
@@ -42,6 +48,6 @@ export class FollowController {
 
     await FollowServices.unfollowUser(userAuthId, userToFollowId);
 
-    return res.status(204).send();
+    return res.sendStatus(204);
   };
 }

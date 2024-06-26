@@ -11,16 +11,16 @@ export class NotificationsController {
     return res.json(notifications);
   };
 
-  static patchNotification = async (_: Request, res: Response) => {
-    const notificationId = res.locals.notification.id;
-    await NotificationsServices.markNotificationAsRead(notificationId);
+  static markAllNotificationsAsRead = async (_: Request, res: Response) => {
+    const userId = res.locals.user.id;
+    await NotificationsServices.markAllNotificationAsRead(userId);
 
     return res.sendStatus(204);
   };
 
-  static markAllNotificationsAsRead = async (_: Request, res: Response) => {
-    const userId = res.locals.user.id;
-    await NotificationsServices.markAllNotificationAsRead(userId);
+  static patchNotification = async (_: Request, res: Response) => {
+    const notificationId = res.locals.notification.id;
+    await NotificationsServices.markNotificationAsRead(notificationId);
 
     return res.sendStatus(204);
   };
