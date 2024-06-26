@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { NotificationsServices } from "../../services";
 import { CommentsServices } from "../../services/interactions/comments.services";
 
 export class CommentsController {
@@ -11,8 +12,11 @@ export class CommentsController {
 
   static postComment = async (req: Request, res: Response) => {
     const {
-      post: { id: postId },
       user: { id: userId },
+      post: {
+        id: postId,
+        author: { id: authorId },
+      },
     } = res.locals;
 
     req.body = {
@@ -22,6 +26,13 @@ export class CommentsController {
     };
 
     const comment = await CommentsServices.postComment(req.body);
+
+    await NotificationsServices.postNotificationPostCommented({
+      authorId: userId,
+      userId: authorId,
+      postId,
+      commentId: comment.id,
+    });
 
     return res.status(201).json(comment);
   };

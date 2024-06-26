@@ -7,6 +7,9 @@ export const userRefSelect = {
   id: true,
   name: true,
   username: true,
+  profileImage: true,
+  joinedAt: true,
+  description: true,
 };
 
 export const userSelect = {
@@ -15,5 +18,6 @@ export const userSelect = {
   birthdate: true,
   description: true,
   address: true,
+  profileImage: true,
   _count: { select: _countUserSelect },
 };

@@ -1,4 +1,5 @@
 import { notificationModel } from "../../database/models";
+import { notificationSelect } from "../../utils/notifications.selects";
 
 enum NotificationType {
   NEW_FOLLOWER = "NEW_FOLLOWER",
@@ -10,20 +11,39 @@ enum NotificationType {
 
 export class NotificationsServices {
   private static async createNotification(type: NotificationType, data: any) {
+    if (data.userId === data.authorId) {
+      return;
+    }
     return await notificationModel.create({
       data: { type, ...data },
     });
   }
 
-  static postNotificationNewFollower(data: { userId: string }) {
+  static postNotificationNewFollower(data: {
+    authorId: string;
+    userId: string;
+  }) {
     return this.createNotification(NotificationType.NEW_FOLLOWER, data);
   }
 
-  static postNotificationPostLiked(data: { userId: string; postId: string }) {
+  static postNotificationPostLiked(data: {
+    authorId: string;
+    userId: string;
+    postId: string;
+  }) {
     return this.createNotification(NotificationType.POST_LIKED, data);
   }
 
+  static postNotificationPostReposted(data: {
+    authorId: string;
+    userId: string;
+    postId: string;
+  }) {
+    return this.createNotification(NotificationType.POST_REPOSTED, data);
+  }
+
   static postNotificationPostCommented(data: {
+    authorId: string;
     userId: string;
     postId: string;
     commentId: string;
@@ -31,17 +51,10 @@ export class NotificationsServices {
     return this.createNotification(NotificationType.POST_COMMENTED, data);
   }
 
-  static postNotificationPostReposted(data: {
-    userId: string;
-    repostId: string;
-  }) {
-    return this.createNotification(NotificationType.POST_REPOSTED, data);
-  }
-
   static postNotificationCommentLiked(data: {
+    authorId: string;
     userId: string;
     commentId: string;
-    likeId: string;
   }) {
     return this.createNotification(NotificationType.COMMENT_LIKED, data);
   }
@@ -50,7 +63,7 @@ export class NotificationsServices {
     const notifications = await notificationModel.findMany({
       where: { userId },
       orderBy: { createdAt: "desc" },
-      include: { user: true },
+      select: notificationSelect,
     });
 
     return notifications;

@@ -10,12 +10,13 @@ import {
   followRouter,
   likesRouter,
   messagesRouter,
+  notificationsRouter,
   postsRouter,
   profileRouter,
+  repostsRouter,
   searchRouter,
   usersRouter,
 } from "./routes";
-import { repostsRouter } from "./routes/interactions/reposts.routes";
 
 export const app = express();
 
@@ -45,5 +46,7 @@ app.use("/reposts", repostsRouter);
 app.use("/posts", postsRouter);
 
 app.use("/messages", messagesRouter);
+
+app.use("/notifications", notificationsRouter);
 
 app.use(ErrorHandler.execute);

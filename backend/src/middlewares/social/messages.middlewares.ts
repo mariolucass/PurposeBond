@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { messageModel } from "../../database/models";
 import { AppError } from "../../errors/appError";
 
 export class MessagesMiddleware {

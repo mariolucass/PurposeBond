@@ -30,9 +30,11 @@ export class UsersMiddlewares {
     res: Response,
     next: NextFunction
   ) => {
+    console.log(res.locals);
+
     const {
       user: { id: userAuthenticatedId },
-      userFound: { id: userParamsId },
+      reqParamsUser: { id: userParamsId },
     } = res.locals;
 
     if (userAuthenticatedId !== userParamsId) {
