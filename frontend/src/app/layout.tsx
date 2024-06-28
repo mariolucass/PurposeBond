@@ -19,23 +19,22 @@ const RootLayout = ({ children }: ChildrenInterface) => (
     <Head />
 
     <AuthProvider>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.className
+        )}
       >
-        <body
-          className={cn(
-            "min-h-screen bg-background font-sans antialiased",
-            fontSans.className
-          )}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
         >
           {children}
-
-          <Toaster />
-        </body>
-      </ThemeProvider>
+        </ThemeProvider>
+        <Toaster />
+      </body>
     </AuthProvider>
   </html>
 );

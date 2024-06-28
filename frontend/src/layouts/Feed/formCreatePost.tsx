@@ -48,7 +48,6 @@ export const FormCreatePost = () => {
 
     if (event.nativeEvent.key === "@") {
       const oldValue = postFormMethods.getValues("content");
-
       postFormMethods.setValue("content", oldValue + "@Mario");
     }
   };
@@ -57,7 +56,7 @@ export const FormCreatePost = () => {
     <Form {...postFormMethods}>
       <form
         onSubmit={postFormMethods.handleSubmit(createPost)}
-        className="w-full h-component3x flex flex-col justify-around gap-4 p-4 border-b-2"
+        className="w-full h-component3x flex flex-col justify-between gap-4 p-4 border-b-2"
       >
         <FormField
           control={postFormMethods.control}

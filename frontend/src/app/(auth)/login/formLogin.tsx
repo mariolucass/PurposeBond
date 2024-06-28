@@ -10,6 +10,7 @@ import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { saveAccountInLocalStorage } from "./saveAccountInLocal";
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -22,54 +23,16 @@ export const LoginForm = () => {
 
   const handleLogin = async (form: LoginType) => {
     setLoading(true);
+
     const formatedForm = form.email.includes("@")
       ? form
       : { username: form.email, password: form.password };
 
     const response = await postLogin(formatedForm);
 
-    const token = response.accessToken;
-    localStorage.setItem("tokenRedeSocial", token);
-
-    const accountsString = localStorage.getItem("accounts");
-    const accounts = accountsString ? JSON.parse(accountsString) : [];
-
-    const { profileImage, username, name } = response.user;
-
-    const accountInLocalStorage = accounts.find(
-      (account: any) => account.username === username
-    );
-
-    const now = new Date();
-    const expiresInTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-    const expiresIn = expiresInTime
-      .toISOString()
-      .slice(0, 23)
-      .replace("T", " ");
-
-    if (accountInLocalStorage) {
-      const accountIndex = accounts.indexOf(accountInLocalStorage);
-      accounts[accountIndex] = {
-        ...accountInLocalStorage,
-        token,
-        expiresIn,
-      };
-
-      localStorage.setItem("accounts", JSON.stringify(accounts));
-    } else {
-      accounts.push({
-        profileImage,
-        username,
-        name,
-        token,
-        expiresIn,
-      });
-
-      localStorage.setItem("accounts", JSON.stringify(accounts));
-    }
+    saveAccountInLocalStorage(response);
 
     setLoading(false);
-
     router.push("/profile");
   };
 
@@ -82,8 +45,11 @@ export const LoginForm = () => {
         <FormFields control={loginFormMethods.control} type={"login"} />
 
         {loading ? (
-          <Button type="submit">
-            <LoaderCircle />
+          <Button type="submit" disabled>
+            <div className="flex items-center space-x-2">
+              <LoaderCircle className="animate-spin" />
+              <span>Logging-in...</span>
+            </div>
           </Button>
         ) : (
           <Button type="submit">Login</Button>

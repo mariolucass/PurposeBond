@@ -1,3 +1,4 @@
+import { DeleteAccount } from "@/components/settings/deleteAccount";
 import { FontSelector } from "@/components/settings/fontSelector";
 import { LanguageSelector } from "@/components/settings/languageSelector";
 import { ThemeSelector } from "@/components/settings/themeSelector";
@@ -42,6 +43,11 @@ export const SettingProvider = ({ children }: ChildrenInterface) => {
           name: "Language",
           setting: "language",
           component: <LanguageSelector />,
+        },
+        {
+          name: "Delete Account",
+          setting: "delete",
+          component: <DeleteAccount />,
         },
       ],
     },

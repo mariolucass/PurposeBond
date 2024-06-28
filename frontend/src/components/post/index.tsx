@@ -26,13 +26,9 @@ export const PostComponent = ({ post }: PostProps) => {
     }
   };
 
-  const handleClickAuthor = () => {
-    router.push(`/users/${post.author.id}`);
-  };
-
   return (
     <div
-      className="h-component3x flex flex-row w-full p-4 rounded-lg min-h-[200px] gap-4 border-b-2"
+      className="h-component3x flex flex-row w-full p-4 gap-4 border-b-2"
       onClick={handlePostContentClick}
     >
       <div className="w-2/3">

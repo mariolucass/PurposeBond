@@ -1,6 +1,7 @@
 "use client";
 
 import { Navigator } from "@/components/navigator";
+import { Button } from "@/components/ui/button";
 import { useMessageContext } from "@/contexts/message.context";
 import { getUsersWhoHaveMessage } from "@/services/messages.services";
 import { useEffect } from "react";
@@ -29,7 +30,11 @@ const MessagesPage = () => {
     <section className="w-full min-w-full flex flex-col justify-start">
       <Navigator name={"Messages"} />
 
-      <ul className="h-screenMinus88 flex flex-col overflow-y-auto ">
+      <div className="h-component flex justify-center items-center border-b-2">
+        <Button>Create New Message</Button>
+      </div>
+
+      <ul className="h-screenMinus176 flex flex-col overflow-y-auto ">
         {usersWhoHaveMessage.map((user: any) => (
           <UserMessageCard user={user} message={user.message} key={user.id} />
         ))}

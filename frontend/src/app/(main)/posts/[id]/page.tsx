@@ -34,9 +34,7 @@ const PostPage = ({ params: { id } }: PostPageProps) => {
 
       <PostComponent post={currentPost} />
 
-      <div className="w-full flex p-4">
-        <FormCreateComment />
-      </div>
+      <FormCreateComment />
 
       <CommentsList postId={id} />
     </section>

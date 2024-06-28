@@ -7,22 +7,25 @@ import {
   HomeIcon,
   LogInIcon,
   MessageSquareText,
+  SearchIcon,
   SettingsIcon,
   UserIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { AccountOptions } from "./accountOptions";
 
 export const SideBarLeft = () => {
   const { authenticatedUser } = useAuthContext();
   const pathname = usePathname();
+  const router = useRouter();
 
   const navigationLinks = [{ href: "/", label: "Home", icon: <HomeIcon /> }];
 
   if (authenticatedUser) {
     navigationLinks.push(
       { href: "/profile", label: "Profile", icon: <UserIcon /> },
+      { href: "/search", label: "Search", icon: <SearchIcon /> },
       { href: "/notifications", label: "Notifications", icon: <Bell /> },
       { href: "/messages", label: "Messages", icon: <MessageSquareText /> },
       { href: "/settings", label: "Settings", icon: <SettingsIcon /> }
@@ -43,8 +46,11 @@ export const SideBarLeft = () => {
     <section className="h-screen side-bar-left flex flex-col items-center fixed mx-auto">
       <div className="w-full flex flex-col justify-start items-center pt-0">
         {authenticatedUser && (
-          <div className="w-[210px] h-component flex p-4 border-b-2 items-center justify-between">
-            <Avatar className="w-[48px] h-[48px] border-primary">
+          <div className="w-[210px] h-component flex p-4 border-b-2 items-center justify-between cursor-pointer ">
+            <Avatar
+              className="w-[48px] h-[48px] border-primary hover:animate-pulse"
+              onClick={() => router.push("/profile")}
+            >
               <AvatarImage src={authenticatedUser.profileImage} />
             </Avatar>
 
