@@ -51,6 +51,8 @@ const AccountsPage = () => {
     }
   }, [usersInDatabase]);
 
+  console.log(accounts);
+
   return (
     <section className="w-1/2 h-full flex flex-col gap-4 shadow-sm mx-auto r">
       <div className="w-full border-2 flex flex-col gap-4 p-4 rounded-sm">
@@ -58,7 +60,7 @@ const AccountsPage = () => {
         <AccountSelector accounts={accounts} />
       </div>
 
-      <div className="w-full border-2 h-28 p-4 flex justify-center items-center rounded-sm">
+      <div className="w-full h-component border-2 p-4 flex justify-center items-center">
         <span className="self-center">
           Already have an account?{" "}
           <Link href="/login" className="font-bold">

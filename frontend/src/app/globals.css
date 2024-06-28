@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -24,8 +23,9 @@
     --border: 220 13% 91%;
     --input: 220 13% 91%;
     --ring: 224 71.4% 4.1%;
-    --radius: 0.3rem;
+    --radius: 0.5rem;
   }
+
   .dark {
     --background: 224 71.4% 4.1%;
     --foreground: 210 20% 98%;
@@ -49,25 +49,13 @@
   }
 }
 
-
 @layer base {
   * {
     @apply border-border;
-
   }
-
   body {
     @apply bg-background text-foreground;
   }
-}
-
-:root{
-  --primaryCOLOR: #4d7a86;
-  --secondaryCOLOR: #2b4c5a;
-  --accentCOLOR: #81c5ca;
-
-  --backgroundCOLOR: #f3f6f4,
-  --textCOLOR: #333333;
 }
 
 body {

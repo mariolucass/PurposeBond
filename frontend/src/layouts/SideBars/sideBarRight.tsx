@@ -55,8 +55,10 @@ export const SideBarRight = () => {
       </form>
 
       {recommendations.length > 0 && (
-        <div className="h-[440px] border-2 flex w-full flex-col rounded-radius justify-around p-4">
+        <div className="h-[440px] border-2 flex w-full flex-col rounded-radius justify-between p-4">
           <h1 className="text-xl font-semibold">Recommendations</h1>
+
+          <Separator />
 
           <ul className="space-y-4 w-full">
             {recommendations.map((user: any, index: any) => (

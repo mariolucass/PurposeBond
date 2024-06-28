@@ -55,7 +55,7 @@ export const NotificationCard = ({ notification }: NotificationProps) => {
 
   return (
     <li
-      className="w-full h-component2x relative flex p-4 justify-around cursor-pointer border-y-2 border-t-0 "
+      className="w-full h-component2x relative flex p-4 cursor-pointer border-y-2 border-t-0"
       onClick={handleNotificationClick}
     >
       <div className="absolute top-4 right-4 flex items-center">
@@ -65,14 +65,14 @@ export const NotificationCard = ({ notification }: NotificationProps) => {
         </span>
       </div>
 
-      <div className="w-1/3 flex items-center -space-x-8 ">
+      <div className="flex items-start -space-x-8 ">
         <AvatarGroup />
       </div>
 
-      <div className="w-2/3 flex flex-col gap-4">
+      <div className="flex flex-col gap-4 ml-12">
         <NotificationTitle />
 
-        <span className="seld-end">Check it now!</span>
+        <span className="self-end font-semibold">Check it now!</span>
       </div>
     </li>
   );

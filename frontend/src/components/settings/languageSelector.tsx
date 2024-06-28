@@ -14,13 +14,13 @@ export const LanguageSelector = () => {
   return (
     <Select onValueChange={handleSelectChange}>
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Theme" />
+        <SelectValue placeholder="Language" />
       </SelectTrigger>
 
       <SelectContent>
-        <SelectItem value="light">Light</SelectItem>
-        <SelectItem value="dark">Dark</SelectItem>
-        <SelectItem value="system">System</SelectItem>
+        <SelectItem value="english">English</SelectItem>
+        <SelectItem value="portugues">Português</SelectItem>
+        <SelectItem value="deutschland">Deutschland</SelectItem>
       </SelectContent>
     </Select>
   );

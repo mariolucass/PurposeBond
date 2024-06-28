@@ -1,9 +1,11 @@
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
+import { useSearchParams } from "next/navigation";
 import {
   Dispatch,
   SetStateAction,
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
 
@@ -13,9 +15,14 @@ interface Results {
   media: never[];
   users: never[];
 }
+
+export type SearchType = "latest" | "popular" | "media" | "users";
 interface ISearchContext {
-  search: string | null;
-  setSearch: Dispatch<SetStateAction<string | null>>;
+  currentSearch: string | null;
+  setCurrentSearch: Dispatch<SetStateAction<string | null>>;
+
+  currentType: SearchType | null;
+  setCurrentType: Dispatch<SetStateAction<SearchType | null>>;
 
   results: Results;
   setResults: Dispatch<SetStateAction<Results>>;
@@ -24,7 +31,18 @@ interface ISearchContext {
 const SearchContext = createContext<ISearchContext>({} as ISearchContext);
 
 export const SearchProvider = ({ children }: ChildrenInterface) => {
-  const [search, setSearch] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+
+  const [searchParam, setSearchParam] = useState(searchParams.get("q"));
+  const [typeParam, setTypeParam] = useState(searchParams.get("type"));
+
+  useEffect(() => {
+    setCurrentSearch(searchParam);
+    setCurrentType(typeParam as SearchType);
+  });
+
+  const [currentSearch, setCurrentSearch] = useState<string | null>(null);
+  const [currentType, setCurrentType] = useState<SearchType | null>(null);
   const [results, setResults] = useState<Results>({
     latest: [],
     popular: [],
@@ -33,7 +51,18 @@ export const SearchProvider = ({ children }: ChildrenInterface) => {
   });
 
   return (
-    <SearchContext.Provider value={{ search, setSearch, results, setResults }}>
+    <SearchContext.Provider
+      value={{
+        currentSearch,
+        setCurrentSearch,
+
+        currentType,
+        setCurrentType,
+
+        results,
+        setResults,
+      }}
+    >
       {children}
     </SearchContext.Provider>
   );

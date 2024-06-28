@@ -1,10 +1,9 @@
 import { CommentComponent } from "@/components/comment";
 import { LoadingComponent } from "@/components/loading";
-import { Separator } from "@/components/ui/separator";
 import { useCommentContext } from "@/contexts/comment.context";
 import { CommentInterface } from "@/interfaces/comments.interfaces";
 import { getCommentsByPost } from "@/services/comments.services";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const CommentsList = ({ postId }: { postId: string }) => {
   const { shouldFetchComments, setShouldFetchComments, comments, setComments } =
@@ -44,14 +43,13 @@ export const CommentsList = ({ postId }: { postId: string }) => {
     return <div>Comments not fetched.</div>;
   }
 
+  if (!comments.length) {
+  }
+
   return (
     <ul className="flex flex-col">
-      <Separator className="mb-0" />
-      {comments.map((e: CommentInterface, index) => (
-        <Fragment key={e.id}>
-          <CommentComponent comment={e} postId={postId} />
-          {index !== comments.length - 1 && <Separator />}
-        </Fragment>
+      {comments.map((e: CommentInterface) => (
+        <CommentComponent comment={e} postId={postId} />
       ))}
     </ul>
   );

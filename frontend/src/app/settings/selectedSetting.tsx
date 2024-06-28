@@ -7,7 +7,7 @@ export const SelectedSetting = () => {
   return (
     <section className="w-full min-w-full flex flex-col justify-start">
       {currentSetting ? (
-        <div className="h-component flex px-8 border-b-2 items-center py-4 justify-between">
+        <div className="h-component flex px-4 border-b-2 items-center py-4 justify-between">
           <div className="flex flex-col">
             <h1 className="text-xl font-bold">{currentSetting.name}</h1>
 

@@ -33,7 +33,7 @@ export const FormCreateComment = () => {
     <Form {...commentFormMethods}>
       <form
         onSubmit={commentFormMethods.handleSubmit(createComment)}
-        className=" h-component3x min-w-full flex items-center justify-center"
+        className=" h-component2x min-w-full flex items-center justify-center border-b-2"
       >
         <FormField
           control={commentFormMethods.control}

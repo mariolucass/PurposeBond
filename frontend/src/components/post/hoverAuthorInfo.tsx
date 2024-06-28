@@ -6,9 +6,11 @@ import {
 } from "@/components/ui/hover-card";
 import { handleJoinedAtDate } from "@/utils/handleDateWithMoment";
 import { CalendarDays } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface HoverCardAuthorProps {
   author: {
+    id: string;
     name: string;
     username: string;
     profileImage?: string;
@@ -18,10 +20,19 @@ interface HoverCardAuthorProps {
 }
 
 export const HoverCardAuthor = ({ author }: HoverCardAuthorProps) => {
+  const router = useRouter();
+
+  const handleClickAuthor = () => {
+    router.push(`/users/${author.id}`);
+  };
+
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <div className="flex gap-4 items-center justify-evenly">
+        <div
+          className="flex gap-4 items-center justify-evenly"
+          onClick={handleClickAuthor}
+        >
           <div>
             <h2 className="cursor-pointer text-lg font-semibold">
               {author.name}
