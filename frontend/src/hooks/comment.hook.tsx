@@ -1,5 +1,6 @@
 import { useCommentContext } from "@/contexts/domains/PostDomain/comment.context";
-import { getComment } from "@/services/comments.services";
+
+import { CommentService } from "@/services/comments.services";
 import { useEffect, useState } from "react";
 import { useFetchPost } from "./post.hook";
 
@@ -18,7 +19,7 @@ export const useFetchComment = (postId: string, id: string) => {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        const fetchedComment = await getComment(id);
+        const fetchedComment = await CommentService.getById(id);
         setCurrentComment(fetchedComment);
       } catch (error) {
         console.error("Error fetching comment:", error);

@@ -6,8 +6,12 @@ interface GetSearchProps {
   type: string;
 }
 
-export const getSearch = async ({ query, type }: GetSearchProps) => {
-  const paramsOptions = { params: { q: query, type: type } };
-
-  return handleApiResponse<any>(api.get("/search", paramsOptions));
+export const SearchService = {
+  search: async ({ query, type }: GetSearchProps): Promise<any> => {
+    return handleApiResponse(
+      api.get("/search", {
+        params: { q: query, type },
+      })
+    );
+  },
 };

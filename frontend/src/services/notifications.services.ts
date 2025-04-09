@@ -2,20 +2,26 @@ import { NotificationInterface } from "@/interfaces/notifications.interfaces";
 import { api } from "./config/api";
 import { handleApiResponse } from "./config/handleResponse";
 
-export const getNotifications = async () => {
-  return handleApiResponse<NotificationInterface[]>(api.get("notifications/"));
-};
+export const NotificationService = {
+  getNotifications: async () => {
+    return handleApiResponse<NotificationInterface[]>(
+      api.get("notifications/")
+    );
+  },
 
-export const patchMarkAllNotificationsRead = async () => {
-  return handleApiResponse<void>(api.patch("/notifications/"));
-};
+  patchMarkAllNotificationsRead: async () => {
+    return handleApiResponse<void>(api.patch("/notifications/"));
+  },
 
-export const patchMarkNotificationRead = async (notificationId: string) => {
-  return handleApiResponse<void>(api.patch(`/notifications/${notificationId}`));
-};
+  patchMarkNotificationRead: async (notificationId: string) => {
+    return handleApiResponse<void>(
+      api.patch(`/notifications/${notificationId}`)
+    );
+  },
 
-export const deleteNotification = async (notificationId: string) => {
-  return handleApiResponse<void>(
-    api.delete(`/notifications/${notificationId}`)
-  );
+  deleteNotification: async (notificationId: string) => {
+    return handleApiResponse<void>(
+      api.delete(`/notifications/${notificationId}`)
+    );
+  },
 };

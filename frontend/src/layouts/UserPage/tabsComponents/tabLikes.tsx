@@ -1,8 +1,8 @@
 import { EmptyLikes } from "@/components/_emptyComponents/emptyLikes";
-import { LoadingComponent } from "@/components/loading";
+import { LoadingComponent } from "@/components/common/loading";
 import { PostComponent } from "@/components/post";
 import { ApiError } from "@/services/config/apiError";
-import { getLikesByUser } from "@/services/likes.services";
+import { LikeService } from "@/services/likes.services";
 import { useEffect, useState } from "react";
 import { TabProps } from "./interfaces";
 
@@ -14,7 +14,7 @@ export const TabLikes = ({ user }: TabProps) => {
   useEffect(() => {
     const fetchLikes = async () => {
       try {
-        const fetchedLikes = await getLikesByUser(user.id);
+        const fetchedLikes = await LikeService.getByUser(user.id);
         setLikes(fetchedLikes);
       } catch (error) {
         if (error instanceof ApiError) {

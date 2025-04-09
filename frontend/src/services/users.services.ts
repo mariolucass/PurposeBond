@@ -2,18 +2,23 @@ import { UserInterface, UserUpdateType } from "@/interfaces/users.interfaces";
 import { api } from "./config/api";
 import { handleApiResponse } from "./config/handleResponse";
 
-export const getUsers = async () => {
-  return handleApiResponse<UserInterface[]>(api.get("/users"));
-};
+export const UserService = {
+  getAll: async (): Promise<UserInterface[]> => {
+    return handleApiResponse(api.get("/users"));
+  },
 
-export const getUser = async (userId: string) => {
-  return handleApiResponse<UserInterface>(api.get(`/users/${userId}`));
-};
+  getById: async (userId: string): Promise<UserInterface> => {
+    return handleApiResponse(api.get(`/users/${userId}`));
+  },
 
-export const patchUser = async (body: UserUpdateType, userId: string) => {
-  return handleApiResponse<UserInterface>(api.patch(`/users/${userId}`, body));
-};
+  update: async (
+    userId: string,
+    data: UserUpdateType
+  ): Promise<UserInterface> => {
+    return handleApiResponse(api.patch(`/users/${userId}`, data));
+  },
 
-export const deleteUser = async (userId: string) => {
-  return handleApiResponse<void>(api.delete(`/users/${userId}`));
+  delete: async (userId: string): Promise<void> => {
+    return handleApiResponse(api.delete(`/users/${userId}`));
+  },
 };

@@ -1,11 +1,11 @@
 import { NoSearchResults } from "@/components/_emptyComponents/noSearchResults";
-import { LoadingComponent } from "@/components/loading";
+import { LoadingComponent } from "@/components/common/loading";
 import { PostComponent } from "@/components/post";
 import { UserCard } from "@/components/userCard";
 import { useSearchContext } from "@/contexts/domains/UiDomain/search.context";
 import { PostInterface } from "@/interfaces/posts.interfaces";
 import { UserInterface } from "@/interfaces/users.interfaces";
-import { getSearch } from "@/services/search.services";
+import { SearchService } from "@/services/search.services";
 import Error from "next/error";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -26,7 +26,7 @@ export const SearchResults = () => {
       setIsLoading(true);
 
       try {
-        const fetchedResults = await getSearch({
+        const fetchedResults = await SearchService.search({
           query: currentSearch,
           type: currentType,
         });

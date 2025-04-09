@@ -1,8 +1,9 @@
 import { EmptyMedia } from "@/components/_emptyComponents/emptyMedia";
-import { LoadingComponent } from "@/components/loading";
+import { LoadingComponent } from "@/components/common/loading";
 import { PostComponent } from "@/components/post";
 import { ApiError } from "@/services/config/apiError";
-import { getMediaByUser } from "@/services/posts.services";
+
+import { PostService } from "@/services/posts.services";
 import { useEffect, useState } from "react";
 import { TabProps } from "./interfaces";
 
@@ -14,8 +15,8 @@ export const TabMedia = ({ user }: TabProps) => {
   useEffect(() => {
     const fetchMedia = async () => {
       try {
-        const fetchedMedia = await getMediaByUser(user.id);
-        setMedia(fetchedMedia);
+        const fetchedMedia = await PostService.getMediaByUser(user.id);
+        setMedia(fetchedMedia as any);
       } catch (error) {
         if (error instanceof ApiError) {
           console.error(error);

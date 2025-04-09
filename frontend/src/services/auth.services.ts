@@ -2,10 +2,12 @@ import { RegisterType } from "@/interfaces/auth.interfaces";
 import { api } from "./config/api";
 import { handleApiResponse } from "./config/handleResponse";
 
-export const postLogin = async (body: any) => {
-  return handleApiResponse<any>(api.post(`/auth/login`, body));
-};
+export const AuthService = {
+  login: async (credentials: any): Promise<any> => {
+    return handleApiResponse(api.post("/auth/login", credentials));
+  },
 
-export const postRegister = async (body: RegisterType) => {
-  return handleApiResponse<any>(api.post(`/auth/register`, body));
+  register: async (data: RegisterType): Promise<any> => {
+    return handleApiResponse(api.post("/auth/register", data));
+  },
 };

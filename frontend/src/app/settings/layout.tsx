@@ -2,7 +2,7 @@
 
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import { SideBarLeft } from "@/layouts/SideBars/sideBarLeft";
-import { SelectedSetting } from "./selectedSetting";
+import { SelectedSetting } from "../../components/settings/selectedSetting";
 
 const MainLayout = ({ children }: ChildrenInterface) => (
   <main className="w-full h-full items-center">

@@ -1,5 +1,6 @@
 import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
-import { getProfile } from "@/services/profile.services";
+import { ProfileService } from "@/services/profile.services";
+
 import { useEffect, useState } from "react";
 
 export const useFetchProfile = () => {
@@ -13,7 +14,7 @@ export const useFetchProfile = () => {
 
     const fetchUser = async () => {
       try {
-        const fetchedUser = await getProfile();
+        const fetchedUser = await ProfileService.getProfile();
         setAuthenticatedUser(fetchedUser);
       } catch (error) {
         localStorage.removeItem("tokenRedeSocial");

@@ -2,24 +2,19 @@ import { useCommentContext } from "@/contexts/domains/PostDomain/comment.context
 import { usePostContext } from "@/contexts/domains/PostDomain/post.context";
 import { CommentCreateType } from "@/interfaces/comments.interfaces";
 import { commentCreateSchema } from "@/lib/schemas/comments.schemas";
-import { postComment } from "@/services/comments.services";
+import { CommentService } from "@/services/comments.services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Button } from "../../../../components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-} from "../../../../components/ui/form";
-import { Textarea } from "../../../../components/ui/textarea";
+import { Button } from "../ui/button";
+import { Form, FormControl, FormField, FormItem } from "../ui/form";
+import { Textarea } from "../ui/textarea";
 
 export const FormCreateComment = () => {
   const { currentPost } = usePostContext();
   const { setShouldFetchComments } = useCommentContext();
 
   const createComment = async (form: { content: string }) => {
-    await postComment(currentPost!.id, form);
+    await CommentService.create(currentPost!.id, form);
     setShouldFetchComments(true);
     commentFormMethods.reset();
   };

@@ -3,7 +3,7 @@
 import { usePostContext } from "@/contexts/domains/PostDomain/post.context";
 import { PostReturnType } from "@/interfaces/posts.interfaces";
 import { ApiError } from "@/services/config/apiError";
-import { getPosts } from "@/services/posts.services";
+import { PostService } from "@/services/posts.services";
 import { AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
 import { PostComponent } from "../../components/post";
@@ -18,7 +18,7 @@ export const Feed = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const fetchedPosts = await getPosts();
+        const fetchedPosts = await PostService.getAll();
         setPosts(() => fetchedPosts);
       } catch (error) {
         if (error instanceof ApiError) {

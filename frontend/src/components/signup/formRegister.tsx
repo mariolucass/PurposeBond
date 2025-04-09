@@ -1,15 +1,15 @@
 "use client";
 
-import { FormFields } from "@/components/formFields";
 import { Button } from "@/components/ui/button";
 import { RegisterType } from "@/interfaces/auth.interfaces";
 import { registerSchema } from "@/lib/schemas/auth.schemas";
-import { postRegister } from "@/services/auth.services";
+import { AuthService } from "@/services/auth.services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { FormFields } from "../common/formFields";
 
 export const RegisterForm = () => {
   const router = useRouter();
@@ -21,7 +21,7 @@ export const RegisterForm = () => {
 
   const handleRegister = async (form: RegisterType) => {
     setLoading(true);
-    const response = await postRegister(form);
+    await AuthService.register(form);
 
     setLoading(false);
     router.push("/profile");

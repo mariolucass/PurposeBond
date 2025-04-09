@@ -1,5 +1,5 @@
+import { LoginForm } from "@/components/login/formLogin";
 import Link from "next/link";
-import { LoginForm } from "./formLogin";
 
 const LoginPage = () => (
   <section className="w-1/2 h-full flex flex-col gap-4 shadow-sm mx-auto r">

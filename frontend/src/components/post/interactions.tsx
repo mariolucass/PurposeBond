@@ -1,6 +1,6 @@
 import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
-import { deleteLike, postLike } from "@/services/likes.services";
-import { deleteRepost, postRepost } from "@/services/reposts.services";
+import { LikeService } from "@/services/likes.services";
+import { RepostService } from "@/services/reposts.services";
 import { MessageSquare, Repeat2, ThumbsUp } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
@@ -80,7 +80,7 @@ export const PostInteractions = ({ postId, count }: PostInteractionsProps) => {
   const handleLike = async () => {
     if (!restrictActionToLoggedInUsers("like")) return;
 
-    const action = isLiked ? deleteLike : postLike;
+    const action = isLiked ? LikeService.unlike : LikeService.like;
 
     try {
       await action(postId);
@@ -96,7 +96,7 @@ export const PostInteractions = ({ postId, count }: PostInteractionsProps) => {
   const handleRepost = async () => {
     if (!restrictActionToLoggedInUsers("repost")) return;
 
-    const action = isReposted ? deleteRepost : postRepost;
+    const action = isReposted ? RepostService.delete : RepostService.create;
 
     try {
       await action(postId);

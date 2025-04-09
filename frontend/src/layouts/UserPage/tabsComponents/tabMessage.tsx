@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { postMessageToUser } from "@/services/messages.services";
+import { MessageService } from "@/services/messages.services";
 import { useState } from "react";
 import { TabProps } from "./interfaces";
 
@@ -15,8 +15,9 @@ export const TabMessage = ({ user }: TabProps) => {
     setLoading(true);
     if (message.trim().length) {
       try {
-        const messagea = await postMessageToUser(user.id, { content: message });
-        console.log(messagea);
+        MessageService.sendMessage(user.id, {
+          content: message,
+        });
       } catch (error) {
         console.log(error);
       }

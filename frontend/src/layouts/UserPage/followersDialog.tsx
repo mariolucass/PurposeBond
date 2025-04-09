@@ -10,7 +10,7 @@ import { UserCard } from "@/components/userCard";
 import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { useModalContext } from "@/contexts/domains/UiDomain/modal.context";
 import { UserInterface } from "@/interfaces/users.interfaces";
-import { getFollowersByUser } from "@/services/follow.services";
+import { FollowService } from "@/services/follow.services";
 import { Fragment, useEffect, useRef, useState } from "react";
 
 export const FollowersDialog = ({ user, isProfile }: any) => {
@@ -36,7 +36,7 @@ export const FollowersDialog = ({ user, isProfile }: any) => {
       try {
         const following = isProfile
           ? await getFollowersForAuthenticatedUser()
-          : await getFollowersByUser(user.id);
+          : await FollowService.getFollowers(user.id);
 
         setFollowers(following);
       } catch (error) {

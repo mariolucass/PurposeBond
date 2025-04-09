@@ -1,8 +1,8 @@
 import { CommentComponent } from "@/components/comment";
-import { LoadingComponent } from "@/components/loading";
+import { LoadingComponent } from "@/components/common/loading";
 import { useCommentContext } from "@/contexts/domains/PostDomain/comment.context";
 import { CommentInterface } from "@/interfaces/comments.interfaces";
-import { getCommentsByPost } from "@/services/comments.services";
+import { CommentService } from "@/services/comments.services";
 import { useEffect, useState } from "react";
 
 export const CommentsList = ({ postId }: { postId: string }) => {
@@ -15,7 +15,7 @@ export const CommentsList = ({ postId }: { postId: string }) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const fetchedComments = await getCommentsByPost(postId);
+        const fetchedComments = await CommentService.getByPost(postId);
         setComments(fetchedComments);
       } catch (error) {
         setError(error);

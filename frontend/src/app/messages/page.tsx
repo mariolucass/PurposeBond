@@ -1,11 +1,11 @@
 "use client";
 
-import { Navigator } from "@/components/navigator";
+import { Navigator } from "@/components/common/navigator";
 import { Button } from "@/components/ui/button";
 import { useMessageContext } from "@/contexts/domains/SocialDomain/message.context";
-import { getUsersWhoHaveMessage } from "@/services/messages.services";
+import { MessageService } from "@/services/messages.services";
 import { useEffect } from "react";
-import { UserMessageCard } from "./userMessageCard";
+import { UserMessageCard } from "../../components/messages/userMessageCard";
 
 const MessagesPage = () => {
   const {
@@ -17,7 +17,7 @@ const MessagesPage = () => {
   useEffect(() => {
     const fetchUsersThatHaveMessage = async () => {
       try {
-        const fetchedUsers: any = await getUsersWhoHaveMessage();
+        const fetchedUsers: any = await MessageService.getAllContacts();
         setUsersWhoHaveMessage(sortUsersWhoHaveMessage(fetchedUsers));
       } catch (error) {
         console.log(error);

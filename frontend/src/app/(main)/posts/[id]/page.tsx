@@ -1,19 +1,15 @@
 "use client";
 
-import { PostComponent } from "@/components/post";
-import { usePostContext } from "@/contexts/domains/PostDomain/post.context";
-
-import { LoadingComponent } from "@/components/loading";
+import { LoadingComponent } from "@/components/common/loading";
 import { Navigator } from "@/components/navigator";
+import { PostComponent } from "@/components/post";
 import { FormCreateComment } from "@/components/post/formCreateComment";
+import { usePostContext } from "@/contexts/domains/PostDomain/post.context";
 import { useFetchPost } from "@/hooks/post.hook";
 import { CommentsList } from "../../../../components/post/commentsList";
 
 interface PostPageProps {
   params: { id: string };
-}
-interface Comment {
-  content: string;
 }
 
 const PostPage = ({ params: { id } }: PostPageProps) => {

@@ -1,7 +1,8 @@
 "use client";
 
-import { LoadingComponent } from "@/components/loading";
-import { Navigator } from "@/components/navigator";
+import { LoadingComponent } from "@/components/common/loading";
+import { Navigator } from "@/components/common/navigator";
+
 import { Separator } from "@/components/ui/separator";
 import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { UserInterface } from "@/interfaces/users.interfaces";
@@ -9,7 +10,8 @@ import { FollowersDialog } from "@/layouts/UserPage/followersDialog";
 import { FollowingDialog } from "@/layouts/UserPage/followingDialog";
 import { TabsUserPage } from "@/layouts/UserPage/tabs";
 import { UserSectionProfile } from "@/layouts/UserPage/userProfile";
-import { getUser } from "@/services/users.services";
+import { UserService } from "@/services/users.services";
+
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -33,7 +35,7 @@ const UserPage = ({ params: { id } }: UserPageProps) => {
 
     const fetchUser = async () => {
       try {
-        const fetchedUser = await getUser(id);
+        const fetchedUser = await UserService.getById(id);
         setUser(fetchedUser);
       } catch (error) {
         console.log(error);

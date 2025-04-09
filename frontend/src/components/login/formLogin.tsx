@@ -1,16 +1,16 @@
 "use client";
 
-import { FormFields } from "@/components/formFields";
 import { Button } from "@/components/ui/button";
 import { LoginType } from "@/interfaces/auth.interfaces";
 import { loginSchema } from "@/lib/schemas/auth.schemas";
-import { postLogin } from "@/services/auth.services";
+import { AuthService } from "@/services/auth.services";
+import { saveAccountInLocalStorage } from "@/utils/saveAccountInLocal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { saveAccountInLocalStorage } from "./saveAccountInLocal";
+import { FormFields } from "../common/formFields";
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -28,7 +28,7 @@ export const LoginForm = () => {
       ? form
       : { username: form.email, password: form.password };
 
-    const response = await postLogin(formatedForm);
+    const response = await AuthService.login(formatedForm);
 
     saveAccountInLocalStorage(response);
 

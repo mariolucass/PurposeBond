@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useMessageContext } from "@/contexts/domains/SocialDomain/message.context";
-import { getConversationWithUser } from "@/services/messages.services";
+import { MessageService } from "@/services/messages.services";
 import { MessageSquare, SquareUser } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -19,7 +19,9 @@ export const ChatSection = () => {
       if (!currentChat) return;
 
       try {
-        const conversation = await getConversationWithUser(currentChat.id);
+        const conversation = await MessageService.getConversation(
+          currentChat.id
+        );
         setConversationWithUser(conversation.messages);
         setShouldFetchMessages(false);
       } catch (error) {

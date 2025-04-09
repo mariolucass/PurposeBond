@@ -2,7 +2,7 @@
 import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 
 interface NavigatorProps {
   name: string;

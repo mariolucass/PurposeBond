@@ -6,31 +6,30 @@ import {
 import { api } from "./config/api";
 import { handleApiResponse } from "./config/handleResponse";
 
-export const getCommentsByPost = async (postId: string) => {
-  return handleApiResponse<CommentInterface[]>(
-    api.get(`posts/${postId}/comments`)
-  );
-};
+export const CommentService = {
+  getByPost: async (postId: string): Promise<CommentInterface[]> => {
+    return handleApiResponse(api.get(`/posts/${postId}/comments`));
+  },
 
-export const postComment = async (postId: string, body: CommentCreateType) => {
-  return handleApiResponse<CommentInterface[]>(
-    api.post(`/posts/${postId}/comments`, body)
-  );
-};
+  getById: async (commentId: string): Promise<CommentInterface> => {
+    return handleApiResponse(api.get(`/comments/${commentId}`));
+  },
 
-export const getComment = async (commentId: string) => {
-  return handleApiResponse<CommentInterface>(api.get(`/comments/${commentId}`));
-};
+  create: async (
+    postId: string,
+    body: CommentCreateType
+  ): Promise<CommentInterface[]> => {
+    return handleApiResponse(api.post(`/posts/${postId}/comments`, body));
+  },
 
-export const patchComment = async (
-  commentId: string,
-  body: CommentUpdateType
-) => {
-  return handleApiResponse<CommentInterface>(
-    api.patch(`/comments/${commentId}`, body)
-  );
-};
+  update: async (
+    commentId: string,
+    body: CommentUpdateType
+  ): Promise<CommentInterface> => {
+    return handleApiResponse(api.patch(`/comments/${commentId}`, body));
+  },
 
-export const deletePost = async (commentId: string) => {
-  return handleApiResponse<void>(api.delete(`/comments/${commentId}`));
+  delete: async (commentId: string): Promise<void> => {
+    return handleApiResponse(api.delete(`/comments/${commentId}`));
+  },
 };

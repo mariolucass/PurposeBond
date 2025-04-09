@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@/components/themeProvider";
+import { ThemeProvider } from "@/components/common/themeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { GlobalProvider } from "@/contexts";
 import { ChildrenInterface } from "@/interfaces/global.interfaces";

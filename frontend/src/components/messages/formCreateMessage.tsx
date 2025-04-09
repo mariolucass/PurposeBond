@@ -4,10 +4,8 @@ import { Input } from "@/components/ui/input";
 import { useMessageContext } from "@/contexts/domains/SocialDomain/message.context";
 import { MessageCreateType } from "@/interfaces/messages.interfaces";
 import { messageCreateSchema } from "@/lib/schemas/messages.schemas";
-import {
-  getUsersWhoHaveMessage,
-  postMessageToUser,
-} from "@/services/messages.services";
+import { MessageService } from "@/services/messages.services";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Send } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -21,11 +19,11 @@ export const FormCreateMessage = () => {
   } = useMessageContext();
 
   const sendMessage = async (form: { content: string }) => {
-    const a = await postMessageToUser(currentChat!.id, form);
+    const a = await MessageService.sendMessage(currentChat!.id, form);
     console.log(a);
     setShouldFetchMessages(true);
 
-    const fetchedUsers: any = await getUsersWhoHaveMessage();
+    const fetchedUsers: any = await MessageService.getAllContacts();
     setUsersWhoHaveMessage(sortUsersWhoHaveMessage(fetchedUsers));
     messageFormMethods.reset();
   };

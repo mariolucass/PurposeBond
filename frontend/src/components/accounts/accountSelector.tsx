@@ -5,7 +5,7 @@ import "swiper/css/navigation";
 
 import { EffectCoverflow, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { AccountCard } from "../../../components/accounts/accountCard";
+import { AccountCard } from "./accountCard";
 
 export const AccountSelector = ({ accounts }: any) => (
   <div className="w-9/12 flex flex-col m-auto gap-4">

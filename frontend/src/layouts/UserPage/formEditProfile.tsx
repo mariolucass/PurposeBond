@@ -1,11 +1,12 @@
-import { FormFields } from "@/components/formFields";
+import { FormFields } from "@/components/common/formFields";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { SheetClose, SheetFooter } from "@/components/ui/sheet";
 import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { UserUpdateType } from "@/interfaces/users.interfaces";
 import { userUpdateSchema } from "@/lib/schemas/users.schemas";
-import { patchUser } from "@/services/users.services";
+import { UserService } from "@/services/users.services";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -55,7 +56,7 @@ export const FormEditProfile = () => {
     );
 
     try {
-      const updatedProfile = await patchUser(formStrip, authenticatedUser.id);
+      await UserService.update(JSON.stringify(formStrip), authenticatedUser.id);
     } catch (error) {
       console.log(error);
     }

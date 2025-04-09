@@ -1,5 +1,5 @@
 import { useFollowContext } from "@/contexts/domains/SocialDomain/follow.context";
-import { followUser, unfollowUser } from "@/services/follow.services";
+import { FollowService } from "@/services/follow.services";
 import Link from "next/link";
 import { useState } from "react";
 import { Avatar, AvatarImage } from "../ui/avatar";
@@ -18,12 +18,9 @@ export const UserCard = ({ user }: any) => {
   const handleToggleFollow = async () => {
     try {
       setLoading(true);
-
-      if (isFollowing) {
-        await unfollowUser(user.id);
-      } else {
-        await followUser(user.id);
-      }
+      isFollowing
+        ? FollowService.unfollow(user.id)
+        : FollowService.follow(user.id);
 
       setIsFollowing(!isFollowing);
     } catch (error) {

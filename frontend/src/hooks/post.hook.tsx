@@ -1,6 +1,6 @@
 import { usePostContext } from "@/contexts/domains/PostDomain/post.context";
+import { PostService } from "@/services/posts.services";
 import { useEffect, useState } from "react";
-import { api } from "../services/config/api";
 
 export const useFetchPost = (id: string) => {
   const { currentPost, setCurrentPost } = usePostContext();
@@ -11,8 +11,8 @@ export const useFetchPost = (id: string) => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await api.get(`/posts/${id}`);
-        setCurrentPost(response.data);
+        const response = await PostService.getById(id);
+        setCurrentPost(response);
       } catch (error) {
         console.error("Error fetching post:", error);
         setFetchPostError(error);

@@ -1,11 +1,13 @@
 "use client";
 
 import { EmptyNotifications } from "@/components/_emptyComponents/emptyNotifications";
-import { Navigator } from "@/components/navigator";
+import { Navigator } from "@/components/common/navigator";
+
 import { NotificationCard } from "@/components/notificationCard";
 import { Separator } from "@/components/ui/separator";
 import { ApiError } from "@/services/config/apiError";
-import { getNotifications } from "@/services/notifications.services";
+import { NotificationService } from "@/services/notifications.services";
+
 import { useEffect, useState } from "react";
 
 const Notifications = () => {
@@ -14,7 +16,7 @@ const Notifications = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const fetched = await getNotifications();
+        const fetched = await NotificationService.getNotifications();
 
         const cleaned = fetched.map((n: any) =>
           Object.fromEntries(Object.entries(n).filter(([_, v]) => v !== null))

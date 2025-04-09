@@ -1,9 +1,9 @@
 import { EmptyPosts } from "@/components/_emptyComponents/emptyPosts";
-import { LoadingComponent } from "@/components/loading";
+import { LoadingComponent } from "@/components/common/loading";
 import { PostComponent } from "@/components/post";
 import { PostInterface } from "@/interfaces/posts.interfaces";
 import { ApiError } from "@/services/config/apiError";
-import { getPostsByUser } from "@/services/posts.services";
+import { PostService } from "@/services/posts.services";
 import Error from "next/error";
 import { useEffect, useState } from "react";
 import { TabProps } from "./interfaces";
@@ -16,7 +16,7 @@ export const TabPosts = ({ user }: TabProps) => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const fetchedPosts = await getPostsByUser(user.id);
+        const fetchedPosts = await PostService.getByUser(user.id);
         setPosts(fetchedPosts);
       } catch (error) {
         if (error instanceof ApiError) {

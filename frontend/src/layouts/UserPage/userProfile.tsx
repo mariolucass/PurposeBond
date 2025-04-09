@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { useModalContext } from "@/contexts/domains/UiDomain/modal.context";
 import { UserInterface } from "@/interfaces/users.interfaces";
-import { followUser, unfollowUser } from "@/services/follow.services";
+
+import { FollowService } from "@/services/follow.services";
 import { MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
 import { EditProfile } from "./editProfile";
@@ -38,7 +39,9 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
     if (!restrictActionToLoggedInUsers("follow")) return;
 
     try {
-      isFollowing ? await unfollowUser(user.id) : await followUser(user.id);
+      isFollowing
+        ? await FollowService.unfollow(user.id)
+        : await FollowService.follow(user.id);
       setIsFollowing(!isFollowing);
       const updateCount = isFollowing ? -1 : 1;
       displayedUser._count.followers += updateCount;

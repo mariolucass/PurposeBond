@@ -1,9 +1,9 @@
 "use client";
 
-import { getUsers } from "@/services/users.services";
+import { AccountSelector } from "@/components/accounts/accountSelector";
+import { UserService } from "@/services/users.services";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { AccountSelector } from "./accountSelector";
 
 const AccountsPage = () => {
   const [accounts, setAccounts] = useState([]);
@@ -12,7 +12,7 @@ const AccountsPage = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const fetchedUsers: any[] = await getUsers();
+        const fetchedUsers: any[] = await UserService.getAll();
         setUsersInDatabase(fetchedUsers);
       } catch (error) {
         console.log(error);

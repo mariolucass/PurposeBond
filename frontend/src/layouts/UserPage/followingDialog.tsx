@@ -11,7 +11,8 @@ import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { useFollowContext } from "@/contexts/domains/SocialDomain/follow.context";
 import { useModalContext } from "@/contexts/domains/UiDomain/modal.context";
 import { UserInterface } from "@/interfaces/users.interfaces";
-import { getFollowingByUser } from "@/services/follow.services";
+import { FollowService } from "@/services/follow.services";
+
 import { Fragment, useEffect, useState } from "react";
 
 export const FollowingDialog = ({ user, isProfile }: any) => {
@@ -36,7 +37,7 @@ export const FollowingDialog = ({ user, isProfile }: any) => {
           const following = await getFollowingForAuthenticatedUser();
           setFollowing(following);
         } else {
-          const following = await getFollowingByUser(user.id);
+          const following = await FollowService.getFollowing(user.id);
           setFollowingInModal(following);
         }
       } catch (error) {

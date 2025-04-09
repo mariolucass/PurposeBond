@@ -3,7 +3,7 @@
 import { MessageProvider } from "@/contexts/domains/SocialDomain/message.context";
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import { SideBarLeft } from "@/layouts/SideBars/sideBarLeft";
-import { ChatSection } from "./chatSection";
+import { ChatSection } from "../../components/messages/chatSection";
 
 const MainLayout = ({ children }: ChildrenInterface) => (
   <MessageProvider>

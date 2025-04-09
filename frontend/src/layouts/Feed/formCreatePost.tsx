@@ -1,7 +1,8 @@
 import { usePostContext } from "@/contexts/domains/PostDomain/post.context";
 import { PostCreateType } from "@/interfaces/posts.interfaces";
 import { postCreateSchema } from "@/lib/schemas/posts.schemas";
-import { postPost } from "@/services/posts.services";
+
+import { PostService } from "@/services/posts.services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { KeyboardEvent, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -21,7 +22,7 @@ export const FormCreatePost = () => {
   const [isMentioning, setIsMentioning] = useState(false);
 
   const createPost = async (form: { content: string }) => {
-    const newPost = await postPost(form);
+    const newPost = await PostService.create(form);
 
     setPosts((prev) => [newPost, ...prev]);
   };

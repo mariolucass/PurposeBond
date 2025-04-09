@@ -3,46 +3,48 @@ import { UserInterface } from "@/interfaces/users.interfaces";
 import { api } from "./config/api";
 import { handleApiResponse } from "./config/handleResponse";
 
-export const getProfile = async () => {
-  return handleApiResponse<UserInterface>(api.get(`/profile`));
-};
+export const ProfileService = {
+  getProfile: async (): Promise<UserInterface> => {
+    return handleApiResponse(api.get("/profile"));
+  },
 
-export const getProfileDiscussions = async () => {
-  return await handleApiResponse<PostInterface[]>(
-    api.get(`/profile/discussions/`)
-  );
-};
+  getPosts: async (): Promise<PostInterface[]> => {
+    return handleApiResponse(api.get("/profile/posts"));
+  },
 
-export const getProfileReposts = async () => {
-  return handleApiResponse<PostInterface[]>(api.get(`/profile/reposts/`));
-};
+  getComments: async (): Promise<PostInterface[]> => {
+    return handleApiResponse(api.get("/profile/comments"));
+  },
 
-export const getProfileComments = async () => {
-  return handleApiResponse<PostInterface[]>(api.get(`/profile/comments/`));
-};
+  getMedia: async (): Promise<PostInterface[]> => {
+    return handleApiResponse(api.get("/profile/media"));
+  },
 
-export const getProfileMedia = async () => {
-  return handleApiResponse<PostInterface[]>(api.get(`/profile/media/`));
-};
+  getReposts: async (): Promise<PostInterface[]> => {
+    return handleApiResponse(api.get("/profile/reposts"));
+  },
 
-export const getProfilePosts = async () => {
-  return handleApiResponse<PostInterface[]>(api.get(`/profile/posts/`));
-};
+  getLikes: async (): Promise<PostInterface[]> => {
+    return handleApiResponse(api.get("/profile/likes"));
+  },
 
-export const getProfileLikes = async () => {
-  return handleApiResponse<PostInterface[]>(api.get(`/profile/likes/`));
-};
+  getDiscussions: async (): Promise<PostInterface[]> => {
+    return handleApiResponse(api.get("/profile/discussions"));
+  },
 
-export const getProfileFollowers = async () => {
-  return handleApiResponse<PostInterface[]>(api.get(`/profile/followers/`));
-};
+  getFollowers: async (): Promise<PostInterface[]> => {
+    return handleApiResponse(api.get("/profile/followers"));
+  },
 
-export const getProfileFollowing = async () => {
-  return handleApiResponse<PostInterface[]>(api.get(`/profile/following/`));
-};
+  getFollowing: async (): Promise<PostInterface[]> => {
+    return handleApiResponse(api.get("/profile/following"));
+  },
 
-export const getProfileCountProperty = async (property: string) => {
-  return handleApiResponse<UserInterface[]>(
-    api.get(`/profile/count/`, { params: { property: property } })
-  );
+  getCountByProperty: async (property: string): Promise<UserInterface[]> => {
+    return handleApiResponse(
+      api.get("/profile/count", {
+        params: { property },
+      })
+    );
+  },
 };

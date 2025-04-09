@@ -1,7 +1,7 @@
 "use client";
 
 import { CommentComponent } from "@/components/comment";
-import { LoadingComponent } from "@/components/loading";
+import { LoadingComponent } from "@/components/common/loading";
 import { Navigator } from "@/components/navigator";
 import { PostAuthorInfo } from "@/components/post/authorInfo";
 import { Separator } from "@/components/ui/separator";

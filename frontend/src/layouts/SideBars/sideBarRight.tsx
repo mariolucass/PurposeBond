@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { UserCard } from "@/components/userCard";
-import { getFollowRecommendations } from "@/services/follow.services";
+import { FollowService } from "@/services/follow.services";
 import { usePathname, useRouter } from "next/navigation";
 import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -15,8 +15,8 @@ export const SideBarRight = () => {
   useEffect(() => {
     const fetchRecommendations = async () => {
       try {
-        const fetchedRecommendations = await getFollowRecommendations();
-        setRecommendations(fetchedRecommendations);
+        const fetchedRecommendations = await FollowService.getRecommendations();
+        setRecommendations(fetchedRecommendations as any);
       } catch (error) {
         console.error("Erro ao buscar recomendações:", error);
       }

@@ -1,6 +1,6 @@
 "use client";
 
-import { LoadingComponent } from "@/components/loading";
+import { LoadingComponent } from "@/components/common/loading";
 import { Navigator } from "@/components/navigator";
 import { Separator } from "@/components/ui/separator";
 import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { RegisterForm } from "./formRegister";
+import { RegisterForm } from "../../../components/signup/formRegister";
 
 const SignUpPage = () => (
   <section className="w-1/2 h-full flex flex-col gap-4 shadow-sm mx-auto r">

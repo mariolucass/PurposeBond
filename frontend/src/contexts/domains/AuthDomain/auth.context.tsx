@@ -3,16 +3,8 @@
 import { toast } from "@/components/ui/use-toast";
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import { api } from "@/services/config/api";
-import {
-  getProfileComments,
-  getProfileCountProperty,
-  getProfileDiscussions,
-  getProfileFollowers,
-  getProfileFollowing,
-  getProfileLikes,
-  getProfilePosts,
-  getProfileReposts,
-} from "@/services/profile.services";
+import { ProfileService } from "@/services/profile.services";
+
 import { useRouter } from "next/navigation";
 import {
   Dispatch,
@@ -80,7 +72,7 @@ export const AuthProvider = ({ children }: ChildrenInterface) => {
       return data;
     }
 
-    const newCountProperty: any = await getProfileCountProperty(
+    const newCountProperty: any = await ProfileService.getCountByProperty(
       propertyName as string
     );
 
@@ -109,25 +101,27 @@ export const AuthProvider = ({ children }: ChildrenInterface) => {
   };
 
   const getLikesForAuthenticatedUser = async () =>
-    getProfileData("likes", getProfileLikes) as Promise<any[]>;
+    getProfileData("likes", ProfileService.getLikes) as Promise<any[]>;
 
   const getPostsForAuthenticatedUser = async () =>
-    getProfileData("posts", getProfilePosts) as Promise<any[]>;
+    getProfileData("posts", ProfileService.getPosts) as Promise<any[]>;
 
   const getCommentsForAuthenticatedUser = async () =>
-    getProfileData("comments", getProfileComments) as Promise<any[]>;
+    getProfileData("comments", ProfileService.getComments) as Promise<any[]>;
 
   const getDiscussionsForAuthenticatedUser = async () =>
-    getProfileData("discussions", getProfileDiscussions) as Promise<any[]>;
+    getProfileData("discussions", ProfileService.getDiscussions) as Promise<
+      any[]
+    >;
 
   const getRepostsForAuthenticatedUser = async () =>
-    getProfileData("reposts", getProfileReposts) as Promise<any[]>;
+    getProfileData("reposts", ProfileService.getReposts) as Promise<any[]>;
 
   const getFollowersForAuthenticatedUser = async () =>
-    getProfileData("followers", getProfileFollowers) as Promise<any[]>;
+    getProfileData("followers", ProfileService.getFollowers) as Promise<any[]>;
 
   const getFollowingForAuthenticatedUser = async () =>
-    getProfileData("following", getProfileFollowing) as Promise<any[]>;
+    getProfileData("following", ProfileService.getFollowing) as Promise<any[]>;
 
   return (
     <AuthContext.Provider
