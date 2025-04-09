@@ -1,6 +1,6 @@
 import { CommentComponent } from "@/components/comment";
 import { LoadingComponent } from "@/components/loading";
-import { useCommentContext } from "@/contexts/comment.context";
+import { useCommentContext } from "@/contexts/domains/PostDomain/comment.context";
 import { CommentInterface } from "@/interfaces/comments.interfaces";
 import { getCommentsByPost } from "@/services/comments.services";
 import { useEffect, useState } from "react";
@@ -49,7 +49,7 @@ export const CommentsList = ({ postId }: { postId: string }) => {
   return (
     <ul className="flex flex-col">
       {comments.map((e: CommentInterface) => (
-        <CommentComponent comment={e} postId={postId} />
+        <CommentComponent comment={e} />
       ))}
     </ul>
   );

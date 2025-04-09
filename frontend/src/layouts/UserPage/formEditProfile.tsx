@@ -2,7 +2,7 @@ import { FormFields } from "@/components/formFields";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { SheetClose, SheetFooter } from "@/components/ui/sheet";
-import { useAuthContext } from "@/contexts/auth.context";
+import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { UserUpdateType } from "@/interfaces/users.interfaces";
 import { userUpdateSchema } from "@/lib/schemas/users.schemas";
 import { patchUser } from "@/services/users.services";

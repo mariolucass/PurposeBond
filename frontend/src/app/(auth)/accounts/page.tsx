@@ -51,8 +51,6 @@ const AccountsPage = () => {
     }
   }, [usersInDatabase]);
 
-  console.log(accounts);
-
   return (
     <section className="w-1/2 h-full flex flex-col gap-4 shadow-sm mx-auto r">
       <div className="w-full border-2 flex flex-col gap-4 p-4 rounded-sm">

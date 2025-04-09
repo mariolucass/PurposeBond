@@ -1,3 +1,4 @@
+"use client";
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import {
   Dispatch,
@@ -11,7 +12,7 @@ interface IFollowContext {
   followers: never[];
   setFollowers: Dispatch<SetStateAction<never[]>>;
 
-  following: never[];
+  following: any[];
   setFollowing: Dispatch<SetStateAction<never[]>>;
 }
 

@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
-import { Avatar, AvatarImage } from "../../../components/ui/avatar";
-import { Button } from "../../../components/ui/button";
+import { Avatar, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
 
 export const AccountCard = ({ account }: any) => {
   const router = useRouter();

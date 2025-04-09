@@ -7,8 +7,9 @@ import {
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { UserCard } from "@/components/userCard";
-import { useAuthContext } from "@/contexts/auth.context";
-import { useModalContext } from "@/contexts/modal.context";
+import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
+import { useFollowContext } from "@/contexts/domains/SocialDomain/follow.context";
+import { useModalContext } from "@/contexts/domains/UiDomain/modal.context";
 import { UserInterface } from "@/interfaces/users.interfaces";
 import { getFollowingByUser } from "@/services/follow.services";
 import { Fragment, useEffect, useState } from "react";
@@ -24,16 +25,20 @@ export const FollowingDialog = ({ user, isProfile }: any) => {
     setIsDialogFollowingOpen(false);
   };
 
-  const [following, setFollowing] = useState<UserInterface[]>([]);
+  const [followingInModal, setFollowingInModal] = useState<UserInterface[]>([]);
+
+  const { setFollowing, following } = useFollowContext();
 
   useEffect(() => {
     const fetchFollowing = async () => {
       try {
-        const following = isProfile
-          ? await getFollowingForAuthenticatedUser()
-          : await getFollowingByUser(user.id);
-
-        setFollowing(following);
+        if (isProfile) {
+          const following = await getFollowingForAuthenticatedUser();
+          setFollowing(following);
+        } else {
+          const following = await getFollowingByUser(user.id);
+          setFollowingInModal(following);
+        }
       } catch (error) {
         console.error("Error fetching following:", error);
       }
@@ -41,7 +46,9 @@ export const FollowingDialog = ({ user, isProfile }: any) => {
 
     fetchFollowing();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [displayedUser, isProfile]);
+
+  const listToDisplay = isProfile ? following : followingInModal;
 
   return (
     <Dialog open={isDialogFollowingOpen} onOpenChange={closeDialogFollowing}>
@@ -53,9 +60,9 @@ export const FollowingDialog = ({ user, isProfile }: any) => {
         <Separator />
 
         <div className="grid gap-4 py-4">
-          {following.length ? (
+          {listToDisplay.length ? (
             <ul className="flex flex-col gap-4 h-96 overflow-y-auto">
-              {following.map((user: any) => (
+              {listToDisplay.map((user: any) => (
                 <Fragment key={user.id}>
                   <UserCard user={user} />
                   <Separator />
@@ -67,7 +74,7 @@ export const FollowingDialog = ({ user, isProfile }: any) => {
           )}
         </div>
 
-        <Separator />
+        {!listToDisplay.length && <Separator />}
       </DialogContent>
     </Dialog>
   );

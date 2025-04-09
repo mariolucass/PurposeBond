@@ -1,4 +1,4 @@
-import { useAuthContext } from "@/contexts/auth.context";
+import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { getProfile } from "@/services/profile.services";
 import { useEffect, useState } from "react";
 

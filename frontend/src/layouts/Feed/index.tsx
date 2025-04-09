@@ -1,11 +1,13 @@
 "use client";
 
-import { usePostContext } from "@/contexts/post.context";
+import { usePostContext } from "@/contexts/domains/PostDomain/post.context";
 import { PostReturnType } from "@/interfaces/posts.interfaces";
 import { ApiError } from "@/services/config/apiError";
 import { getPosts } from "@/services/posts.services";
+import { AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
 import { PostComponent } from "../../components/post";
+import { ItemTransitionWrapper } from "../Animations/ItemTransition";
 import { FormCreatePost } from "./formCreatePost";
 import { TabsFeed } from "./tabs";
 
@@ -17,7 +19,7 @@ export const Feed = () => {
     const fetchPosts = async () => {
       try {
         const fetchedPosts = await getPosts();
-        setPosts(fetchedPosts);
+        setPosts(() => fetchedPosts);
       } catch (error) {
         if (error instanceof ApiError) {
           console.error(error);
@@ -39,12 +41,16 @@ export const Feed = () => {
 
       <FormCreatePost />
 
-      <ul className="flex flex-col w-full">
-        {posts &&
-          posts.map((e: PostReturnType) => (
-            <PostComponent post={e} key={e.id} />
-          ))}
-      </ul>
+      <AnimatePresence mode="popLayout">
+        <ul className="flex flex-col w-full">
+          {posts &&
+            posts.map((e: PostReturnType) => (
+              <ItemTransitionWrapper>
+                <PostComponent post={e} key={e.id} />
+              </ItemTransitionWrapper>
+            ))}
+        </ul>
+      </AnimatePresence>
     </section>
   );
 };

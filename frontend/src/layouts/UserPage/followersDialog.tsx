@@ -7,11 +7,11 @@ import {
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { UserCard } from "@/components/userCard";
-import { useAuthContext } from "@/contexts/auth.context";
-import { useModalContext } from "@/contexts/modal.context";
+import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
+import { useModalContext } from "@/contexts/domains/UiDomain/modal.context";
 import { UserInterface } from "@/interfaces/users.interfaces";
 import { getFollowersByUser } from "@/services/follow.services";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 export const FollowersDialog = ({ user, isProfile }: any) => {
   const { authenticatedUser } = useAuthContext();
@@ -70,15 +70,12 @@ export const FollowersDialog = ({ user, isProfile }: any) => {
 
         <div className="grid gap-4 py-4">
           {followers.length ? (
-            <ul
-              className="flex flex-col gap-4 min-h-96 overflow-y-auto"
-              onClick={handleUserCardClick}
-            >
+            <ul className="flex flex-col gap-4 h-96 overflow-y-auto">
               {followers.map((user: any) => (
-                <div key={user.id} ref={userCardRef}>
+                <Fragment key={user.id}>
                   <UserCard user={user} />
                   <Separator />
-                </div>
+                </Fragment>
               ))}
             </ul>
           ) : (
@@ -86,7 +83,7 @@ export const FollowersDialog = ({ user, isProfile }: any) => {
           )}
         </div>
 
-        <Separator />
+        {!followers.length && <Separator />}
       </DialogContent>
     </Dialog>
   );

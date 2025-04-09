@@ -1,3 +1,4 @@
+"use client";
 import { CommentInterface } from "@/interfaces/comments.interfaces";
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import {

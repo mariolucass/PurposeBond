@@ -1,3 +1,5 @@
+"use client";
+
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import { useSearchParams } from "next/navigation";
 import {
@@ -42,7 +44,7 @@ export const SearchProvider = ({ children }: ChildrenInterface) => {
   });
 
   const [currentSearch, setCurrentSearch] = useState<string | null>(null);
-  const [currentType, setCurrentType] = useState<SearchType | null>(null);
+  const [currentType, setCurrentType] = useState<SearchType | null>("popular");
   const [results, setResults] = useState<Results>({
     latest: [],
     popular: [],

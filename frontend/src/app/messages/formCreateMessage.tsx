@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useMessageContext } from "@/contexts/message.context";
+import { useMessageContext } from "@/contexts/domains/SocialDomain/message.context";
 import { MessageCreateType } from "@/interfaces/messages.interfaces";
 import { messageCreateSchema } from "@/lib/schemas/messages.schemas";
 import {
@@ -21,7 +21,8 @@ export const FormCreateMessage = () => {
   } = useMessageContext();
 
   const sendMessage = async (form: { content: string }) => {
-    await postMessageToUser(currentChat!.id, form);
+    const a = await postMessageToUser(currentChat!.id, form);
+    console.log(a);
     setShouldFetchMessages(true);
 
     const fetchedUsers: any = await getUsersWhoHaveMessage();

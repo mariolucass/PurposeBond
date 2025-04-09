@@ -1,42 +1,51 @@
+import { NoSearchResults } from "@/components/_emptyComponents/noSearchResults";
 import { LoadingComponent } from "@/components/loading";
-import { useSearchContext } from "@/contexts/search.context";
+import { PostComponent } from "@/components/post";
+import { UserCard } from "@/components/userCard";
+import { useSearchContext } from "@/contexts/domains/UiDomain/search.context";
+import { PostInterface } from "@/interfaces/posts.interfaces";
+import { UserInterface } from "@/interfaces/users.interfaces";
+import { getSearch } from "@/services/search.services";
 import Error from "next/error";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export const SearchResults = () => {
   const { results, setResults } = useSearchContext();
   const [errorCode, setErrorCode] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { currentSearch, currentType } = useSearchContext();
-
+  const searchParams = useSearchParams();
+  const currentSearch = searchParams.get("q") || "";
+  const currentType = (searchParams.get("type") ||
+    "popular") as keyof typeof results;
   const isUserSearch = currentType === "users";
 
-  // useEffect(() => {
-  //   const fetchResults = async () => {
-  //     try {
-  //       const fetchedResults = await getSearch({
-  //         query: currentSearch!,
-  //         type: currentType!,
-  //       });
+  useEffect(() => {
+    const fetchResults = async () => {
+      setIsLoading(true);
 
-  //       setResults((prev) => {
-  //         return { ...prev, [currentType!]: fetchedResults };
-  //       });
-  //     } catch (error) {
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
+      try {
+        const fetchedResults = await getSearch({
+          query: currentSearch,
+          type: currentType,
+        });
 
-  //   if (!results[currentType!].length) {
-  //     fetchResults();
-  //   } else {
-  //     setIsLoading(false);
-  //   }
+        setResults((prev) => ({
+          ...prev,
+          [currentType]: fetchedResults,
+        }));
+      } catch (error: any) {
+        setErrorCode(500); // exemplo
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // });
+    if (currentSearch) {
+      fetchResults();
+    }
+  }, [searchParams.toString()]);
 
   if (isLoading) {
     return <LoadingComponent />;
@@ -46,24 +55,19 @@ export const SearchResults = () => {
     return <Error statusCode={errorCode} />;
   }
 
-  console.log(currentType, "TYPE");
-  console.log(currentSearch, "Search");
+  if (!results[currentType] || !results[currentType].length) {
+    return <NoSearchResults typeSearch={currentType} search={currentSearch!} />;
+  }
 
-  // if (!results[currentType!].length) {
-  //   return (
-  //     <NoSearchResults typeSearch={currentType!} search={currentSearch!} />
-  //   );
-  // }
-
-  // return (
-  //   <ul className="flex flex-col w-full">
-  //     {results[currentType!].map((item: UserInterface | PostInterface) =>
-  //       isUserSearch ? (
-  //         <UserCard user={item as UserInterface} key={item.id} />
-  //       ) : (
-  //         <PostComponent post={item as PostInterface} key={item.id} />
-  //       )
-  //     )}
-  //   </ul>
-  // );
+  return (
+    <ul className="flex flex-col w-full">
+      {results[currentType].map((item: UserInterface | PostInterface) =>
+        isUserSearch ? (
+          <UserCard user={item as UserInterface} key={item.id} />
+        ) : (
+          <PostComponent post={item as PostInterface} key={item.id} />
+        )
+      )}
+    </ul>
+  );
 };

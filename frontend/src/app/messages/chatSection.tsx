@@ -1,8 +1,7 @@
-import { EmptyCurrentChat } from "@/components/_emptyComponents/emptyCurrentChat";
 import { Button } from "@/components/ui/button";
-import { useMessageContext } from "@/contexts/message.context";
+import { useMessageContext } from "@/contexts/domains/SocialDomain/message.context";
 import { getConversationWithUser } from "@/services/messages.services";
-import { SquareUser } from "lucide-react";
+import { MessageSquare, SquareUser } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FormCreateMessage } from "./formCreateMessage";
@@ -36,7 +35,7 @@ export const ChatSection = () => {
   if (!currentChat) {
     return (
       <section className="w-full min-w-full flex flex-col justify-start">
-        <EmptyCurrentChat />
+        <MessagesPlaceholder />
       </section>
     );
   }
@@ -78,3 +77,16 @@ export const ChatSection = () => {
     </section>
   );
 };
+
+export const MessagesPlaceholder = () => (
+  <div className="flex flex-col items-center justify-center h-full text-center px-4 gap-4">
+    <div className="bg-muted p-4 rounded-full">
+      <MessageSquare className="w-8 h-8 text-muted-foreground" />
+    </div>
+
+    <h2 className="text-xl font-semibold text-foreground">Chat</h2>
+    <p className="max-w-sm text-sm text-muted-foreground">
+      Select a conversation from the left or create a new one to start chatting.
+    </p>
+  </div>
+);

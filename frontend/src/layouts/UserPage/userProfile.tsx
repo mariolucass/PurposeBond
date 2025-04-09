@@ -1,7 +1,7 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { useAuthContext } from "@/contexts/auth.context";
-import { useModalContext } from "@/contexts/modal.context";
+import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
+import { useModalContext } from "@/contexts/domains/UiDomain/modal.context";
 import { UserInterface } from "@/interfaces/users.interfaces";
 import { followUser, unfollowUser } from "@/services/follow.services";
 import { MapPin } from "lucide-react";
@@ -29,7 +29,6 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
     };
 
     verifyIsFollowing();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { setIsDialogFollowersOpen, setIsDialogFollowingOpen } =
@@ -41,9 +40,7 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
     try {
       isFollowing ? await unfollowUser(user.id) : await followUser(user.id);
       setIsFollowing(!isFollowing);
-
       const updateCount = isFollowing ? -1 : 1;
-
       displayedUser._count.followers += updateCount;
     } catch (error) {
       console.error("Error following/unfollowing:", error);
@@ -51,12 +48,16 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
   };
 
   const RenderFollowButton = () => {
-    if (isProfile) {
-      return;
-    }
+    if (isProfile) return null;
 
     return (
-      <Button onClick={() => handleFollowing()}>
+      <Button
+        variant="outline"
+        onClick={handleFollowing}
+        className={`text-sm px-4 py-2   ${
+          isFollowing ? " border-red-500 " : " border-blue-500"
+        }`}
+      >
         {isFollowing ? "Unfollow" : "Follow"}
       </Button>
     );
@@ -76,46 +77,42 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
   ];
 
   return (
-    <div className="relative">
-      <div className="w-full h-component2x absolute top-0 left-0 bg-foreground z-10" />
+    <div className="relative w-full bg-background text-foreground rounded-lg overflow-hidden">
+      <div className="w-full h-40 bg-foreground dark:bg-muted" />
 
-      <div className="h-component2x flex flex-row items-center justify-between relative z-20 p-4 mt-20 mb-1">
-        <div className="flex flex-row gap-4">
-          <Avatar className="w-[120px] h-[120px] border-primary border-2">
+      <div className="relative z-10 px-6 -mt-16 flex justify-between items-end ">
+        <div className="flex gap-4 items-end">
+          <Avatar className="w-28 h-28 border-4 border-background shadow-lg">
             <AvatarImage src={displayedUser.profileImage} />
           </Avatar>
 
-          <div className="mt-24">
-            <h1 className="text-3xl font-bold">{displayedUser.name}</h1>
-            <h2 className="text-lg text-gray-500">@{displayedUser.username}</h2>
+          <div className="mt-20">
+            <h1 className="text-2xl font-bold">{displayedUser.name}</h1>
+            <p className="text-muted-foreground text-sm">
+              @{displayedUser.username}
+            </p>
           </div>
         </div>
 
-        {isProfile && <EditProfile />}
+        {isProfile ? <EditProfile /> : <RenderFollowButton />}
       </div>
 
-      <div className="h-component2x flex flex-col p-4 relative z-20 justify-between ">
-        <div className="flex w-full ">
-          <p className="w-2/3 break-words">
-            {displayedUser.description || "No bio yet."}
-          </p>
+      <div className="px-6 py-4 flex flex-col gap-4">
+        <p className="text-sm text-foreground break-words">
+          {displayedUser.description || "No bio yet."}
+        </p>
 
-          <div className="w-1/3 flex justify-end items-center">
-            <RenderFollowButton />
-          </div>
-        </div>
-
-        <div className="w-full flex justify-between">
-          <span className="flex gap-2">
-            <MapPin />
-            {displayedUser.address || "somewhere"}
+        <div className="flex justify-between items-center text-sm text-muted-foreground">
+          <span className="flex items-center gap-2">
+            <MapPin className="w-4 h-4" />
+            {displayedUser.address || "Somewhere"}
           </span>
 
-          <ul className="flex gap-4 self-end">
+          <ul className="flex gap-4">
             {followStats.map((item, index) => (
               <li key={index}>
                 <span
-                  className="hover:underline cursor-pointer font-semibold"
+                  className="hover:underline cursor-pointer font-semibold text-foreground"
                   onClick={item.onClick}
                 >
                   {item.count} {item.label}

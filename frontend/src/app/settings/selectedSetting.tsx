@@ -1,5 +1,6 @@
 import { EmptyCurrentSetting } from "@/components/_emptyComponents/emptyCurrentSetting";
-import { useSettingContext } from "@/contexts/setting.context";
+import { useSettingContext } from "@/contexts/domains/AuthDomain/setting.context";
+import { Settings2 } from "lucide-react";
 
 export const SelectedSetting = () => {
   const { currentSetting } = useSettingContext();
@@ -18,7 +19,7 @@ export const SelectedSetting = () => {
         <EmptyCurrentSetting />
       )}
 
-      {currentSetting && (
+      {currentSetting ? (
         <ul
           className={
             currentSetting
@@ -40,7 +41,24 @@ export const SelectedSetting = () => {
               );
             })}
         </ul>
+      ) : (
+        <SettingPlaceholder />
       )}
     </section>
+  );
+};
+
+const SettingPlaceholder = () => {
+  return (
+    <div className="flex flex-col items-center justify-center h-full text-center px-4 gap-4">
+      <div className="bg-muted p-4 rounded-full">
+        <Settings2 className="w-8 h-8 text-muted-foreground" />
+      </div>
+
+      <h2 className="text-xl font-semibold text-foreground">Settings</h2>
+      <p className="max-w-sm text-muted-foreground text-sm">
+        Select a setting on the left to view and customize your experience.
+      </p>
+    </div>
   );
 };

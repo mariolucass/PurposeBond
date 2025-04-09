@@ -6,30 +6,35 @@ import {
 import { api } from "./config/api";
 import { handleApiResponse } from "./config/handleResponse";
 
-export const getPostsByUser = async (userId: string) => {
-  return handleApiResponse<PostInterface[]>(api.get(`users/${userId}/posts`));
-};
+export const PostService = {
+  getAll: async (): Promise<PostInterface[]> => {
+    return handleApiResponse(api.get("/posts"));
+  },
 
-export const getMediaByUser = async (userId: string) => {
-  return handleApiResponse<any>(api.get(`users/${userId}/media`));
-};
+  getById: async (postId: string): Promise<PostInterface> => {
+    return handleApiResponse(api.get(`/posts/${postId}`));
+  },
 
-export const getPosts = async () => {
-  return handleApiResponse<PostInterface[]>(api.get("/posts"));
-};
+  getByUser: async (userId: string): Promise<PostInterface[]> => {
+    return handleApiResponse(api.get(`/users/${userId}/posts`));
+  },
 
-export const getPost = async (postId: string) => {
-  return handleApiResponse<PostInterface>(api.get(`/posts/${postId}`));
-};
+  getMediaByUser: async (userId: string) => {
+    return handleApiResponse(api.get(`/users/${userId}/media`));
+  },
 
-export const postPost = async (body: PostCreateType) => {
-  return handleApiResponse<PostInterface>(api.post("/posts/", body));
-};
+  create: async (body: PostCreateType): Promise<PostInterface> => {
+    return handleApiResponse(api.post("/posts", body));
+  },
 
-export const patchPost = async (body: PostUpdateType, postId: string) => {
-  return handleApiResponse<PostInterface>(api.patch(`/posts/${postId}`, body));
-};
+  update: async (
+    postId: string,
+    body: PostUpdateType
+  ): Promise<PostInterface> => {
+    return handleApiResponse(api.patch(`/posts/${postId}`, body));
+  },
 
-export const deletePost = async (postId: string) => {
-  return handleApiResponse<void>(api.delete(`/posts/${postId}`));
+  delete: async (postId: string): Promise<void> => {
+    return handleApiResponse(api.delete(`/posts/${postId}`));
+  },
 };

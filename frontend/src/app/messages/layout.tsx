@@ -1,6 +1,6 @@
 "use client";
 
-import { MessageProvider } from "@/contexts/message.context";
+import { MessageProvider } from "@/contexts/domains/SocialDomain/message.context";
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import { SideBarLeft } from "@/layouts/SideBars/sideBarLeft";
 import { ChatSection } from "./chatSection";

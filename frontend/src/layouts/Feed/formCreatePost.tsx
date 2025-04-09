@@ -1,9 +1,9 @@
-import { usePostContext } from "@/contexts/post.context";
+import { usePostContext } from "@/contexts/domains/PostDomain/post.context";
 import { PostCreateType } from "@/interfaces/posts.interfaces";
 import { postCreateSchema } from "@/lib/schemas/posts.schemas";
 import { postPost } from "@/services/posts.services";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { KeyboardEvent, useEffect, useState } from "react";
+import { KeyboardEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "../../components/ui/button";
 import {
@@ -16,16 +16,14 @@ import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
 
 export const FormCreatePost = () => {
-  const { setShouldFetchPosts } = usePostContext();
+  const { setPosts } = usePostContext();
 
   const [isMentioning, setIsMentioning] = useState(false);
 
-  useEffect(() => {}, [isMentioning]);
-
   const createPost = async (form: { content: string }) => {
-    await postPost(form);
-    setShouldFetchPosts(true);
-    postFormMethods.reset();
+    const newPost = await postPost(form);
+
+    setPosts((prev) => [newPost, ...prev]);
   };
 
   const postFormMethods = useForm<PostCreateType>({

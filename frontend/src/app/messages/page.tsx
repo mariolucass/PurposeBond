@@ -2,7 +2,7 @@
 
 import { Navigator } from "@/components/navigator";
 import { Button } from "@/components/ui/button";
-import { useMessageContext } from "@/contexts/message.context";
+import { useMessageContext } from "@/contexts/domains/SocialDomain/message.context";
 import { getUsersWhoHaveMessage } from "@/services/messages.services";
 import { useEffect } from "react";
 import { UserMessageCard } from "./userMessageCard";

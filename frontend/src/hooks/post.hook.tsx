@@ -1,4 +1,4 @@
-import { usePostContext } from "@/contexts/post.context";
+import { usePostContext } from "@/contexts/domains/PostDomain/post.context";
 import { useEffect, useState } from "react";
 import { api } from "../services/config/api";
 

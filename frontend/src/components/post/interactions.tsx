@@ -1,4 +1,4 @@
-import { useAuthContext } from "@/contexts/auth.context";
+import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { deleteLike, postLike } from "@/services/likes.services";
 import { deleteRepost, postRepost } from "@/services/reposts.services";
 import { MessageSquare, Repeat2, ThumbsUp } from "lucide-react";

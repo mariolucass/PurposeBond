@@ -1,36 +1,44 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { handleDateWithMoment } from "@/utils/handleDateWithMoment";
+import clsx from "clsx";
+import { motion } from "framer-motion";
 
-const defaultDivClass =
-  "min-w-[204px] max-w-[352px] py-4 px-8 flex flex-col gap-8 justify-end items-end rounded-sm border-2 border-b-8";
+export const MessageItem = ({ message, user }: any) => {
+  const isSender = message.isSender;
 
-const defaultLiClass = "min-w-[204px] flex flex-row p-4 gap-4";
-
-export const MessageItem = ({ message, user }: any) => (
-  <li
-    className={
-      message.isSender
-        ? `${defaultLiClass} self-end`
-        : `${defaultLiClass} self-start`
-    }
-  >
-    {!message.isSender && (
-      <div className="flex self-end">
-        <Avatar className="w-[48px] h-[48px]">
-          <AvatarImage src={user.profileImage} />
-        </Avatar>
-      </div>
-    )}
-
-    <div
-      className={
-        message.isSender
-          ? `${defaultDivClass} border-r-8 rounded-br-none`
-          : `${defaultDivClass} border-l-8 rounded-bl-none`
-      }
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 10 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+      className={clsx(
+        "flex flex-col gap-1 mb-4",
+        isSender ? "items-start" : "items-end"
+      )}
     >
-      <p className="w-full">{message.content}</p>
-      <span className="text-xs">{handleDateWithMoment(message.createdAt)}</span>
-    </div>
-  </li>
-);
+      <li className="flex gap-3 items-end">
+        {isSender && (
+          <Avatar className="w-8 h-8">
+            <AvatarImage src={user.profileImage} />
+          </Avatar>
+        )}
+
+        <div
+          className={clsx(
+            "max-w-sm px-4 py-3 rounded-xl shadow-sm text-sm",
+            isSender
+              ? "bg-muted border-border rounded-bl-none"
+              : "bg-primary/10 border-primary text-primary rounded-br-none"
+          )}
+        >
+          <p className="break-words">{message.content}</p>
+        </div>
+      </li>
+
+      <span className="text-xs text-muted-foreground">
+        {handleDateWithMoment(message.createdAt)}
+      </span>
+    </motion.div>
+  );
+};

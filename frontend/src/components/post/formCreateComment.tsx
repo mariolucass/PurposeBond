@@ -1,5 +1,5 @@
-import { useCommentContext } from "@/contexts/comment.context";
-import { usePostContext } from "@/contexts/post.context";
+import { useCommentContext } from "@/contexts/domains/PostDomain/comment.context";
+import { usePostContext } from "@/contexts/domains/PostDomain/post.context";
 import { CommentCreateType } from "@/interfaces/comments.interfaces";
 import { commentCreateSchema } from "@/lib/schemas/comments.schemas";
 import { postComment } from "@/services/comments.services";

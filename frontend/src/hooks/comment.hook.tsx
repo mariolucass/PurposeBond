@@ -1,4 +1,4 @@
-import { useCommentContext } from "@/contexts/comment.context";
+import { useCommentContext } from "@/contexts/domains/PostDomain/comment.context";
 import { getComment } from "@/services/comments.services";
 import { useEffect, useState } from "react";
 import { useFetchPost } from "./post.hook";
@@ -8,7 +8,7 @@ export const useFetchComment = (postId: string, id: string) => {
 
   const { currentComment, setCurrentComment } = useCommentContext();
 
-  const [isLoadingCurrentComment, setisLoadingCurrentComment] = useState(
+  const [isLoadingCurrentComment, setIsLoadingCurrentComment] = useState(
     currentComment ? false : true
   );
   const [fetchCommentError, setFetchCommentError] = useState<null | unknown>(
@@ -24,7 +24,7 @@ export const useFetchComment = (postId: string, id: string) => {
         console.error("Error fetching comment:", error);
         setFetchCommentError(error);
       } finally {
-        setisLoadingCurrentComment(false);
+        setIsLoadingCurrentComment(false);
       }
     };
 
@@ -33,7 +33,7 @@ export const useFetchComment = (postId: string, id: string) => {
     } else if (!currentComment) {
       fetchComment();
     } else {
-      setisLoadingCurrentComment(false);
+      setIsLoadingCurrentComment(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

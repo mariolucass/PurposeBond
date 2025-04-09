@@ -1,7 +1,10 @@
 "use client";
 
 import { Navigator } from "@/components/navigator";
-import { Setting, useSettingContext } from "@/contexts/setting.context";
+import {
+  Setting,
+  useSettingContext,
+} from "@/contexts/domains/AuthDomain/setting.context";
 import { ChevronRight } from "lucide-react";
 
 const SettingsPage = () => {

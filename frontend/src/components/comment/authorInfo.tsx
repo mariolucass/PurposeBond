@@ -1,6 +1,6 @@
-import { useAuthContext } from "@/contexts/auth.context";
-import { handleDateWithMoment } from "@/utils/handleDateWithMoment";
+import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { Ellipsis } from "lucide-react";
+import { HoverCardAuthor } from "../post/hoverAuthorInfo";
 import { Avatar, AvatarImage } from "../ui/avatar";
 
 interface CommentAuthorInfoProps {
@@ -9,6 +9,7 @@ interface CommentAuthorInfoProps {
     name: string;
     username: string;
     profileImage: string;
+    joinedAt: string;
   };
 
   createdAt: Date;
@@ -26,15 +27,7 @@ export const CommentAuthorInfo = ({
           <AvatarImage src={author.profileImage} />
         </Avatar>
 
-        <div>
-          <h2 className="text-lg font-semibold">
-            {author.name}{" "}
-            <span className="text-bgmodal text-sm">
-              {handleDateWithMoment(createdAt)}
-            </span>
-          </h2>
-          <p className="text-bgmodal">@{author.username}</p>
-        </div>
+        <HoverCardAuthor author={author} />
       </div>
 
       {verifyOwnership(author.id) && (

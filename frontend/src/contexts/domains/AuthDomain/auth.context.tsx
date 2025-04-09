@@ -1,3 +1,5 @@
+"use client";
+
 import { toast } from "@/components/ui/use-toast";
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import { api } from "@/services/config/api";

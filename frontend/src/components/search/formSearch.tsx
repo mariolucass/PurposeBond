@@ -1,27 +1,29 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useSearchContext } from "@/contexts/search.context";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 export const SearchForm = ({ query }: { query: string | null }) => {
   const router = useRouter();
 
-  const { setCurrentSearch, currentSearch } = useSearchContext();
+  const searchParams = useSearchParams();
+  const currentType = searchParams.get("type") || "popular";
 
   const { handleSubmit, register } = useForm<{ search: string | null }>({
     defaultValues: { search: query },
   });
 
   const handleSearch = (data: any) => {
-    if (data.search.trim()) {
-      router.push(`/search?q=${encodeURIComponent(data.search)}`);
+    const searchValue = data.search?.toString().trim();
+
+    if (searchValue) {
+      const search = new URLSearchParams();
+      search.set("q", searchValue);
+      search.set("type", currentType);
+
+      router.push(`/search?${search.toString()}`);
     }
-
-    setCurrentSearch(data.search);
   };
-
-  console.log(currentSearch);
 
   return (
     <form

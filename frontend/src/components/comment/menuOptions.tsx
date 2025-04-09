@@ -6,7 +6,7 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import { useAuthContext } from "@/contexts/auth.context";
+import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { Ellipsis } from "lucide-react";
 import { useState } from "react";
 import { DeleteCommentModal } from "./deleteModal";

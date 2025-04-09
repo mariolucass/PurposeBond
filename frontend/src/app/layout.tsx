@@ -1,9 +1,8 @@
-"use client";
-
 import { ThemeProvider } from "@/components/themeProvider";
 import { Toaster } from "@/components/ui/toaster";
-import { AuthProvider } from "@/contexts/auth.context";
+import { GlobalProvider } from "@/contexts";
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
+import { PageTransitionWrapper } from "@/layouts/Animations/PageTransition";
 import { cn } from "@/lib/utils";
 import { Nunito_Sans as FontSans } from "next/font/google";
 import "./globals.css";
@@ -18,24 +17,26 @@ const RootLayout = ({ children }: ChildrenInterface) => (
   <html lang="en" suppressHydrationWarning>
     <Head />
 
-    <AuthProvider>
+    <GlobalProvider>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
           fontSans.className
         )}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <PageTransitionWrapper>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </PageTransitionWrapper>
         <Toaster />
       </body>
-    </AuthProvider>
+    </GlobalProvider>
   </html>
 );
 

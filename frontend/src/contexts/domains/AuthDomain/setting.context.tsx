@@ -1,3 +1,5 @@
+"use client";
+
 import { DeleteAccount } from "@/components/settings/deleteAccount";
 import { FontSelector } from "@/components/settings/fontSelector";
 import { LanguageSelector } from "@/components/settings/languageSelector";

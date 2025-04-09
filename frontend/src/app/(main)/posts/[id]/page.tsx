@@ -1,13 +1,13 @@
 "use client";
 
 import { PostComponent } from "@/components/post";
-import { usePostContext } from "@/contexts/post.context";
+import { usePostContext } from "@/contexts/domains/PostDomain/post.context";
 
 import { LoadingComponent } from "@/components/loading";
 import { Navigator } from "@/components/navigator";
+import { FormCreateComment } from "@/components/post/formCreateComment";
 import { useFetchPost } from "@/hooks/post.hook";
-import { CommentsList } from "./commentsList";
-import { FormCreateComment } from "./formCreateComment";
+import { CommentsList } from "../../../../components/post/commentsList";
 
 interface PostPageProps {
   params: { id: string };
@@ -30,7 +30,10 @@ const PostPage = ({ params: { id } }: PostPageProps) => {
 
   return (
     <section className="w-full flex flex-col justify-start">
-      <Navigator name={"Post"} />
+      <Navigator
+        name={"Post"}
+        description={`@${currentPost.author.username}`}
+      />
 
       <PostComponent post={currentPost} />
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import { createContext, useContext } from "react";
 

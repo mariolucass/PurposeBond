@@ -1,8 +1,9 @@
+import { NotificationInterface } from "@/interfaces/notifications.interfaces";
 import { api } from "./config/api";
 import { handleApiResponse } from "./config/handleResponse";
 
 export const getNotifications = async () => {
-  return handleApiResponse<any[]>(api.get("notifications/"));
+  return handleApiResponse<NotificationInterface[]>(api.get("notifications/"));
 };
 
 export const patchMarkAllNotificationsRead = async () => {

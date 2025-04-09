@@ -8,7 +8,7 @@ import {
 
 export const FontSelector = () => {
   const handleSelectChange = (change: string) => {
-    console.log(change);
+    // console.log(change);
   };
 
   return (

@@ -3,7 +3,7 @@
 import { LoadingComponent } from "@/components/loading";
 import { Navigator } from "@/components/navigator";
 import { Separator } from "@/components/ui/separator";
-import { useAuthContext } from "@/contexts/auth.context";
+import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { useFetchProfile } from "@/hooks/user.hook";
 import { FollowersDialog } from "@/layouts/UserPage/followersDialog";
 import { FollowingDialog } from "@/layouts/UserPage/followingDialog";

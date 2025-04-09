@@ -1,3 +1,4 @@
+"use client";
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import {
   Dispatch,

@@ -5,7 +5,7 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import { useAuthContext } from "@/contexts/auth.context";
+import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { Ellipsis, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 

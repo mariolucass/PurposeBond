@@ -1,5 +1,5 @@
 "use client";
-import { useAuthContext } from "@/contexts/auth.context";
+import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";

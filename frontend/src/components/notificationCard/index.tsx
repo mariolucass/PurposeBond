@@ -13,66 +13,61 @@ const notificationTitles = {
   POST_REPOSTED: "reposted your post.",
   POST_COMMENTED: "commented on your post.",
 };
+
 type NotificationType = keyof typeof notificationTitles;
 
 export const NotificationCard = ({ notification }: NotificationProps) => {
   const router = useRouter();
 
-  const NotificationTitle = () => {
-    const notificationType = notification.type as NotificationType;
-
-    return (
-      <h1>
-        <span className="font-semibold">@{notification.author.username}</span>{" "}
-        has {notificationTitles[notificationType] || "interacted with you."}
-      </h1>
-    );
-  };
-
-  const AvatarGroup = () => {
-    return [{}, {}, notification.author].map((elem, index) => (
-      <Avatar className="w-[48px] h-[48px]" key={index}>
-        <AvatarImage
-          src={
-            elem.profileImage
-              ? elem.profileImage
-              : "https://static-00.iconduck.com/assets.00/profile-default-icon-512x511-v4sw4m29.png"
-          }
-        />
-      </Avatar>
-    ));
-  };
+  const notificationType = notification.type as NotificationType;
+  const notificationIsOnPost =
+    notificationTitles[notificationType] !== "followed you.";
 
   const handleNotificationClick = () => {
-    const notificationType = notification.type as NotificationType;
-    const notificationIsOnPost =
-      notificationTitles[notificationType] !== "followed you.";
-
     if (notificationIsOnPost) {
       router.push(`/posts/${notification.postId}`);
     }
   };
 
+  console.log(notification);
+
+  const authors = notification.authors;
+  const lastAuthor = authors[authors.length - 1];
+
   return (
     <li
-      className="w-full h-component2x relative flex p-4 cursor-pointer border-y-2 border-t-0"
       onClick={handleNotificationClick}
+      className="w-full flex justify-between items-center gap-4 p-4 bg-card hover:bg-muted transition cursor-pointer"
     >
-      <div className="absolute top-4 right-4 flex items-center">
-        <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
-        <span className="text-xs text-muted-foreground">
-          {handleDateWithMoment(notification.createdAt)}
-        </span>
+      <div className="flex -space-x-4">
+        {authors.map((elem: any) => (
+          <Avatar
+            key={elem.id}
+            className="w-10 h-10 border-2 border-background shadow-sm"
+          >
+            <AvatarImage
+              src={
+                elem.profileImage ||
+                "https://static-00.iconduck.com/assets.00/profile-default-icon-512x511-v4sw4m29.png"
+              }
+            />
+          </Avatar>
+        ))}
       </div>
 
-      <div className="flex items-start -space-x-8 ">
-        <AvatarGroup />
+      <div className="flex-1 ml-4">
+        <p className="text-sm text-foreground leading-tight">
+          <span className="font-semibold">@{lastAuthor.username}</span>{" "}
+          {notificationTitles[notificationType] || "interacted with you."}
+        </p>
+        <button className="text-xs mt-1 font-medium text-primary hover:underline">
+          Check it now!
+        </button>
       </div>
 
-      <div className="flex flex-col gap-4 ml-12">
-        <NotificationTitle />
-
-        <span className="self-end font-semibold">Check it now!</span>
+      <div className="flex items-center gap-1 text-muted-foreground text-xs whitespace-nowrap">
+        <CalendarDays className="w-4 h-4" />
+        {handleDateWithMoment(notification.createdAt)}
       </div>
     </li>
   );
