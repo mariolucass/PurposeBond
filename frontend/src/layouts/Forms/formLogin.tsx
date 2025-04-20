@@ -1,5 +1,6 @@
 "use client";
 
+import { FormFields } from "@/components/common/formFields";
 import { Button } from "@/components/ui/button";
 import { LoginType } from "@/interfaces/auth.interfaces";
 import { loginSchema } from "@/lib/schemas/auth.schemas";
@@ -10,7 +11,6 @@ import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { FormFields } from "../common/formFields";
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -24,11 +24,11 @@ export const LoginForm = () => {
   const handleLogin = async (form: LoginType) => {
     setLoading(true);
 
-    const formatedForm = form.email.includes("@")
+    const formattedForm = form.email.includes("@")
       ? form
       : { username: form.email, password: form.password };
 
-    const response = await AuthService.login(formatedForm);
+    const response = await AuthService.login(formattedForm);
 
     saveAccountInLocalStorage(response);
 

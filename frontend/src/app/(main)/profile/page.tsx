@@ -1,7 +1,7 @@
 "use client";
 
 import { LoadingComponent } from "@/components/common/loading";
-import { Navigator } from "@/components/navigator";
+import { Navigator } from "@/components/common/navigator";
 import { Separator } from "@/components/ui/separator";
 import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { useFetchProfile } from "@/hooks/user.hook";

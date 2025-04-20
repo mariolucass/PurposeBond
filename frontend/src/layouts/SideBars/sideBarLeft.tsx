@@ -1,7 +1,7 @@
 "use client";
 
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
+import { cn } from "@/lib/utils";
 import {
   Bell,
   HomeIcon,
@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { AccountOptions } from "./accountOptions";
+import { UserHeaderCard } from "./userHeaderCard";
 
 export const SideBarLeft = () => {
   const { authenticatedUser } = useAuthContext();
@@ -39,9 +39,6 @@ export const SideBarLeft = () => {
 
   const isOnPath = (href: string) => pathname === href;
 
-  const defaultNavigationClass =
-    "w-[210px] h-component flex items-center gap-4 hover:bg-slate-600 p-4 hover:text-white hover:border-r-slate-800 hover:border-b-slate-800 hover:border-r-2 border-b-2 ";
-
   const baseItemClass =
     "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200 text-sm w-full";
   const activeClass = "bg-muted text-primary font-semibold";
@@ -49,29 +46,20 @@ export const SideBarLeft = () => {
 
   return (
     <section className="h-screen w-[220px] side-bar-left flex flex-col items-center fixed mx-auto border-r border-border bg-background text-foreground">
-      <div className="w-full flex flex-col justify-start items-center pt-4">
-        {authenticatedUser && (
-          <div className="w-full flex p-4 items-center justify-between">
-            <Avatar
-              className="w-11 h-11 border border-primary cursor-pointer"
-              onClick={() => router.push("/profile")}
-            >
-              <AvatarImage src={authenticatedUser.profileImage} />
-            </Avatar>
-            <AccountOptions />
-          </div>
-        )}
+      <div className="w-full flex flex-col justify-start items-center">
+        <UserHeaderCard />
 
         <ul className="w-full px-2 flex flex-col gap-1 mt-4">
           {navigationLinks.map((link) => (
             <Link href={link.href} key={link.href}>
               <li
-                className={`${baseItemClass} ${
+                className={cn(
+                  baseItemClass,
                   isOnPath(link.href) ? activeClass : hoverClass
-                }`}
+                )}
               >
                 {link.icon}
-                <span>{link.label}</span>
+                <span className="ml-3">{link.label}</span>
               </li>
             </Link>
           ))}

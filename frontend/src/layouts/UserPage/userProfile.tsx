@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { useModalContext } from "@/contexts/domains/UiDomain/modal.context";
 import { UserInterface } from "@/interfaces/users.interfaces";
-
+import { cn } from "@/lib/utils";
 import { FollowService } from "@/services/follow.services";
 import { MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -57,9 +57,10 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
       <Button
         variant="outline"
         onClick={handleFollowing}
-        className={`text-sm px-4 py-2   ${
-          isFollowing ? " border-red-500 " : " border-blue-500"
-        }`}
+        className={cn(
+          "text-sm h-8 px-3 border text-primary",
+          isFollowing ? "border-red-500" : "border-blue-500"
+        )}
       >
         {isFollowing ? "Unfollow" : "Follow"}
       </Button>
@@ -80,8 +81,8 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
   ];
 
   return (
-    <div className="relative w-full bg-background text-foreground rounded-lg overflow-hidden">
-      <div className="w-full h-40 bg-foreground dark:bg-muted" />
+    <div className="relative w-full bg-background text-foreground  overflow-hidden">
+      <div className="w-full h-40 bg-foreground dark:bg-slate-500" />
 
       <div className="relative z-10 px-6 -mt-16 flex justify-between items-end ">
         <div className="flex gap-4 items-end">

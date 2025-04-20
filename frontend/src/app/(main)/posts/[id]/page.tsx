@@ -1,11 +1,15 @@
 "use client";
 
 import { LoadingComponent } from "@/components/common/loading";
-import { Navigator } from "@/components/navigator";
+
+import { Navigator } from "@/components/common/navigator";
+import { PostNotFound } from "@/components/notFoundStates/postNotFound";
 import { PostComponent } from "@/components/post";
-import { FormCreateComment } from "@/components/post/formCreateComment";
 import { usePostContext } from "@/contexts/domains/PostDomain/post.context";
 import { useFetchPost } from "@/hooks/post.hook";
+import { CommentInterface } from "@/interfaces/comments.interfaces";
+import { FormCreateComment } from "@/layouts/Forms/formCreateComment";
+import { useState } from "react";
 import { CommentsList } from "../../../../components/post/commentsList";
 
 interface PostPageProps {
@@ -15,13 +19,14 @@ interface PostPageProps {
 const PostPage = ({ params: { id } }: PostPageProps) => {
   const { currentPost } = usePostContext();
   const { isLoadingCurrentPost, fetchPostError } = useFetchPost(id);
+  const [comments, setComments] = useState<CommentInterface[]>([]);
 
   if (isLoadingCurrentPost) {
     return <LoadingComponent />;
   }
 
   if (fetchPostError || !currentPost) {
-    return <div>Post not found.</div>;
+    return <PostNotFound />;
   }
 
   return (
@@ -33,9 +38,9 @@ const PostPage = ({ params: { id } }: PostPageProps) => {
 
       <PostComponent post={currentPost} />
 
-      <FormCreateComment />
+      <FormCreateComment comments={comments} setComments={setComments} />
 
-      <CommentsList postId={id} />
+      <CommentsList postId={id} comments={comments} setComments={setComments} />
     </section>
   );
 };

@@ -11,6 +11,10 @@ export const CommentService = {
     return handleApiResponse(api.get(`/posts/${postId}/comments`));
   },
 
+  getByUser: async (userId: string): Promise<CommentInterface[]> => {
+    return handleApiResponse(api.get(`/users/${userId}/comments`));
+  },
+
   getById: async (commentId: string): Promise<CommentInterface> => {
     return handleApiResponse(api.get(`/comments/${commentId}`));
   },

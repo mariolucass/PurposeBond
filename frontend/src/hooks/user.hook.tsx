@@ -1,4 +1,5 @@
 import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
+import socket from "@/lib/socket";
 import { ProfileService } from "@/services/profile.services";
 
 import { useEffect, useState } from "react";
@@ -16,6 +17,8 @@ export const useFetchProfile = () => {
       try {
         const fetchedUser = await ProfileService.getProfile();
         setAuthenticatedUser(fetchedUser);
+        socket.io.opts.query = { userId: fetchedUser.id };
+        socket.connect();
       } catch (error) {
         localStorage.removeItem("tokenRedeSocial");
         setError(error);

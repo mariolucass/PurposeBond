@@ -34,11 +34,13 @@ export const HoverCardAuthor = ({ author }: HoverCardAuthorProps) => {
           onClick={handleClickAuthor}
         >
           <div>
-            <h2 className="cursor-pointer text-lg font-semibold">
+            <h2 className="cursor-pointer text-sm font-semibold">
               {author.name}
             </h2>
 
-            <p className="cursor-pointer text-gray-500">@{author.username}</p>
+            <p className="cursor-pointer text-gray-500 text-sm">
+              @{author.username}
+            </p>
           </div>
         </div>
       </HoverCardTrigger>

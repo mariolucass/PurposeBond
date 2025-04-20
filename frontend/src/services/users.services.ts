@@ -21,4 +21,9 @@ export const UserService = {
   delete: async (userId: string): Promise<void> => {
     return handleApiResponse(api.delete(`/users/${userId}`));
   },
+
+  async checkOnlineStatus(userId: string) {
+    const res = await api.get(`/users/online/${userId}`);
+    return res.data.isOnline;
+  },
 };

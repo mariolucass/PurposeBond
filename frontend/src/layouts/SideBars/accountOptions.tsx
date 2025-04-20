@@ -15,15 +15,14 @@ export const AccountOptions = () => {
   const { setAuthenticatedUser } = useAuthContext();
 
   const handleLogout = () => {
-    router.push("/login");
+    router.replace("/login");
 
     setAuthenticatedUser(null);
     localStorage.removeItem("tokenRedeSocial");
   };
 
-  const handleChangeAccount = () => {
-    router.push("/accounts");
-
+  const handleChangeAccount = async () => {
+    router.replace("/accounts");
     setAuthenticatedUser(null);
     localStorage.removeItem("tokenRedeSocial");
   };
@@ -31,11 +30,11 @@ export const AccountOptions = () => {
   return (
     <Menubar className="border-none">
       <MenubarMenu>
-        <MenubarTrigger className="hover:bg-slate-200">
+        <MenubarTrigger className="hover:bg-slate-200 ">
           <Ellipsis className="relative top-0 right-0" />
         </MenubarTrigger>
 
-        <MenubarContent className="flex flex-col gap-4">
+        <MenubarContent className="flex flex-col gap-4" align="end">
           <MenubarItem className="flex gap-4" onClick={handleLogout}>
             <LogOut />
             Logout

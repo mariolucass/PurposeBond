@@ -23,7 +23,7 @@ export const PostAuthorInfo = ({ author, createdAt }: PostAuthorInfoProps) => (
     <div className="w-10/12 flex gap-4 items-start justify-between">
       <HoverCardAuthor author={author} />
 
-      <span className="w-[104px] text-bgmodal justify-around text-sm flex items-start mt-1 text-gray-500">
+      <span className="w-[104px] text-bgmodal justify-around text-sm flex items-start mt-1 text-gray-500 ">
         {handleDateWithMoment(createdAt)}
       </span>
     </div>

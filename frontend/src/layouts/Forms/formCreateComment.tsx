@@ -1,21 +1,24 @@
-import { useCommentContext } from "@/contexts/domains/PostDomain/comment.context";
 import { usePostContext } from "@/contexts/domains/PostDomain/post.context";
 import { CommentCreateType } from "@/interfaces/comments.interfaces";
 import { commentCreateSchema } from "@/lib/schemas/comments.schemas";
 import { CommentService } from "@/services/comments.services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Button } from "../ui/button";
-import { Form, FormControl, FormField, FormItem } from "../ui/form";
-import { Textarea } from "../ui/textarea";
+import { Button } from "../../components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+} from "../../components/ui/form";
+import { Textarea } from "../../components/ui/textarea";
 
-export const FormCreateComment = () => {
+export const FormCreateComment = ({ comments, setComments }: any) => {
   const { currentPost } = usePostContext();
-  const { setShouldFetchComments } = useCommentContext();
 
   const createComment = async (form: { content: string }) => {
-    await CommentService.create(currentPost!.id, form);
-    setShouldFetchComments(true);
+    const newComment = await CommentService.create(currentPost!.id, form);
+    setComments((prev: any) => [...prev, newComment]);
     commentFormMethods.reset();
   };
 
@@ -39,7 +42,7 @@ export const FormCreateComment = () => {
                 <Textarea
                   placeholder="Write a comment."
                   {...field}
-                  className="w-10/12"
+                  className="w-11/12 resize-none min-h-[120px] rounded-md border border-border bg-muted/20 p-3 text-sm focus-visible:ring-1 focus-visible:ring-primary focus-visible:outline-none transition-all"
                 />
               </FormControl>
             </FormItem>

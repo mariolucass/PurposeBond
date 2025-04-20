@@ -1,5 +1,4 @@
-import { useCommentContext } from "@/contexts/domains/PostDomain/comment.context";
-
+import { CommentInterface } from "@/interfaces/comments.interfaces";
 import { CommentService } from "@/services/comments.services";
 import { useEffect, useState } from "react";
 import { useFetchPost } from "./post.hook";
@@ -7,10 +6,10 @@ import { useFetchPost } from "./post.hook";
 export const useFetchComment = (postId: string, id: string) => {
   const { fetchPostError } = useFetchPost(postId);
 
-  const { currentComment, setCurrentComment } = useCommentContext();
+  const [comment, setComment] = useState<CommentInterface | null>(null);
 
   const [isLoadingCurrentComment, setIsLoadingCurrentComment] = useState(
-    currentComment ? false : true
+    comment ? false : true
   );
   const [fetchCommentError, setFetchCommentError] = useState<null | unknown>(
     null
@@ -20,7 +19,7 @@ export const useFetchComment = (postId: string, id: string) => {
     const fetchComment = async () => {
       try {
         const fetchedComment = await CommentService.getById(id);
-        setCurrentComment(fetchedComment);
+        setComment(fetchedComment);
       } catch (error) {
         console.error("Error fetching comment:", error);
         setFetchCommentError(error);
@@ -31,7 +30,7 @@ export const useFetchComment = (postId: string, id: string) => {
 
     if (fetchPostError) {
       setFetchCommentError("Post not found");
-    } else if (!currentComment) {
+    } else if (!comment) {
       fetchComment();
     } else {
       setIsLoadingCurrentComment(false);
@@ -39,5 +38,5 @@ export const useFetchComment = (postId: string, id: string) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { isLoadingCurrentComment, fetchCommentError };
+  return { comment, isLoadingCurrentComment, fetchCommentError };
 };

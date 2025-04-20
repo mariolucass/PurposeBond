@@ -1,5 +1,4 @@
 import { handleDateWithMoment } from "@/utils/handleDateWithMoment";
-import { CalendarDays } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarImage } from "../ui/avatar";
 
@@ -66,7 +65,6 @@ export const NotificationCard = ({ notification }: NotificationProps) => {
       </div>
 
       <div className="flex items-center gap-1 text-muted-foreground text-xs whitespace-nowrap">
-        <CalendarDays className="w-4 h-4" />
         {handleDateWithMoment(notification.createdAt)}
       </div>
     </li>

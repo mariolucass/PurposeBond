@@ -1,10 +1,10 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { cn } from "@/lib/utils";
 import { handleDateWithMoment } from "@/utils/handleDateWithMoment";
-import clsx from "clsx";
 import { motion } from "framer-motion";
 
 export const MessageItem = ({ message, user }: any) => {
-  const isSender = message.isSender;
+  const isSender = message.areSender;
 
   return (
     <motion.div
@@ -12,24 +12,24 @@ export const MessageItem = ({ message, user }: any) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 10 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
-      className={clsx(
+      className={cn(
         "flex flex-col gap-1 mb-4",
-        isSender ? "items-start" : "items-end"
+        isSender ? "items-end" : "items-start"
       )}
     >
       <li className="flex gap-3 items-end">
-        {isSender && (
+        {!isSender && (
           <Avatar className="w-8 h-8">
             <AvatarImage src={user.profileImage} />
           </Avatar>
         )}
 
         <div
-          className={clsx(
+          className={cn(
             "max-w-sm px-4 py-3 rounded-xl shadow-sm text-sm",
             isSender
-              ? "bg-muted border-border rounded-bl-none"
-              : "bg-primary/10 border-primary text-primary rounded-br-none"
+              ? "bg-primary/10 border-primary text-primary rounded-br-none"
+              : "bg-muted border-border rounded-bl-none"
           )}
         >
           <p className="break-words">{message.content}</p>

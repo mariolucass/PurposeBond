@@ -8,41 +8,35 @@ export const SelectedSetting = () => {
   return (
     <section className="w-full min-w-full flex flex-col justify-start">
       {currentSetting ? (
-        <div className="h-component flex px-4 border-b-2 items-center py-4 justify-between">
-          <div className="flex flex-col">
-            <h1 className="text-xl font-bold">{currentSetting.name}</h1>
-
-            <span>{currentSetting.description}</span>
+        <>
+          <div className="h-component flex px-4 border-b-2 items-center py-4 justify-between">
+            <div className="ml-4 flex flex-col">
+              <h1 className="text-base font-bold">{currentSetting.name}</h1>
+              <span className="text-sm">{currentSetting.description}</span>
+            </div>
           </div>
-        </div>
-      ) : (
-        <EmptyCurrentSetting />
-      )}
 
-      {currentSetting ? (
-        <ul
-          className={
-            currentSetting
-              ? "h-screenMinus176 flex flex-col "
-              : "h-screenMinus176 flex flex-col "
-          }
-        >
-          {currentSetting.settings.length > 0 &&
-            currentSetting.settings.map((settingOption: any) => {
-              return (
-                <li
-                  className="min-w-full h-component flex justify-between items-center gap-2 px-4 border-b-2 cursor-pointer"
-                  key={settingOption.name}
-                >
-                  {settingOption.name}
+          <ul className="h-screenMinus176 flex flex-col gap-1 mt-4">
+            {currentSetting.settings.length > 0 &&
+              currentSetting.settings.map((settingOption: any) => {
+                return (
+                  <li
+                    className="min-w-full text-sm flex justify-between items-center gap-2 py-3 px-4 border-b-2 cursor-pointer"
+                    key={settingOption.name}
+                  >
+                    {settingOption.name}
 
-                  {settingOption.component && settingOption.component}
-                </li>
-              );
-            })}
-        </ul>
+                    {settingOption.component && settingOption.component}
+                  </li>
+                );
+              })}
+          </ul>
+        </>
       ) : (
-        <SettingPlaceholder />
+        <>
+          <EmptyCurrentSetting />
+          <SettingPlaceholder />
+        </>
       )}
     </section>
   );
@@ -55,8 +49,8 @@ const SettingPlaceholder = () => {
         <Settings2 className="w-8 h-8 text-muted-foreground" />
       </div>
 
-      <h2 className="text-xl font-semibold text-foreground">Settings</h2>
-      <p className="max-w-sm text-muted-foreground text-sm">
+      <h2 className="text-base font-semibold text-foreground">Settings</h2>
+      <p className="text-sm max-w-sm text-muted-foreground ">
         Select a setting on the left to view and customize your experience.
       </p>
     </div>

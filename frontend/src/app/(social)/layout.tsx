@@ -2,7 +2,6 @@
 
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import { SideBarLeft } from "@/layouts/SideBars/sideBarLeft";
-import { SelectedSetting } from "../../components/settings/selectedSetting";
 
 const MainLayout = ({ children }: ChildrenInterface) => (
   <main className="w-full h-full items-center">
@@ -11,11 +10,7 @@ const MainLayout = ({ children }: ChildrenInterface) => (
         <SideBarLeft />
       </div>
 
-      <div className="col-span-4 border-r-2">{children}</div>
-
-      <div className="col-span-6 flex border-r-2 justify-start h-full">
-        <SelectedSetting />
-      </div>
+      {children}
     </div>
   </main>
 );

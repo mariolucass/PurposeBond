@@ -13,7 +13,7 @@ export const EditProfile = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <div className="self-end mb-4">
+        <div className="self-end mt-4">
           <Button>Edit Profile</Button>
         </div>
       </SheetTrigger>

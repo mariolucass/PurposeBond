@@ -42,9 +42,12 @@ const AccountsPage = () => {
           return expiresInDate < dateNow;
         };
 
-        const accountsValidated = accountsExist.map((account: any) => {
-          return { ...account, isExpired: verifyIsExpired(account.expiresIn) };
-        });
+        const accountsValidated = accountsExist
+          .filter((account: any) => !verifyIsExpired(account.expiresIn))
+          .map((account: any) => ({
+            ...account,
+            isExpired: false,
+          }));
 
         setAccounts(accountsValidated);
       }

@@ -1,13 +1,12 @@
 import { usePostContext } from "@/contexts/domains/PostDomain/post.context";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
-import { CommentAuthorInfo } from "./authorInfo";
+import { useRef } from "react";
+import { PostAuthorInfo } from "../post/authorInfo";
 
 export const CommentComponent = ({ comment }: any) => {
   const router = useRouter();
   const authorInfoRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLParagraphElement>(null);
-  const [isHoveringOutside, setIsHoveringOutside] = useState(false);
   const { currentPost } = usePostContext();
 
   const handleCommentContentClick = (
@@ -22,30 +21,23 @@ export const CommentComponent = ({ comment }: any) => {
     }
   };
 
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    const isInside = [authorInfoRef, contentRef].some((ref) =>
-      ref.current?.contains(event.target as Node)
-    );
-
-    setIsHoveringOutside(!isInside);
-  };
-
   return (
     <div
-      className={`w-full flex flex-col gap-4 p-4 border-b transition-colors duration-150`}
+      className="flex flex-row w-full px-6 py-5 gap-6 border-b border-border bg-background text-foreground transition-colors duration-150 cursor-pointer"
       onClick={handleCommentContentClick}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => setIsHoveringOutside(false)}
     >
-      <div className="flex flex-col gap-4">
+      <div className="w-2/3">
         <div ref={authorInfoRef}>
-          <CommentAuthorInfo
+          <PostAuthorInfo
             author={comment.author}
             createdAt={comment.createdAt}
           />
         </div>
 
-        <p ref={contentRef} className="ml-14  ">
+        <p
+          ref={contentRef}
+          className="ml-14 text-sm leading-relaxed max-w-prose break-words"
+        >
           {comment.content}
         </p>
       </div>

@@ -2,13 +2,11 @@
 
 import { EmptyNotifications } from "@/components/_emptyComponents/emptyNotifications";
 import { Navigator } from "@/components/common/navigator";
-
 import { NotificationCard } from "@/components/notificationCard";
 import { Separator } from "@/components/ui/separator";
 import { ApiError } from "@/services/config/apiError";
 import { NotificationService } from "@/services/notifications.services";
-
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState<any[]>([]);
@@ -18,56 +16,55 @@ const Notifications = () => {
       try {
         const fetched = await NotificationService.getNotifications();
 
-        const cleaned = fetched.map((n: any) =>
-          Object.fromEntries(Object.entries(n).filter(([_, v]) => v !== null))
-        );
+        const grouped: any[] = [];
 
-        const grouped = new Map<string, any>();
+        for (const notif of fetched) {
+          const key = `${notif.type}-${notif.targetId}`;
+          const author = {
+            ...notif.author,
+            notificationCreatedAt: notif.createdAt,
+          };
 
-        cleaned.forEach((notif: any) => {
-          const key = `${notif.type}-${notif.postId || "none"}`;
-          const author = { ...notif.author, createdAt: notif.createdAt };
+          const existingGroup = grouped.find(
+            (group) => `${group.type}-${group.targetId}` === key
+          );
 
-          const group = grouped.get(key);
-
-          if (!group) {
-            grouped.set(key, {
-              type: notif.type,
-              postId: notif.postId,
-              createdAt: notif.createdAt,
+          if (!existingGroup) {
+            grouped.push({
+              ...notif,
               authors: [author],
             });
-            return;
+            continue;
           }
 
-          const existingAuthorIndex = group.authors.findIndex(
+          const existingAuthor = existingGroup.authors.find(
             (a: any) => a.id === author.id
           );
 
-          if (existingAuthorIndex === -1) {
-            group.authors.push(author);
+          if (!existingAuthor) {
+            existingGroup.authors.push(author);
           } else {
-            const existing = group.authors[existingAuthorIndex];
             const isNewer =
-              new Date(author.createdAt) > new Date(existing.createdAt);
+              new Date(author.notificationCreatedAt) >
+              new Date(existingAuthor.notificationCreatedAt);
 
             if (isNewer) {
-              group.authors[existingAuthorIndex].createdAt = author.createdAt;
+              existingAuthor.notificationCreatedAt =
+                author.notificationCreatedAt;
             }
           }
+        }
 
-          grouped.set(key, group);
-        });
-
-        const groupedArray = Array.from(grouped.values()).map((group) => ({
+        const groupedSorted = grouped.map((group) => ({
           ...group,
           authors: group.authors.sort(
             (a: any, b: any) =>
-              new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+              new Date(a.notificationCreatedAt).getTime() -
+              new Date(b.notificationCreatedAt).getTime()
           ),
         }));
 
-        setNotifications(groupedArray);
+        setNotifications(groupedSorted);
       } catch (error) {
         if (error instanceof ApiError) {
           console.error(error);
@@ -85,14 +82,11 @@ const Notifications = () => {
       {notifications.length ? (
         <ul className="flex flex-col w-full">
           {notifications.map((notification) => (
-            <>
-              <NotificationCard
-                notification={notification}
-                key={notification.id}
-              />
+            <Fragment key={notification.id}>
+              <NotificationCard notification={notification} />
 
               <Separator />
-            </>
+            </Fragment>
           ))}
         </ul>
       ) : (

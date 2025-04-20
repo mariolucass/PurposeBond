@@ -45,8 +45,7 @@ export const FollowersDialog = ({ user, isProfile }: any) => {
     };
 
     fetchFollowing();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isDialogFollowersOpen]);
 
   const handleUserCardClick = (event: any) => {
     const userHasClickedInCard = userCardRef.current?.contains(
@@ -63,7 +62,7 @@ export const FollowersDialog = ({ user, isProfile }: any) => {
     <Dialog open={isDialogFollowersOpen} onOpenChange={closeDialogFollowers}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{displayedUser.username} Followers</DialogTitle>
+          <DialogTitle>@{displayedUser.username} Followers</DialogTitle>
         </DialogHeader>
 
         <Separator />

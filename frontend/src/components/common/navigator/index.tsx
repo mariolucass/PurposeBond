@@ -26,9 +26,9 @@ export const Navigator = ({ name, description }: NavigatorProps) => {
       </Button>
 
       <div className="flex flex-col">
-        <h1 className="text-xl font-bold">{name}</h1>
+        <h1 className="text-base font-bold ">{name}</h1>
 
-        <span>{descriptionShown}</span>
+        <span className="text-sm">{descriptionShown}</span>
       </div>
     </div>
   );

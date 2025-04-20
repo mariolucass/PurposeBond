@@ -1,9 +1,9 @@
 export const EmptyCurrentSetting = () => (
-  <div className="h-component flex gap-4 px-8 border-b-2 items-center py-4">
-    <div className="flex flex-col">
-      <h1 className="text-xl font-bold">Setting</h1>
+  <div className="h-component flex px-4 border-b-2 items-center py-6 justify-between">
+    <div className="flex flex-col ml-4">
+      <h3 className="text-base font-bold">Setting</h3>
 
-      <span>Select a setting to change.</span>
+      <span className="text-sm">Select a setting to change.</span>
     </div>
   </div>
 );

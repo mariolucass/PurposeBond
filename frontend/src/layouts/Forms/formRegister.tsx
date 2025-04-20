@@ -1,5 +1,6 @@
 "use client";
 
+import { FormFields } from "@/components/common/formFields";
 import { Button } from "@/components/ui/button";
 import { RegisterType } from "@/interfaces/auth.interfaces";
 import { registerSchema } from "@/lib/schemas/auth.schemas";
@@ -9,7 +10,6 @@ import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { FormFields } from "../common/formFields";
 
 export const RegisterForm = () => {
   const router = useRouter();

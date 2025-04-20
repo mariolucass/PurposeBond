@@ -1,7 +1,13 @@
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
-import { TabLikes, TabMedia, TabMessage, TabPosts } from "./tabsComponents";
+import {
+  TabDiscussions,
+  TabLikes,
+  TabMedia,
+  TabMessage,
+  TabPosts,
+} from "./tabsComponents";
 
 interface TabsUserPage {
   user?: {
@@ -22,7 +28,7 @@ export const TabsUserPage = ({ user, isProfile }: TabsUserPage) => {
     },
     {
       name: "discussions",
-      component: <TabLikes user={displayedUser} />,
+      component: <TabDiscussions user={displayedUser} />,
     },
     {
       name: "likes",

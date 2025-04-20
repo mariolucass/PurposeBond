@@ -2,10 +2,10 @@
 
 import { CommentComponent } from "@/components/comment";
 import { LoadingComponent } from "@/components/common/loading";
-import { Navigator } from "@/components/navigator";
+import { Navigator } from "@/components/common/navigator";
+
 import { PostAuthorInfo } from "@/components/post/authorInfo";
 import { Separator } from "@/components/ui/separator";
-import { useCommentContext } from "@/contexts/domains/PostDomain/comment.context";
 import { usePostContext } from "@/contexts/domains/PostDomain/post.context";
 import { useFetchComment } from "@/hooks/comment.hook";
 
@@ -14,12 +14,8 @@ interface CommentPageProps {
 }
 
 const CommentPage = ({ params: { id, commentId } }: CommentPageProps) => {
-  const { isLoadingCurrentComment, fetchCommentError } = useFetchComment(
-    id,
-    commentId
-  );
-
-  const { currentComment } = useCommentContext();
+  const { comment, isLoadingCurrentComment, fetchCommentError } =
+    useFetchComment(id, commentId);
 
   const { currentPost } = usePostContext();
 
@@ -31,11 +27,11 @@ const CommentPage = ({ params: { id, commentId } }: CommentPageProps) => {
     return <div>Comment not found.</div>;
   }
 
-  if (!currentPost) return null;
+  if (!currentPost || !comment) return null;
 
   return (
     <section className="gap-4 flex flex-col justify-start">
-      <Navigator name={"Comment"} />
+      <Navigator name={"Comment"} description={`@${comment.author.username}`} />
       <div className="mt-2 p-3 border rounded-xl bg-background text-sm ">
         <div className="mb-1 font-semibold">Comentando sobre:</div>
 
@@ -53,7 +49,7 @@ const CommentPage = ({ params: { id, commentId } }: CommentPageProps) => {
         <Separator orientation="vertical" />
 
         <div className=" w-full">
-          <CommentComponent comment={currentComment} />
+          <CommentComponent comment={comment} />
         </div>
       </div>
     </section>

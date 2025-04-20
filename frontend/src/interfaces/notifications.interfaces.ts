@@ -26,11 +26,7 @@ export interface NotificationInterface {
   id: string;
   type: NotificationType;
   createdAt: string;
-  postId?: string;
-  commentId?: string;
-  likeId?: string;
-  repostId?: string;
-  followerId?: string;
+  targetId: string;
   user: NotificationUser;
   author: NotificationAuthor;
 }

@@ -1,32 +1,26 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useSearchContext } from "@/contexts/domains/UiDomain/search.context";
 import { SearchResults } from "@/layouts/Search/resultsSearch";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import {
+  ReadonlyURLSearchParams,
+  usePathname,
+  useRouter,
+} from "next/navigation";
 
 type SearchType = "latest" | "popular" | "media" | "users";
 
-export const TabsSearch = ({ query, type }: any) => {
-  const { currentSearch, setCurrentSearch, currentType, setCurrentType } =
-    useSearchContext();
-
+export const TabsSearch = ({
+  searchParams,
+}: {
+  searchParams: ReadonlyURLSearchParams;
+}) => {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const typeParam = (searchParams.get("type") as SearchType) || "popular";
-  const queryParam = searchParams.get("q") || "";
-
-  useEffect(() => {
-    setCurrentType(typeParam);
-    setCurrentSearch(queryParam);
-  }, [typeParam, queryParam]);
 
   const tabTypes: SearchType[] = ["popular", "latest", "users", "media"];
 
   const tabs = tabTypes.map((typeElem) => ({
     name: typeElem,
-    component: currentSearch && <SearchResults />,
+    component: <SearchResults />,
   }));
 
   const handleTypeChange = (name: string) => {
@@ -38,7 +32,7 @@ export const TabsSearch = ({ query, type }: any) => {
 
   return (
     <Tabs
-      defaultValue={currentType ? currentType : "popular"}
+      defaultValue={"popular"}
       className="min-w-full flex flex-col items-center"
     >
       <TabsList className="w-full flex justify-between p-4 h-[80] rounded-none">

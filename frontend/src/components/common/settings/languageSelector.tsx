@@ -8,7 +8,7 @@ import {
 
 export const LanguageSelector = () => {
   const handleSelectChange = (change: string) => {
-    console.log(change);
+    // console.log(change);
   };
 
   return (

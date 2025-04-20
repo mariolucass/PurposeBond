@@ -6,6 +6,7 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { PostInterface } from "@/interfaces/posts.interfaces";
 import { Ellipsis } from "lucide-react";
 import { useState } from "react";
 import { DeletePostModal } from "./deleteModal";
@@ -13,8 +14,10 @@ import { UpdatePostModal } from "./updateModal";
 
 export const PostMenuOptions = ({
   isPostAuthor,
+  post,
 }: {
   isPostAuthor: boolean;
+  post: PostInterface;
 }) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -31,18 +34,28 @@ export const PostMenuOptions = ({
     <>
       <Menubar className="border-none self-end">
         <MenubarMenu>
-          <MenubarTrigger className="hover:bg-slate-200 p-1 rounded">
+          <MenubarTrigger className="p-1 rounded w-[56px] h-[40px] justify-center hover:bg-accent hover:text-accent-foreground">
             <Ellipsis className="w-5 h-5" />
           </MenubarTrigger>
 
-          <MenubarContent>
+          <MenubarContent align="end">
             {isPostAuthor ? (
               <>
-                <MenubarItem onClick={() => setIsUpdateModalOpen(true)}>
+                <MenubarItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsUpdateModalOpen(true);
+                  }}
+                >
                   Update Post
                 </MenubarItem>
                 <MenubarSeparator />
-                <MenubarItem onClick={() => setIsDeleteModalOpen(true)}>
+                <MenubarItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsDeleteModalOpen(true);
+                  }}
+                >
                   Delete Post
                 </MenubarItem>
               </>
@@ -61,8 +74,16 @@ export const PostMenuOptions = ({
 
       {isPostAuthor && (
         <>
-          <UpdatePostModal modalOpen={isUpdateModalOpen} />
-          <DeletePostModal modalOpen={isDeleteModalOpen} />
+          <UpdatePostModal
+            modalOpen={isUpdateModalOpen}
+            setModalOpen={setIsUpdateModalOpen}
+            post={post}
+          />
+          <DeletePostModal
+            modalOpen={isDeleteModalOpen}
+            setModalOpen={setIsDeleteModalOpen}
+            postId={post.id}
+          />
         </>
       )}
     </>

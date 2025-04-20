@@ -1,24 +1,42 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { useMessageContext } from "@/contexts/domains/SocialDomain/message.context";
+import { useChatSocket } from "@/hooks/socket.hook";
+import { cn } from "@/lib/utils";
 import { MessageService } from "@/services/messages.services";
 import { MessageSquare, SquareUser } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { FormCreateMessage } from "./formCreateMessage";
+import { useEffect, useRef, useState } from "react";
+import { FormCreateMessage } from "../../layouts/Forms/formCreateMessage";
+import { EmptyCurrentChat } from "../_emptyComponents/emptyCurrentChat";
 import { MessageItem } from "./message";
 
 export const ChatSection = () => {
   const router = useRouter();
   const { currentChat, shouldFetchMessages, setShouldFetchMessages } =
     useMessageContext();
-
+  const { authenticatedUser } = useAuthContext();
   const [conversationWithUser, setConversationWithUser] = useState<any>([]);
+  const messagesEndRef = useRef<HTMLLIElement>(null);
+
+  let roomId: string | undefined;
+
+  if (authenticatedUser?.id && currentChat?.id) {
+    roomId = `${authenticatedUser.id}-${currentChat.id}`;
+  }
+
+  useChatSocket(roomId, (message) => {
+    setConversationWithUser((prev: any[]) => [...prev, message]);
+  });
 
   useEffect(() => {
     const fetchConversationWithUser = async () => {
       if (!currentChat) return;
 
       try {
+        setConversationWithUser([]);
         const conversation = await MessageService.getConversation(
           currentChat.id
         );
@@ -34,48 +52,54 @@ export const ChatSection = () => {
     }
   }, [currentChat, shouldFetchMessages]);
 
-  if (!currentChat) {
-    return (
-      <section className="w-full min-w-full flex flex-col justify-start">
-        <MessagesPlaceholder />
-      </section>
-    );
-  }
+  useEffect(() => {
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
+    }, 0);
+  }, [conversationWithUser]);
 
   return (
     <section className="w-full min-w-full flex flex-col justify-start">
-      <div className="h-component flex px-8 border-b-2 items-center py-4 justify-between">
-        <div className="flex flex-col">
-          <h1 className="text-xl font-bold">{currentChat.name}</h1>
+      {currentChat ? (
+        <>
+          <div className="h-component flex px-4 border-b-2 items-center py-4 justify-between">
+            <div className="flex flex-col">
+              <h1 className="text-base font-bold">{currentChat.name}</h1>
 
-          <span>@{currentChat.username}</span>
-        </div>
+              <span className="text-sm">@{currentChat.username}</span>
+            </div>
 
-        <Button
-          variant="ghost"
-          onClick={() => router.push(`users/${currentChat.id}`)}
-        >
-          <SquareUser />
-        </Button>
-      </div>
+            <Button
+              variant="ghost"
+              onClick={() => router.push(`users/${currentChat.id}`)}
+            >
+              <SquareUser />
+            </Button>
+          </div>
 
-      {conversationWithUser.length > 0 && (
-        <ul
-          className={
-            currentChat
-              ? "h-screenMinus176 flex flex-col gap-2 p-4 overflow-y-auto"
-              : "h-screenMinus176 flex flex-col gap-2 p-4"
-          }
-        >
-          {conversationWithUser.map((message: any) => (
-            <MessageItem user={currentChat} message={message} />
-          ))}
-        </ul>
+          <ul
+            className={cn(
+              "h-screenMinus176 flex flex-col gap-2 p-4 overflow-y-auto",
+              currentChat && ""
+            )}
+          >
+            {conversationWithUser.length > 0 &&
+              conversationWithUser.map((message: any, index: number) => (
+                <MessageItem user={currentChat} message={message} key={index} />
+              ))}{" "}
+            <li ref={messagesEndRef} />
+          </ul>
+
+          <div className="flex gap-4 p-4 border-t-2 items-center h-component">
+            {currentChat && <FormCreateMessage />}
+          </div>
+        </>
+      ) : (
+        <>
+          <EmptyCurrentChat />
+          <MessagesPlaceholder />
+        </>
       )}
-
-      <div className="flex gap-4 p-4 border-t-2 items-center h-component">
-        {currentChat && <FormCreateMessage />}
-      </div>
     </section>
   );
 };
@@ -86,8 +110,8 @@ export const MessagesPlaceholder = () => (
       <MessageSquare className="w-8 h-8 text-muted-foreground" />
     </div>
 
-    <h2 className="text-xl font-semibold text-foreground">Chat</h2>
-    <p className="max-w-sm text-sm text-muted-foreground">
+    <h2 className="text-base font-semibold text-foreground">Chat</h2>
+    <p className="text-sm max-w-sm text-muted-foreground">
       Select a conversation from the left or create a new one to start chatting.
     </p>
   </div>

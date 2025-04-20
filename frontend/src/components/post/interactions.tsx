@@ -1,4 +1,5 @@
 import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
+import { cn } from "@/lib/utils";
 import { LikeService } from "@/services/likes.services";
 import { RepostService } from "@/services/reposts.services";
 import { MessageSquare, Repeat2, ThumbsUp } from "lucide-react";
@@ -13,6 +14,7 @@ export interface PostInteractionsProps {
     likes: number;
     reposts: number;
   };
+  router: any;
 }
 
 export interface InteractionsState {
@@ -26,7 +28,11 @@ export interface PostMetricsState {
   comments: number;
 }
 
-export const PostInteractions = ({ postId, count }: PostInteractionsProps) => {
+export const PostInteractions = ({
+  postId,
+  count,
+  router,
+}: PostInteractionsProps) => {
   const {
     authenticatedUser,
     getLikesForAuthenticatedUser,
@@ -109,7 +115,11 @@ export const PostInteractions = ({ postId, count }: PostInteractionsProps) => {
     }
   };
 
-  const spanClass = "self-center font-semibold mt-2";
+  const handleComment = () => {
+    router.push(`/posts/${postId}`);
+  };
+
+  const spanClass = "self-center font-semibold mt-2 text-sm";
 
   const actions = [
     {
@@ -126,7 +136,7 @@ export const PostInteractions = ({ postId, count }: PostInteractionsProps) => {
     },
     {
       icon: <MessageSquare />,
-      onClick: () => {},
+      onClick: handleComment,
       count: comments,
       active: false,
     },
@@ -135,7 +145,7 @@ export const PostInteractions = ({ postId, count }: PostInteractionsProps) => {
   return (
     <ul className="flex justify-between">
       {actions.map((action, index) => (
-        <li key={index} className="flex flex-col justify-center p-1">
+        <li key={index} className="flex flex-col justify-left p-1">
           <Button
             onClick={action.onClick}
             variant={action.active ? "default" : "ghost"}
@@ -144,11 +154,10 @@ export const PostInteractions = ({ postId, count }: PostInteractionsProps) => {
           </Button>
 
           <span
-            className={
-              action.active
-                ? `${spanClass} text-[#4d7a86] text-bold`
-                : `${spanClass}`
-            }
+            className={cn(
+              spanClass,
+              action.active && "text-[#4d7a86] font-bold"
+            )}
           >
             {action.count}
           </span>

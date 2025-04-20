@@ -16,11 +16,10 @@ import { FollowService } from "@/services/follow.services";
 import { Fragment, useEffect, useState } from "react";
 
 export const FollowingDialog = ({ user, isProfile }: any) => {
-  const { authenticatedUser } = useAuthContext();
-  const displayedUser = isProfile ? authenticatedUser : user;
-
+  const { authenticatedUser, getFollowingForAuthenticatedUser } =
+    useAuthContext();
   const { isDialogFollowingOpen, setIsDialogFollowingOpen } = useModalContext();
-  const { getFollowingForAuthenticatedUser } = useAuthContext();
+  const { setFollowing, following } = useFollowContext();
 
   const closeDialogFollowing = () => {
     setIsDialogFollowingOpen(false);
@@ -28,7 +27,7 @@ export const FollowingDialog = ({ user, isProfile }: any) => {
 
   const [followingInModal, setFollowingInModal] = useState<UserInterface[]>([]);
 
-  const { setFollowing, following } = useFollowContext();
+  const displayedUser = isProfile ? authenticatedUser : user;
 
   useEffect(() => {
     const fetchFollowing = async () => {
@@ -46,8 +45,7 @@ export const FollowingDialog = ({ user, isProfile }: any) => {
     };
 
     fetchFollowing();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [displayedUser, isProfile]);
+  }, [displayedUser, isProfile, isDialogFollowingOpen]);
 
   const listToDisplay = isProfile ? following : followingInModal;
 
@@ -55,7 +53,7 @@ export const FollowingDialog = ({ user, isProfile }: any) => {
     <Dialog open={isDialogFollowingOpen} onOpenChange={closeDialogFollowing}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{displayedUser.username} Following</DialogTitle>
+          <DialogTitle>@{displayedUser.username} Following</DialogTitle>
         </DialogHeader>
 
         <Separator />

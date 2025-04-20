@@ -7,45 +7,62 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { PostInterface } from "@/interfaces/posts.interfaces";
+import { PostService } from "@/services/posts.services";
+import { useState } from "react";
+import { Textarea } from "../ui/textarea";
 
-export const UpdatePostModal = ({ postId, modalOpen }: any) => {
+export const UpdatePostModal = ({
+  post,
+  modalOpen,
+  setModalOpen,
+}: {
+  post: PostInterface;
+  modalOpen: boolean;
+  setModalOpen: (open: boolean) => void;
+}) => {
+  const [updatedContent, setUpdatedContent] = useState(post.content);
+
+  const handleUpdatePost = async () => {
+    const updatePost = await PostService.update(post.id, {
+      content: updatedContent,
+    });
+    setModalOpen(false);
+  };
+
   return (
-    <Dialog open={modalOpen}>
-      <DialogContent className="sm:max-w-[425px]">
+    <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+      <DialogContent
+        className="sm:max-w-[480px] gap-6"
+        onClick={(e) => e.stopPropagation()}
+      >
         <DialogHeader>
-          <DialogTitle>Edit post</DialogTitle>
-
-          <DialogDescription>
-            Make changes to your post here. Click save when you're done.
+          <DialogTitle className="text-xl">Edit your post</DialogTitle>
+          <DialogDescription className="text-sm text-muted-foreground mt-1">
+            You can change your post content below. This action is reversible.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input
-              id="name"
-              defaultValue="Pedro Duarte"
-              className="col-span-3"
-            />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input
-              id="username"
-              defaultValue="@peduarte"
-              className="col-span-3"
-            />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
+        <Textarea
+          placeholder="Update your message here..."
+          className="min-h-[120px]"
+          value={updatedContent}
+          onChange={(event) => {
+            setUpdatedContent(event?.target.value);
+          }}
+        />
+
+        <DialogFooter className="flex justify-between pt-4">
+          <Button
+            variant="ghost"
+            onClick={() => setModalOpen(false)}
+            className="text-muted-foreground"
+          >
+            Cancel
+          </Button>
+          <Button type="submit" onClick={handleUpdatePost}>
+            Save changes
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

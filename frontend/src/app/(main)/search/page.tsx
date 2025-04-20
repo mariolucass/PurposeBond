@@ -1,9 +1,9 @@
 "use client";
 
-import { Navigator } from "@/components/navigator";
+import { Navigator } from "@/components/common/navigator";
 import { useSearchParams } from "next/navigation";
-import { SearchForm } from "../../../components/search/formSearch";
 import { TabsSearch } from "../../../components/search/tabsSearch";
+import { SearchForm } from "../../../layouts/Forms/formSearch";
 
 const SearchPage = () => {
   const searchParams = useSearchParams();
@@ -17,9 +17,9 @@ const SearchPage = () => {
         description={searchParam ? `${searchParam}` : "Search someting."}
       />
 
-      <SearchForm query={searchParam} />
+      <SearchForm query={searchParam} type={typeParam} />
 
-      <TabsSearch query={searchParam} type={typeParam} />
+      <TabsSearch searchParams={searchParams} />
     </section>
   );
 };

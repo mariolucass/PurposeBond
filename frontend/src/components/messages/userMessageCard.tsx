@@ -3,11 +3,14 @@ import { useMessageContext } from "@/contexts/domains/SocialDomain/message.conte
 import { handleDateWithMoment } from "@/utils/handleDateWithMoment";
 
 export const UserMessageCard = ({ user, message }: any) => {
-  const { setCurrentChat, setShouldFetchMessages } = useMessageContext();
+  const { currentChat, setCurrentChat, setShouldFetchMessages } =
+    useMessageContext();
 
   const handleChangeChat = () => {
-    setShouldFetchMessages(true);
-    setCurrentChat(user);
+    if (currentChat != user) {
+      setShouldFetchMessages(true);
+      setCurrentChat(user);
+    }
   };
 
   return (

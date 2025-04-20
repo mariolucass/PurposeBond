@@ -1,14 +1,14 @@
-import {
-  PostCreateType,
-  PostInterface,
-  PostUpdateType,
-} from "@/interfaces/posts.interfaces";
+import { PostCreateType, PostInterface } from "@/interfaces/posts.interfaces";
 import { api } from "./config/api";
 import { handleApiResponse } from "./config/handleResponse";
 
 export const PostService = {
   getAll: async (): Promise<PostInterface[]> => {
     return handleApiResponse(api.get("/posts"));
+  },
+
+  getFollowingPosts: async (): Promise<PostInterface[]> => {
+    return handleApiResponse(api.get("/posts/dashboard"));
   },
 
   getById: async (postId: string): Promise<PostInterface> => {
@@ -27,10 +27,7 @@ export const PostService = {
     return handleApiResponse(api.post("/posts", body));
   },
 
-  update: async (
-    postId: string,
-    body: PostUpdateType
-  ): Promise<PostInterface> => {
+  update: async (postId: string, body: any): Promise<PostInterface> => {
     return handleApiResponse(api.patch(`/posts/${postId}`, body));
   },
 

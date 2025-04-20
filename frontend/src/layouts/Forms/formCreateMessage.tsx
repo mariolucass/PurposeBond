@@ -5,7 +5,6 @@ import { useMessageContext } from "@/contexts/domains/SocialDomain/message.conte
 import { MessageCreateType } from "@/interfaces/messages.interfaces";
 import { messageCreateSchema } from "@/lib/schemas/messages.schemas";
 import { MessageService } from "@/services/messages.services";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Send } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -19,8 +18,8 @@ export const FormCreateMessage = () => {
   } = useMessageContext();
 
   const sendMessage = async (form: { content: string }) => {
-    const a = await MessageService.sendMessage(currentChat!.id, form);
-    console.log(a);
+    await MessageService.sendMessage(currentChat!.id, form);
+
     setShouldFetchMessages(true);
 
     const fetchedUsers: any = await MessageService.getAllContacts();
@@ -37,17 +36,17 @@ export const FormCreateMessage = () => {
     <Form {...messageFormMethods}>
       <form
         onSubmit={messageFormMethods.handleSubmit(sendMessage)}
-        className="min-w-full flex items-center justify-center"
+        className="w-full flex items-center gap-2 p-2 bg-background"
       >
         <FormField
           control={messageFormMethods.control}
           name="content"
           render={({ field }) => (
-            <FormItem className="w-11/12">
+            <FormItem className="flex-1">
               <FormControl>
                 <Input
-                  placeholder={`Send message to ${currentChat!.username}.`}
-                  className="w-10/12"
+                  placeholder={`Send message to ${currentChat?.username}.`}
+                  className="w-full  px-4 py-2 text-sm bg-muted/20 border-none focus:ring-2 focus:ring-primary focus:outline-none transition-all"
                   {...field}
                 />
               </FormControl>
@@ -55,8 +54,12 @@ export const FormCreateMessage = () => {
           )}
         />
 
-        <Button type="submit">
-          <Send />
+        <Button
+          type="submit"
+          size="icon"
+          className=" p-2 bg-primary hover:bg-primary/90 transition-all"
+        >
+          <Send className="h-4 w-4" />
         </Button>
       </form>
     </Form>
