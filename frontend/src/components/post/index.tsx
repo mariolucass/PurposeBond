@@ -2,17 +2,12 @@ import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { PostInterface } from "@/interfaces/posts.interfaces";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
-
 import { Separator } from "../ui/separator";
 import { PostAuthorInfo } from "./authorInfo";
 import { PostInteractions } from "./interactions";
 import { PostMenuOptions } from "./menuOptions";
 
-interface PostProps {
-  post: PostInterface;
-}
-
-export const PostComponent = ({ post }: PostProps) => {
+export const PostComponent = ({ post }: { post: PostInterface }) => {
   const { authenticatedUser } = useAuthContext();
   const router = useRouter();
 
@@ -52,7 +47,7 @@ export const PostComponent = ({ post }: PostProps) => {
         </div>
       </div>
 
-      <Separator orientation="vertical" className="h-full w-4" />
+      <Separator orientation="vertical" className="h-[120px]" />
 
       <div className="w-1/3 flex flex-col justify-between">
         <div

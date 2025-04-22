@@ -5,20 +5,22 @@ import { cn } from "@/lib/utils";
 import {
   Bell,
   HomeIcon,
+  LineChart,
   LogInIcon,
+  Medal,
   MessageSquareText,
+  Network,
   SearchIcon,
   SettingsIcon,
   UserIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { UserHeaderCard } from "./userHeaderCard";
 
 export const SideBarLeft = () => {
   const { authenticatedUser } = useAuthContext();
   const pathname = usePathname();
-  const router = useRouter();
 
   const navigationLinks = [{ href: "/", label: "Home", icon: <HomeIcon /> }];
 
@@ -26,8 +28,11 @@ export const SideBarLeft = () => {
     navigationLinks.push(
       { href: "/profile", label: "Profile", icon: <UserIcon /> },
       { href: "/search", label: "Search", icon: <SearchIcon /> },
-      { href: "/notifications", label: "Notifications", icon: <Bell /> },
+      { href: "/communities", label: "Communities", icon: <LineChart /> },
       { href: "/messages", label: "Messages", icon: <MessageSquareText /> },
+      { href: "/notifications", label: "Notifications", icon: <Bell /> },
+      { href: "/insights", label: "Insights", icon: <Network /> },
+      { href: "/badges", label: "Badges", icon: <Medal /> },
       { href: "/settings", label: "Settings", icon: <SettingsIcon /> }
     );
   } else {
@@ -45,7 +50,7 @@ export const SideBarLeft = () => {
   const hoverClass = "hover:bg-muted hover:text-primary";
 
   return (
-    <section className="h-screen w-[220px] side-bar-left flex flex-col items-center fixed mx-auto border-r border-border bg-background text-foreground">
+    <section className="h-screen w-[220px] side-bar-left flex flex-col items-center fixed mx-auto bg-background text-foreground">
       <div className="w-full flex flex-col justify-start items-center">
         <UserHeaderCard />
 

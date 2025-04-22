@@ -101,8 +101,8 @@ export const UserSectionProfile = ({ user, isProfile }: any) => {
         {isProfile ? <EditProfile /> : <RenderFollowButton />}
       </div>
 
-      <div className="px-6 py-4 flex flex-col gap-4">
-        <p className="text-sm text-foreground break-words">
+      <div className="px-6 py-4 flex flex-col gap-12 mt-8">
+        <p className="text-sm text-foreground break-words ml-6">
           {displayedUser.description || "No bio yet."}
         </p>
 

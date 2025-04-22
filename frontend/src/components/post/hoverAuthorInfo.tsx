@@ -8,7 +8,9 @@ import { handleJoinedAtDate } from "@/utils/handleDateWithMoment";
 import { CalendarDays } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-interface HoverCardAuthorProps {
+export const HoverCardAuthor = ({
+  author,
+}: {
   author: {
     id: string;
     name: string;
@@ -17,9 +19,7 @@ interface HoverCardAuthorProps {
     description?: string;
     joinedAt: string;
   };
-}
-
-export const HoverCardAuthor = ({ author }: HoverCardAuthorProps) => {
+}) => {
   const router = useRouter();
 
   const handleClickAuthor = () => {

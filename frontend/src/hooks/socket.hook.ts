@@ -10,16 +10,19 @@ export function useChatSocket(
   useEffect(() => {
     if (!roomId || !onNewMessage) return;
 
-    if (joinedRoom.current !== roomId) {
+    if (!socket.connected) {
       socket.connect();
-      socket.emit("joinRoom", roomId);
+    }
+
+    if (joinedRoom.current !== roomId) {
+      socket.emit("chat:join", roomId);
       joinedRoom.current = roomId;
     }
 
-    socket.on("newMessage", onNewMessage);
+    socket.on("chat:message:new", (msg) => onNewMessage(msg));
 
     return () => {
-      socket.off("newMessage", onNewMessage);
+      socket.off("chat:message:new", onNewMessage);
     };
   }, [roomId, onNewMessage]);
 }

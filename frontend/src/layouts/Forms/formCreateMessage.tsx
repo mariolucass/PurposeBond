@@ -12,9 +12,9 @@ import { useForm } from "react-hook-form";
 export const FormCreateMessage = () => {
   const {
     currentChat,
-    setShouldFetchMessages,
     setUsersWhoHaveMessage,
     sortUsersWhoHaveMessage,
+    setShouldFetchMessages,
   } = useMessageContext();
 
   const sendMessage = async (form: { content: string }) => {

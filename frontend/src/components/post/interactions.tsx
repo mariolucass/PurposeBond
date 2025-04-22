@@ -4,28 +4,21 @@ import { LikeService } from "@/services/likes.services";
 import { RepostService } from "@/services/reposts.services";
 import { MessageSquare, Repeat2, ThumbsUp } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button } from "../ui/button";
 import { errorLiking, errorReposting } from "./errors";
-
+export interface PostMetricsState {
+  likes: number;
+  reposts: number;
+  comments: number;
+}
 export interface PostInteractionsProps {
   postId: string;
-  count: {
-    comments: number;
-    likes: number;
-    reposts: number;
-  };
+  count: PostMetricsState;
   router: any;
 }
 
 export interface InteractionsState {
   isLiked: boolean;
   isReposted: boolean;
-}
-
-export interface PostMetricsState {
-  likes: number;
-  reposts: number;
-  comments: number;
 }
 
 export const PostInteractions = ({
@@ -119,8 +112,6 @@ export const PostInteractions = ({
     router.push(`/posts/${postId}`);
   };
 
-  const spanClass = "self-center font-semibold mt-2 text-sm";
-
   const actions = [
     {
       icon: <ThumbsUp />,
@@ -143,20 +134,28 @@ export const PostInteractions = ({
   ];
 
   return (
-    <ul className="flex justify-between">
+    <ul className="flex gap-6 mt-2 text-muted-foreground text-sm">
       {actions.map((action, index) => (
-        <li key={index} className="flex flex-col justify-left p-1">
-          <Button
-            onClick={action.onClick}
-            variant={action.active ? "default" : "ghost"}
+        <li
+          key={index}
+          className="flex items-center gap-2 cursor-pointer transition hover:text-primary"
+          onClick={action.onClick}
+        >
+          <div
+            className={cn(
+              "w-8 h-8 flex items-center justify-center rounded-full transition",
+              action.active
+                ? "bg-accent text-accent-foreground"
+                : "hover:bg-muted"
+            )}
           >
             {action.icon}
-          </Button>
+          </div>
 
           <span
             className={cn(
-              spanClass,
-              action.active && "text-[#4d7a86] font-bold"
+              "text-sm",
+              action.active && "text-primary font-semibold"
             )}
           >
             {action.count}

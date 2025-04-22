@@ -1,11 +1,11 @@
+import { Button } from "@/components/ui/button";
 import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarTrigger,
-} from "@/components/ui/menubar";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { PostInterface } from "@/interfaces/posts.interfaces";
 import { Ellipsis } from "lucide-react";
 import { useState } from "react";
@@ -22,55 +22,49 @@ export const PostMenuOptions = ({
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  const handleHidePost = () => {
-    console.log("Post hidden");
-  };
-
-  const handleReportPost = () => {
-    console.log("Post reported");
-  };
-
   return (
     <>
-      <Menubar className="border-none self-end">
-        <MenubarMenu>
-          <MenubarTrigger className="p-1 rounded w-[56px] h-[40px] justify-center hover:bg-accent hover:text-accent-foreground">
-            <Ellipsis className="w-5 h-5" />
-          </MenubarTrigger>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild className="self-end">
+          <Button variant="ghost" size="icon" className="h-8 w-8">
+            <Ellipsis className="h-4 w-4 text-muted-foreground" />
+          </Button>
+        </DropdownMenuTrigger>
 
-          <MenubarContent align="end">
-            {isPostAuthor ? (
-              <>
-                <MenubarItem
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsUpdateModalOpen(true);
-                  }}
-                >
-                  Update Post
-                </MenubarItem>
-                <MenubarSeparator />
-                <MenubarItem
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsDeleteModalOpen(true);
-                  }}
-                >
-                  Delete Post
-                </MenubarItem>
-              </>
-            ) : (
-              <>
-                <MenubarItem onClick={handleHidePost}>Hide Post</MenubarItem>
-                <MenubarSeparator />
-                <MenubarItem onClick={handleReportPost}>
-                  Report Post
-                </MenubarItem>
-              </>
-            )}
-          </MenubarContent>
-        </MenubarMenu>
-      </Menubar>
+        <DropdownMenuContent align="end" className="w-40">
+          {isPostAuthor ? (
+            <>
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsUpdateModalOpen(true);
+                }}
+              >
+                Update Post
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsDeleteModalOpen(true);
+                }}
+              >
+                Delete Post
+              </DropdownMenuItem>
+            </>
+          ) : (
+            <>
+              <DropdownMenuItem onClick={() => console.log("Post hidden")}>
+                Hide Post
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => console.log("Post reported")}>
+                Report Post
+              </DropdownMenuItem>
+            </>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
 
       {isPostAuthor && (
         <>

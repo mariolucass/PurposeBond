@@ -2,7 +2,6 @@ import { ThemeProvider } from "@/components/common/themeProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { GlobalProvider } from "@/contexts";
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
-import { PageTransitionWrapper } from "@/layouts/Animations/PageTransition";
 import { cn } from "@/lib/utils";
 import { Nunito_Sans as FontSans } from "next/font/google";
 import "./globals.css";
@@ -24,16 +23,15 @@ const RootLayout = ({ children }: ChildrenInterface) => (
           fontSans.className
         )}
       >
-        <PageTransitionWrapper>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
-        </PageTransitionWrapper>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+
         <Toaster />
       </body>
     </GlobalProvider>

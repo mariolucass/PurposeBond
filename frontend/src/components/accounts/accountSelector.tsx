@@ -2,7 +2,6 @@
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
-
 import { EffectCoverflow, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { AccountCard } from "./accountCard";

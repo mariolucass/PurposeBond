@@ -13,8 +13,7 @@ export interface Setting {
 export const settingsList: Setting[] = [
   {
     name: "Your Account",
-    description:
-      "Manage your personal information, preferences, and security options.",
+    description: "Manage your personal information and preferences options.",
     settings: [
       {
         name: "Email Notifications",
@@ -103,8 +102,7 @@ export const settingsList: Setting[] = [
   },
   {
     name: "Data & Privacy",
-    description:
-      "Control your data and understand how it's used. You're in charge.",
+    description: "Control your data and understand how it's used.",
     settings: [
       {
         name: "Download My Data",

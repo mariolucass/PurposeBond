@@ -16,7 +16,6 @@ export const TabDiscussions = ({ user }: TabProps) => {
     const fetchDiscussions = async () => {
       try {
         const fetchedDiscussions = await CommentService.getByUser(user.id);
-
         setDiscussions(fetchedDiscussions);
       } catch (error) {
         if (error instanceof ApiError) {

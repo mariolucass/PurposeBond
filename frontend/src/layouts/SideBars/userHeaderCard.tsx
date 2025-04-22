@@ -11,7 +11,7 @@ export const UserHeaderCard = () => {
 
   return (
     <div className="flex flex-row w-full px-4 py-5 gap-4 border-b-2 border-border bg-background text-foreground transition-colors duration-150 h-component items-center">
-      <div className="flex items-center gap-4 flex-1">
+      <div className="flex items-center gap-2 flex-1">
         <Avatar
           className="w-10 h-10 border border-primary cursor-pointer"
           onClick={() => router.push("/profile")}

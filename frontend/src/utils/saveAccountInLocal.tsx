@@ -5,7 +5,7 @@ export const saveAccountInLocalStorage = (response: any) => {
   const accountsString = localStorage.getItem("accounts");
   const accounts = accountsString ? JSON.parse(accountsString) : [];
 
-  const { profileImage, username, name } = response.user;
+  const { username } = response.user;
 
   const accountInLocalStorage = accounts.find(
     (account: any) => account.username === username
@@ -26,9 +26,7 @@ export const saveAccountInLocalStorage = (response: any) => {
     localStorage.setItem("accounts", JSON.stringify(accounts));
   } else {
     accounts.push({
-      profileImage,
-      username,
-      name,
+      ...response.user,
       token,
       expiresIn,
     });

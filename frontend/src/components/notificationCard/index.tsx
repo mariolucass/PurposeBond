@@ -28,8 +28,6 @@ export const NotificationCard = ({ notification }: NotificationProps) => {
     }
   };
 
-  console.log(notification);
-
   const authors = notification.authors;
   const lastAuthor = authors[authors.length - 1];
 

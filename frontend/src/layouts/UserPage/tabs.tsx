@@ -52,9 +52,9 @@ export const TabsUserPage = ({ user, isProfile }: TabsUserPage) => {
       defaultValue="posts"
       className="min-w-full flex flex-col items-center"
     >
-      <TabsList className=" h-[80] w-full flex justify-around p-4 rounded-none">
+      <TabsList className="w-full h-component bg-muted/50 flex justify-around items-center px-2 py-2 gap-2 border border-border shadow-sm rounded-none">
         {tabs.map((item) => (
-          <TabsTrigger value={item.name} key={item.name} className="h-full">
+          <TabsTrigger value={item.name} key={item.name} className="h-[44px]">
             {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
           </TabsTrigger>
         ))}

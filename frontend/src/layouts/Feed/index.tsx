@@ -5,8 +5,10 @@ import { PostReturnType } from "@/interfaces/posts.interfaces";
 import { ApiError } from "@/services/config/apiError";
 import { PostService } from "@/services/posts.services";
 import { AnimatePresence } from "framer-motion";
+import { Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import { PostComponent } from "../../components/post";
+import { ContentTransition } from "../Animations/ContentTransition";
 import { ItemTransitionWrapper } from "../Animations/ItemTransition";
 import { FormCreatePost } from "./formCreatePost";
 import { TabsFeed } from "./tabs";
@@ -65,23 +67,42 @@ export const Feed = () => {
 
   return (
     <section className="min-w-full w-full flex flex-col justify-start">
-      <div className="h-component flex z-20 gap-4 p-4 border-b-2 items-center">
+      <div className="h-component flex  gap-4  border-b-2 items-center sticky top-0 z-20">
         <TabsFeed setFeedState={setFeedState} feedState={feedState} />
       </div>
 
       <FormCreatePost />
 
-      <AnimatePresence mode="popLayout">
-        <ul className="flex flex-col w-full">
-          {feedState.content[feedState.selectedTab]?.data?.map(
-            (e: PostReturnType) => (
-              <ItemTransitionWrapper key={e.id}>
-                <PostComponent post={e} />
-              </ItemTransitionWrapper>
-            )
-          )}
-        </ul>
-      </AnimatePresence>
+      {feedState.content[feedState.selectedTab]?.data?.length > 0 ? (
+        <AnimatePresence mode="popLayout">
+          <ul className="flex flex-col w-full">
+            {feedState.content[feedState.selectedTab]?.data?.map(
+              (e: PostReturnType) => (
+                <ItemTransitionWrapper key={e.id}>
+                  <PostComponent post={e} />
+                </ItemTransitionWrapper>
+              )
+            )}
+          </ul>
+        </AnimatePresence>
+      ) : (
+        <EmptyFeedState />
+      )}
     </section>
   );
 };
+
+const EmptyFeedState = () => (
+  <ContentTransition>
+    <div className="flex flex-col items-center justify-start pt-8 h-full text-center px-4 gap-4 w-full">
+      <div className="bg-muted p-4 rounded-full">
+        <Users className="w-8 h-8 text-muted-foreground" />
+      </div>
+
+      <h2 className="text-base font-semibold text-foreground">No Posts Yet</h2>
+      <p className="text-sm max-w-sm text-muted-foreground">
+        Follow other developers and communities to start seeing content here.
+      </p>
+    </div>
+  </ContentTransition>
+);

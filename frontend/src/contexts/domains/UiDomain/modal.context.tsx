@@ -23,22 +23,8 @@ const ModalContext = createContext<IModalContext>({} as IModalContext);
 
 export const ModalProvider = ({ children }: ChildrenInterface) => {
   const [isDialogMessagesOpen, setIsDialogMessagesOpen] = useState(false);
-
-  const handleDialogMessagesOpen = () => {
-    setIsDialogMessagesOpen(!isDialogMessagesOpen);
-  };
-
   const [isDialogFollowersOpen, setIsDialogFollowersOpen] = useState(false);
-
-  const handleDialogFollowersOpen = () => {
-    setIsDialogMessagesOpen(!isDialogFollowersOpen);
-  };
-
   const [isDialogFollowingOpen, setIsDialogFollowingOpen] = useState(false);
-
-  const handleDialogFollowingOpen = () => {
-    setIsDialogMessagesOpen(!isDialogFollowingOpen);
-  };
 
   return (
     <ModalContext.Provider

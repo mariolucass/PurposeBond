@@ -2,8 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { usePathname, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { ActivityRecapCard } from "./activityRecapCard";
+import { CommunitySpotlight } from "./communitySpotlight";
 import { Recommendations } from "./recommendations";
-import { TrendsOverview } from "./trendsOverview";
 
 export const SideBarRight = () => {
   const router = useRouter();
@@ -20,7 +21,7 @@ export const SideBarRight = () => {
   const isSearchPage = pathname.startsWith("/search");
 
   return (
-    <section className="side-bar-right w-[320px] flex flex-col justify-start items-center gap-4 fixed mx-auto z-40 p-4">
+    <section className="side-bar-right w-[320px] flex flex-col justify-start items-center gap-6 fixed mx-auto z-40 p-4">
       {!isSearchPage && (
         <form
           className="h-12  mb-2 flex w-full max-w-sm items-center space-x-2 "
@@ -40,7 +41,9 @@ export const SideBarRight = () => {
 
       <Recommendations isSearchPage={isSearchPage} />
 
-      <TrendsOverview />
+      <CommunitySpotlight />
+
+      <ActivityRecapCard />
     </section>
   );
 };

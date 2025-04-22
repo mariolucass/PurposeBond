@@ -1,57 +1,80 @@
 import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarTrigger,
-} from "@/components/ui/menubar";
-import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Ellipsis } from "lucide-react";
 import { useState } from "react";
+import { Button } from "../ui/button";
 import { DeleteCommentModal } from "./deleteModal";
 import { UpdateCommentModal } from "./updateModal";
 
-export const CommentMenuOptions = () => {
-  const { authenticatedUser } = useAuthContext();
-
+export const CommentMenuOptions = ({
+  isCommentAuthor,
+}: {
+  isCommentAuthor: boolean;
+}) => {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   return (
     <>
-      <Menubar>
-        <MenubarMenu>
-          <MenubarTrigger>
-            <Ellipsis className="relative top-0 right-0" />
-          </MenubarTrigger>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild className="self-end">
+          <Button variant="ghost" size="icon" className="h-8 w-8">
+            <Ellipsis className="h-4 w-4 text-muted-foreground" />
+          </Button>
+        </DropdownMenuTrigger>
 
-          <MenubarContent>
-            <MenubarItem
-              onClick={() => {
-                setIsDeleteModalOpen(true);
-              }}
-            >
-              Delete Comment
-            </MenubarItem>
+        <DropdownMenuContent align="end" className="w-40">
+          {isCommentAuthor ? (
+            <>
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsUpdateModalOpen(true);
+                }}
+              >
+                Update Comment
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsDeleteModalOpen(true);
+                }}
+              >
+                Delete Comment
+              </DropdownMenuItem>
+            </>
+          ) : (
+            <>
+              <DropdownMenuItem onClick={() => console.log("Post hidden")}>
+                Hide Comment
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => console.log("Post reported")}>
+                Report Comment
+              </DropdownMenuItem>
+            </>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
 
-            <MenubarSeparator />
-
-            <MenubarItem
-              onClick={() => {
-                setIsUpdateModalOpen(true);
-              }}
-            >
-              Update Comment
-            </MenubarItem>
-          </MenubarContent>
-        </MenubarMenu>
-      </Menubar>
-
-      <UpdateCommentModal modalOpen={isUpdateModalOpen} />
-
-      <DeleteCommentModal modalOpen={isDeleteModalOpen} />
+      {isCommentAuthor && (
+        <>
+          <UpdateCommentModal
+            modalOpen={isUpdateModalOpen}
+            setModalOpen={setIsUpdateModalOpen}
+          />
+          <DeleteCommentModal
+            modalOpen={isDeleteModalOpen}
+            setModalOpen={setIsDeleteModalOpen}
+          />
+        </>
+      )}
     </>
   );
 };

@@ -1,6 +1,6 @@
-/** @type {import('tailwindcss').Config} */
+import { type Config } from "tailwindcss";
 
-module.exports = {
+const config: Config = {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -27,16 +27,11 @@ module.exports = {
       height: {
         screenMinus88: "calc(100vh - 88px)",
         screenMinus176: "calc(100vh - 176px)",
-
         halfComponent: "44px",
         component: "88px",
         component2x: "176px",
         component3x: "264px",
         component4x: "352px",
-      },
-
-      margin: {
-        component: "",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -96,3 +91,5 @@ module.exports = {
   },
   plugins: [require("tailwindcss-animate")],
 };
+
+export default config;

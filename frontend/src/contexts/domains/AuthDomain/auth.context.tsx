@@ -4,7 +4,6 @@ import { toast } from "@/components/ui/use-toast";
 import { ChildrenInterface } from "@/interfaces/global.interfaces";
 import { api } from "@/services/config/api";
 import { ProfileService } from "@/services/profile.services";
-
 import { useRouter } from "next/navigation";
 import {
   Dispatch,
@@ -39,7 +38,7 @@ export const AuthProvider = ({ children }: ChildrenInterface) => {
   useEffect(() => {
     const autoLogin = async () => {
       const token = localStorage.getItem("tokenRedeSocial");
-      if (token) {
+      if (token && !authenticatedUser) {
         try {
           const response = await api.get("/profile", {
             headers: { Authorization: `Bearer ${token}` },

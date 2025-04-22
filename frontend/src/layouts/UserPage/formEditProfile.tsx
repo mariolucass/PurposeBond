@@ -6,7 +6,6 @@ import { useAuthContext } from "@/contexts/domains/AuthDomain/auth.context";
 import { UserUpdateType } from "@/interfaces/users.interfaces";
 import { userUpdateSchema } from "@/lib/schemas/users.schemas";
 import { UserService } from "@/services/users.services";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 

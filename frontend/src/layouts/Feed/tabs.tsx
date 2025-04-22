@@ -15,9 +15,9 @@ export const TabsFeed = ({ feedState, setFeedState }: any) => {
         }));
       }}
     >
-      <TabsList className="w-11/12 flex justify-around h-[48px]">
+      <TabsList className="w-full h-component bg-muted flex justify-around items-center px-2 py-2 gap-2 border border-border shadow-sm rounded-none">
         {tabs.map((item) => (
-          <TabsTrigger value={item.name} key={item.name}>
+          <TabsTrigger value={item.name} key={item.name} className="h-[44px]">
             {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
           </TabsTrigger>
         ))}

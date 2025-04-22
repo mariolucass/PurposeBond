@@ -5,7 +5,6 @@ import { PostProvider } from "./domains/PostDomain/post.context";
 import { FollowProvider } from "./domains/SocialDomain/follow.context";
 import { MessageProvider } from "./domains/SocialDomain/message.context";
 import { ModalProvider } from "./domains/UiDomain/modal.context";
-import { SearchProvider } from "./domains/UiDomain/search.context";
 
 export const GlobalProvider = ({ children }: ChildrenInterface) => {
   return (
@@ -13,11 +12,9 @@ export const GlobalProvider = ({ children }: ChildrenInterface) => {
       <FollowProvider>
         <PostProvider>
           <MessageProvider>
-            <SearchProvider>
-              <SettingProvider>
-                <ModalProvider>{children}</ModalProvider>
-              </SettingProvider>
-            </SearchProvider>
+            <SettingProvider>
+              <ModalProvider>{children}</ModalProvider>
+            </SettingProvider>
           </MessageProvider>
         </PostProvider>
       </FollowProvider>

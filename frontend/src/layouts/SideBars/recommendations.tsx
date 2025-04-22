@@ -6,6 +6,7 @@ import { Fragment, useEffect, useState } from "react";
 
 export const Recommendations = ({ isSearchPage }: any) => {
   const [recommendations, setRecommendations] = useState([]);
+
   useEffect(() => {
     const fetchRecommendations = async () => {
       try {
@@ -30,7 +31,7 @@ export const Recommendations = ({ isSearchPage }: any) => {
     <div
       className={cn(
         "bg-background border border-border w-full flex flex-col rounded-xl shadow-sm p-4",
-        isSearchPage && "mt-6"
+        isSearchPage && "mt-[4.4rem]"
       )}
     >
       <h1 className="text-lg font-semibold mb-4 px-1">Recommendations</h1>

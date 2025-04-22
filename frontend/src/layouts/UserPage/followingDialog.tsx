@@ -12,7 +12,6 @@ import { useFollowContext } from "@/contexts/domains/SocialDomain/follow.context
 import { useModalContext } from "@/contexts/domains/UiDomain/modal.context";
 import { UserInterface } from "@/interfaces/users.interfaces";
 import { FollowService } from "@/services/follow.services";
-
 import { Fragment, useEffect, useState } from "react";
 
 export const FollowingDialog = ({ user, isProfile }: any) => {
