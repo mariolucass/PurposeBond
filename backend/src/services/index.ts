@@ -1,14 +1,18 @@
-export { AuthServices } from "./core/auth.services";
-export { SettingsServices } from "./core/settings.services";
+export { AuthService } from "./identity/auth.service";
+export { SearchService } from "./identity/search.service";
+export { SettingService } from "./identity/settings.service";
 
-export { CommentsServices } from "./interactions/comments.services";
-export { LikesServices } from "./interactions/likes.services";
-export { MentionsServices } from "./interactions/mentions.services";
-export { PostsViewsServices } from "./interactions/postviews.services";
-export { RepostsServices } from "./interactions/reposts.services";
+export { CommentService } from "./engagement/comments.service";
+export { LikeService } from "./engagement/likes.service";
+export { MentionService } from "./engagement/mentions.service";
+export { PostViewService } from "./engagement/postViews.service";
+export { RepostService } from "./engagement/reposts.service";
 
-export { PostsServices } from "./resources/posts.services";
-export { ProfileServices } from "./resources/profile.services";
-export { UsersServices } from "./resources/users.services";
+export { FollowService } from "./communication/follow.service";
+export { MessageService } from "./communication/messages.service";
 
-export { NotificationsServices } from "./utilities/notifications.services";
+export { PostService } from "./content/posts.service";
+export { ProfileService } from "./content/profile.service";
+export { UserService } from "./content/users.service";
+
+export { NotificationService } from "./utilities/notifications.service";

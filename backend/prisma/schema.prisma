@@ -18,7 +18,7 @@ model User {
   profileImage       String?   @db.VarChar(500) 
   address            String? @db.VarChar(100)
   phone              String? @db.VarChar(15)
-  birthdate          DateTime? 
+  birthDate          DateTime? 
   description        String? @db.Text()
   joinedAt           DateTime @default(now())
 
@@ -30,8 +30,8 @@ model User {
   comments           Comment[]
   likes              Like[]
 
-  followers          User[]  @relation("follows")
-  following          User[]  @relation("follows")
+  followers Follow[] @relation("following")
+  following Follow[] @relation("followers")
 
   messagesSent       Message[] @relation("Sent")
   messagesReceived   Message[] @relation("Received")
@@ -41,9 +41,30 @@ model User {
   notificationsSent  Notification[] @relation(name: "notificationNotifier")
   notifications      Notification[]
 
+  ownedCommunities  Community[]
+  communityMemberships CommunityMember[]
+
+  badges     UserBadge[]
+
+  activityLogs UserActivityLog[]
+
   mentions           Mention[]
 
   @@map("users")
+}
+
+model Follow {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  
+  follower   User     @relation("followers", fields: [followerId], references: [id])
+  followerId String
+
+  following  User     @relation("following", fields: [followingId], references: [id])
+  followingId String
+
+  @@unique([followerId, followingId])
+  @@map("follows")
 }
 
 model Settings {
@@ -81,6 +102,9 @@ model Post {
   mentions   Mention[]
 
   views      PostView[]
+
+  community   Community? @relation(fields: [communityId], references: [id], onDelete: SetNull)
+  communityId String?
 
   @@map("posts")
 }
@@ -147,7 +171,7 @@ model Comment {
   author     User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId   String
 
-  post       Post     @relation(fields: [postId], references: [id])
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId     String
 
   @@map("comments")
@@ -171,27 +195,59 @@ model Message {
   content    String @db.Text()
   createdAt  DateTime @default(now())
 
-  sender     User     @relation("Sent", fields: [senderId], references: [id], onDelete: Cascade)
-  senderId   String
+  sender     User?     @relation("Sent", fields: [senderId], references: [id], onDelete: SetNull)
+  senderId   String?
 
-  receiver   User     @relation("Received", fields: [receiverId], references: [id], onDelete: Cascade)
-  receiverId String 
+  receiver   User?    @relation("Received", fields: [receiverId], references: [id], onDelete: SetNull)
+  receiverId String? 
   
   @@map("messages")
 }
 
 enum NotificationType {
   NEW_FOLLOWER
+  PROFILE_MENTIONED
+
+  POST_CREATED
   POST_LIKED
   POST_COMMENTED
   POST_REPOSTED
+  POST_MENTIONED
+
   COMMENT_LIKED
+  COMMENT_MENTIONED
+
+  COMMUNITY_INVITE
+  COMMUNITY_JOINED
+  COMMUNITY_ROLE_UPDATED
+
+  NEW_MESSAGE
+
+  BADGE_GRANTED
+
+  VERIFICATION_APPROVED
+  VERIFICATION_REJECTED
 }
+
+enum NotificationTargetType {
+  POST
+  COMMENT
+  LIKE
+  REPOST
+  USER
+  COMMUNITY
+  MESSAGE
+  BADGE
+}
+
 
 model Notification {
   id          String         @id @default(uuid())
+
   type        NotificationType
-  content     String?        @db.Text() 
+  targetType   NotificationTargetType
+  targetId String
+
   createdAt   DateTime       @default(now())
   isRead      Boolean        @default(false)
 
@@ -201,18 +257,87 @@ model Notification {
   author      User           @relation(name: "notificationNotifier", fields: [authorId], references: [id], onDelete: Cascade)  
   authorId    String 
 
-  postId     String?
-  commentId  String?
-  likeId     String?
-  repostId   String?
-  followerId String? 
-
   @@map("notifications")
 }
 
+enum BadgeType {
+  VERIFICATION
+  COMMUNITY
+  CONTRIBUTION
+}
+
+model Badge {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  icon      String  
+  type      BadgeType
+  createdAt DateTime @default(now())
+
+  users     UserBadge[]
+}
+
+model UserBadge {
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
+
+  badge    Badge    @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+  badgeId  String
+
+  grantedAt DateTime @default(now())
+
+  @@id([userId, badgeId])
+}
+
+enum ActivityType {
+  POST_CREATED
+  POST_LIKED
+  FOLLOWED_USER
+  COMMENTED
+  JOINED_COMMUNITY
+}
+
+enum ActivityTargetType {
+  POST
+  COMMUNITY
+  USER
+}
+
+model UserActivityLog {
+  id        String   @id @default(uuid())
+  type      ActivityType
+  targetType ActivityTargetType?
+  referenceId String?
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+}
+
+model Community {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String   @db.Text()
+  image       String?
+  createdAt   DateTime @default(now())
+
+  owner       User     @relation(fields: [ownerId], references: [id])
+  ownerId     String
+
+  members     CommunityMember[]
+  posts       Post[] 
+}
 
 
+model CommunityMember {
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
 
+  community    Community @relation(fields: [communityId], references: [id], onDelete: Cascade)
+  communityId  String 
+  joinedAt     DateTime @default(now())
 
+  @@id([userId, communityId])
+}
 
 

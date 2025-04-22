@@ -1,16 +1,17 @@
-export { searchRouter } from "./core/search.routes";
+export { insightRouter } from "./analytics/insight.routes";
 
-export { authRouter } from "./core/auth.routes";
+export { authRouter } from "./identity/auth.routes";
+export { searchRouter } from "./identity/search.routes";
 
-export { commentsRouter } from "./interactions/comments.routes";
-export { likesRouter } from "./interactions/likes.routes";
-export { repostsRouter } from "./interactions/reposts.routes";
+export { commentsRouter } from "./engagement/comments.routes";
+export { likesRouter } from "./engagement/likes.routes";
+export { repostsRouter } from "./engagement/reposts.routes";
 
-export { postsRouter } from "./resources/posts.routes";
-export { profileRouter } from "./resources/profile.routes";
-export { usersRouter } from "./resources/users.routes";
+export { postsRouter } from "./content/posts.routes";
+export { profileRouter } from "./content/profile.routes";
+export { usersRouter } from "./content/users.routes";
 
-export { followRouter } from "./social/follow.routes";
-export { messagesRouter } from "./social/messages.routes";
+export { followRouter } from "./communication/follow.routes";
+export { messagesRouter } from "./communication/messages.routes";
 
 export { notificationsRouter } from "./utilities/notifications.routes";

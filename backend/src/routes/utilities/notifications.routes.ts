@@ -1,22 +1,21 @@
+import { NotificationController } from "@/controllers";
+import { AuthMiddleware, NotificationsMiddleware } from "@/middlewares";
 import { Router } from "express";
-import { NotificationsController } from "../../controllers";
-import { AuthMiddlewares } from "../../middlewares/core/auth.middlewares";
-import { NotificationsMiddlewares } from "../../middlewares/utilities/notifications.middlewares";
 
 export const notificationsRouter = Router();
 
-notificationsRouter.use(AuthMiddlewares.validateToken);
+notificationsRouter.use(AuthMiddleware.validateToken);
 
-notificationsRouter.get("/", NotificationsController.getNotifications);
+notificationsRouter.get("/", NotificationController.getNotifications);
 notificationsRouter.patch(
   "/",
-  NotificationsController.markAllNotificationsAsRead
+  NotificationController.markAllNotificationsAsRead
 );
 
 notificationsRouter.use("/:id", [
-  NotificationsMiddlewares.verifyNotificationExistence,
-  NotificationsMiddlewares.confirmNotificationOwnership,
+  NotificationsMiddleware.verifyNotificationExistence,
+  NotificationsMiddleware.confirmNotificationOwnership,
 ]);
 
-notificationsRouter.patch("/:id", NotificationsController.patchNotification);
-notificationsRouter.delete("/:id", NotificationsController.deleteNotification);
+notificationsRouter.patch("/:id", NotificationController.patchNotification);
+notificationsRouter.delete("/:id", NotificationController.deleteNotification);
